@@ -1,10 +1,18 @@
 package cz.muni.fi.pa165.dao;
 
+import cz.muni.fi.pa165.entity.Room;
+
 /**
- * TODO: JavaDoc
- *
- * @author
+ * @author Jana Cechackova
  */
 public interface RoomDao {
-    /* TODO: Methods */
+    
+    public void addRoom(Room room);
+    
+    public void updateRoom(Room room);
+    
+    public void deleteRoom(Room room);
+    
+    public Room getRoomById(Long Id);    
+    
 }

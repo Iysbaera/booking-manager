@@ -1,10 +1,18 @@
 package cz.muni.fi.pa165.dao;
 
+import cz.muni.fi.pa165.entity.Hotel;
+
 /**
- * TODO: JavaDoc
- *
- * @author
+ * @author Jana Cechackova
  */
 public interface HotelDao {
-    /* TODO: Methods */
+    
+    public void addHotel(Hotel hotel);
+    
+    public void updateHotel(Hotel hotel);
+    
+    public void deleteHotel(Hotel hotel);
+    
+    public Hotel getHotelById(Long Id);
+    
 }
