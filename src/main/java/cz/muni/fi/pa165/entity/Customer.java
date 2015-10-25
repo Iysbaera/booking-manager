@@ -11,5 +11,31 @@ public class Customer {
     @GeneratedValue
     private Long Id;
 
-    /* TODO: Implementation */
+    private String firstName;
+    
+    private String lastName;
+    
+    public Long getId(){
+	return Id;
+    }
+    
+    public void setId(Long Id){
+	this.Id = Id;
+    }
+    
+    public String getFirstName(){
+	return firstName;
+    }
+    
+    public void setFirstName(String firstName){
+	this.firstName = firstName;
+    }
+    
+    public String getLastName(){
+	return lastName;
+    }
+    
+    public void setLastName(String lastName){
+	this.lastName = lastName;
+    }
 }

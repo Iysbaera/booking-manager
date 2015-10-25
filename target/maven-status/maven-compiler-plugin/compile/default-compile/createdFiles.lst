@@ -1,0 +1,8 @@
+cz/muni/fi/pa165/entity/Hotel.class
+cz/muni/fi/pa165/dao/CustomerDao.class
+cz/muni/fi/pa165/entity/Customer.class
+cz/muni/fi/pa165/entity/Room.class
+cz/muni/fi/pa165/dao/RoomDao.class
+cz/muni/fi/pa165/dao/BookingDao.class
+cz/muni/fi/pa165/entity/Booking.class
+cz/muni/fi/pa165/dao/HotelDao.class
