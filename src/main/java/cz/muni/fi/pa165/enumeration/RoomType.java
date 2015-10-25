@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.Enum;
+package cz.muni.fi.pa165.enumeration;
 
 /**
  * Enumeration representing type of the room
