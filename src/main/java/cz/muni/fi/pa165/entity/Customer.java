@@ -7,16 +7,18 @@ import java.util.HashSet;
 
 /**
  * Entity representing a customer.
+ * <p>
+ * Every customer has forename and surname. Customer is able to make one or
+ * more bookings in the hotels.
  *
  * @see Booking
  * @author Ivo Hradek
  */
 @Entity
 public class Customer {
-
     @Id
     @GeneratedValue
-    private Long Id;
+    private Long id;
 
     @Column(nullable = false)
     private String forename;
@@ -28,11 +30,7 @@ public class Customer {
     private Collection<Booking> bookings = new HashSet<>();
 
     public Long getId() {
-        return Id;
-    }
-
-    public void setId(Long id) {
-        Id = id;
+        return id;
     }
 
     public String getForename() {
@@ -52,10 +50,10 @@ public class Customer {
     }
 
     public Collection<Booking> getBookings() {
-        return bookings;
+        return Collections.unmodifiableCollection(bookings);
     }
 
-    public void setBookings(Collection<Booking> bookings) {
-        this.bookings = bookings;
+    public void addBooking(Booking booking) {
+        bookings.add(booking);
     }
 }

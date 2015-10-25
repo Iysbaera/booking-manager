@@ -1,9 +1,9 @@
 package cz.muni.fi.pa165.entity;
 
-import cz.muni.fi.pa165.Enum.RoomType;
-import cz.muni.fi.pa165.embeddable.RoomPrice;
+import cz.muni.fi.pa165.enumeration.RoomType;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 /***
  * Entity representing a single room.
@@ -23,32 +23,31 @@ import javax.persistence.*;
  */
 @Entity
 public class Room {
-
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false, unique = true)
-    private Long Id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "fk_hotel", nullable = false)
     private Hotel hotel;
 
-    @Column(nullable = true, unique = true)
-    private int number;
-
     @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
     private RoomType type;
 
-    @Embedded
-    private RoomPrice price;
+    @Column(nullable = true, unique = true)
+    private int number;
+
+    @Column(nullable = true)
+    private BigDecimal price;
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public Hotel getHotel() {
@@ -59,6 +58,14 @@ public class Room {
         this.hotel = hotel;
     }
 
+    public RoomType getType() {
+        return type;
+    }
+
+    public void setType(RoomType type) {
+        this.type = type;
+    }
+
     public int getNumber() {
         return number;
     }
@@ -67,11 +74,11 @@ public class Room {
         this.number = number;
     }
 
-    public RoomPrice getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(RoomPrice price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 }
