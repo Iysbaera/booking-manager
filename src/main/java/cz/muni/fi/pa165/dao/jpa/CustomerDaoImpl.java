@@ -3,14 +3,17 @@ package cz.muni.fi.pa165.dao.jpa;
 import cz.muni.fi.pa165.dao.CustomerDao;
 import cz.muni.fi.pa165.dao.DAOBase;
 import cz.muni.fi.pa165.entity.Customer;
+import org.springframework.stereotype.Repository;
+
 import javax.persistence.PersistenceException;
 
 /**
  *
  * @author Jana Cechackova
  */
+@Repository
 public class CustomerDaoImpl extends DAOBase implements CustomerDao {
-    
+
     @Override
     public void addCustomer(Customer customer) {
 	if (customer == null){
@@ -21,9 +24,9 @@ public class CustomerDaoImpl extends DAOBase implements CustomerDao {
 	}
 	catch (Exception ex){
 	    throw new PersistenceException("Transaction failed.\n"+ ex.getMessage(), ex);
-	}    
+	}
     }
-    
+
     @Override
     public void updateCustomer(Customer customer) {
 	if (customer == null){
@@ -34,13 +37,13 @@ public class CustomerDaoImpl extends DAOBase implements CustomerDao {
 	}
 	catch (Exception ex){
 	    throw new PersistenceException("Transaction failed.\n" + ex.getMessage(), ex);
-	}    
+	}
     }
-    
+
     @Override
     public void deleteCustomer(Customer customer){
 	try {
-            Customer toBeRemoved = getEntityManager().merge(customer); 
+            Customer toBeRemoved = getEntityManager().merge(customer);
             if (toBeRemoved != null) {
                 getEntityManager().remove(toBeRemoved);
             }
@@ -49,9 +52,9 @@ public class CustomerDaoImpl extends DAOBase implements CustomerDao {
             throw new PersistenceException("Transaction failed.\n" + ex.getMessage(), ex);
         }
     }
-    
+
     @Override
     public Customer getCustomerById(Long Id){
-	return getEntityManager().find(Customer.class, Id); 
+	return getEntityManager().find(Customer.class, Id);
     }
 }

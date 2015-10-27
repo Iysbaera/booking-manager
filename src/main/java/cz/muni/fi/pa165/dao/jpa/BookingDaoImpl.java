@@ -3,14 +3,17 @@ package cz.muni.fi.pa165.dao.jpa;
 import cz.muni.fi.pa165.dao.BookingDao;
 import cz.muni.fi.pa165.dao.DAOBase;
 import cz.muni.fi.pa165.entity.Booking;
+import org.springframework.stereotype.Repository;
+
 import javax.persistence.PersistenceException;
 
 /**
  *
  * @author Jana Cechackova
  */
+@Repository
 public class BookingDaoImpl extends DAOBase implements BookingDao {
-    
+
     @Override
     public void addBooking(Booking booking) {
 	if (booking == null){
@@ -21,9 +24,9 @@ public class BookingDaoImpl extends DAOBase implements BookingDao {
 	}
 	catch (Exception ex){
 	    throw new PersistenceException("Transaction failed.\n"+ ex.getMessage(), ex);
-	}    
+	}
     }
-    
+
     @Override
     public void updateBooking(Booking booking) {
 	if (booking == null){
@@ -34,13 +37,13 @@ public class BookingDaoImpl extends DAOBase implements BookingDao {
 	}
 	catch (Exception ex){
 	    throw new PersistenceException("Transaction failed.\n" + ex.getMessage(), ex);
-	}    
+	}
     }
-    
+
     @Override
     public void deleteBooking(Booking booking){
 	try {
-            Booking toBeRemoved = getEntityManager().merge(booking); 
+            Booking toBeRemoved = getEntityManager().merge(booking);
             if (toBeRemoved != null) {
                 getEntityManager().remove(toBeRemoved);
             }
@@ -49,9 +52,9 @@ public class BookingDaoImpl extends DAOBase implements BookingDao {
             throw new PersistenceException("Transaction failed.\n" + ex.getMessage(), ex);
         }
     }
-    
+
     @Override
     public Booking getBookingById(Long Id){
-	return getEntityManager().find(Booking.class, Id); 
+	return getEntityManager().find(Booking.class, Id);
     }
 }
