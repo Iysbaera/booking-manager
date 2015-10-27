@@ -6,7 +6,7 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <properties>
             <!-- DB connection settings -->
-            <property name="hibernate.connection.url" value="jdbc:derby:memory:testdb" />
+            <property name="hibernate.connection.url" value="jdbc:derby:memory:unit-tests-db;create=true" />
             <property name="hibernate.connection.driver_class" value="org.apache.derby.jdbc.EmbeddedDriver" />
 
             <!-- Disable the second level cache -->
@@ -16,7 +16,7 @@
             <property name="hibernate.hbm2ddl.auto" value="create" />
 
             <!-- SQL Dialect -->
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.DerbyTenSevenDialect" />
 
             <!-- Echo nicely formatted all SQL queries to stdout -->
             <property name="hibernate.show_sql" value="true" />
