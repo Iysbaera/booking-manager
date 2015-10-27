@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.enumeration.RoomType;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * Entity representing a single room.
@@ -80,5 +81,28 @@ public class Room {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Room)) return false;
+
+        final Room room = (Room) o;
+
+        return room.getId().equals(getId())       &&
+               room.getNumber() ==  getNumber()   &&
+               room.getType().equals(getType())   &&
+               room.getHotel().equals(getHotel()) &&
+               room.getPrice().equals(getPrice());
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        result = getNumber();
+        result = 19 * result + getPrice().intValue();
+        result = 23 * result + getType().ordinal();
+        return result;
     }
 }

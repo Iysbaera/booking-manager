@@ -21,7 +21,7 @@ public class Hotel {
     @Column(nullable = false, unique = true)
     private Long id;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "hotel")
@@ -45,5 +45,23 @@ public class Hotel {
 
     public void addRoom(Room room) {
         rooms.add(room);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Hotel)) return false;
+
+        final Hotel hotel = (Hotel) o;
+
+        return hotel.getId().equals(getId()) &&
+               hotel.getName().equals(getName());
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        result = 31 + ((null == getName()) ? 0 : getName().hashCode());
+        return result;
     }
 }

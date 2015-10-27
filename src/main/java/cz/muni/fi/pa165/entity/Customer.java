@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 
 /**
  * Entity representing a customer.
@@ -55,5 +56,26 @@ public class Customer {
 
     public void addBooking(Booking booking) {
         bookings.add(booking);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Customer)) return false;
+
+        final Customer customer = (Customer) o;
+
+        return customer.getId().equals(getId())             &&
+               customer.getSurname().equals(getSurname())   &&
+               customer.getBookings().equals(getBookings()) &&
+               customer.getForename().equals(getForename());
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        result = (null == getForename()) ? 0 : getForename().hashCode();
+        result = 19 * result + ((null == getSurname()) ? 0 : getSurname().hashCode());
+        return result;
     }
 }
