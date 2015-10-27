@@ -7,14 +7,14 @@
 package cz.muni.fi.pa165.dao.jpa;
 
 import cz.muni.fi.pa165.dao.BookingDao;
-import javax.transaction.Transactional;
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.transaction.annotation.Transactional;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 /**
  *
@@ -26,18 +26,18 @@ public class BookingDaoTest extends AbstractTestNGSpringContextTests{
 
     @Autowired
     private BookingDao bookingDao;
-    
-    @Before
+
+    @BeforeMethod
     public void setUp() {
 
     }
-    
+
     /**
      * Test of addBooking method, of class BookingDaoImpl.
      */
     @Test
     public void testAddBooking() {
-        fail("The test case is a prototype.");
+        Assert.fail("The test case is a prototype.");
     }
 
     /**
@@ -45,7 +45,7 @@ public class BookingDaoTest extends AbstractTestNGSpringContextTests{
      */
     @Test
     public void testUpdateBooking() {
-        fail("The test case is a prototype.");
+        Assert.fail("The test case is a prototype.");
     }
 
     /**
@@ -53,7 +53,7 @@ public class BookingDaoTest extends AbstractTestNGSpringContextTests{
      */
     @Test
     public void testDeleteBooking() {
-        fail("The test case is a prototype.");
+        Assert.fail("The test case is a prototype.");
     }
 
     /**
@@ -61,7 +61,7 @@ public class BookingDaoTest extends AbstractTestNGSpringContextTests{
      */
     @Test
     public void testGetBookingById() {
-        fail("The test case is a prototype.");
+        Assert.fail("The test case is a prototype.");
     }
-    
+
 }
