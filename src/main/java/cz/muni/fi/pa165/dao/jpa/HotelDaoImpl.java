@@ -19,17 +19,13 @@ import java.util.Collection;
 @Repository
 public class HotelDaoImpl extends DAOBase implements HotelDao {
 
-    @PersistenceContext
-    private EntityManager em;
-
     @Override
     public void addHotel(Hotel hotel) {
 	if (hotel == null){
 	    throw new IllegalArgumentException("Hotel is null.");
 	}
 	try {
-        System.out.println((em == null) ? "YES" : "NO");
-	    em.persist(hotel);
+	    getEntityManager().persist(hotel);
 	}
 	catch (Exception ex){
 	    throw new PersistenceException("Transaction failed.\n"+ ex.getMessage(), ex);
