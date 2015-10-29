@@ -24,7 +24,7 @@ import java.util.Collection;
  * @author Ivo Hradek
  */
 @Transactional
-@ContextConfiguration("/applicationContext.xml")
+@ContextConfiguration("classpath:applicationContextTest.xml")
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 public class HotelDaoTest extends AbstractTestNGSpringContextTests {
 
@@ -72,25 +72,25 @@ public class HotelDaoTest extends AbstractTestNGSpringContextTests {
         /* Names weren't modified */
         String h1Name = hotelDao.getHotelById(h1.getId()).getName();
         String h2Name = hotelDao.getHotelById(h2.getId()).getName();
-        Assert.assertEquals(h1Name, h1.getName());
-        Assert.assertEquals(h2Name, h2.getName());
+        Assert.assertEquals(h1Name, h1.getName(), "Hotel1 name was malformed");
+        Assert.assertEquals(h2Name, h2.getName(), "Hotel2 name was malformed");
 
         /* Rooms were added too */
         int numberOfRoomsHotel1 =
                 hotelDao.getHotelById(h1.getId())
                         .getRooms()
                         .size();
-        Assert.assertSame(numberOfRoomsHotel1, h2.getRooms().size());
+        Assert.assertSame(numberOfRoomsHotel1, h2.getRooms().size(), "Number of hotel1 rooms are not same");
 
         int numberOfRoomsHotel2 =
                 hotelDao.getHotelById(h2.getId())
                         .getRooms()
                         .size();
-        Assert.assertSame(numberOfRoomsHotel2, h2.getRooms().size());
+        Assert.assertSame(numberOfRoomsHotel2, h2.getRooms().size(), "Number of hotel2 rooms are not same");
 
         /* Same rooms were added */
         for (Room r : h1.getRooms()) {
-            Assert.assertNotNull(r.getId());
+            Assert.assertNotNull(r.getId(), "Rooms weren't added to hotel1");
         }
 
     }
@@ -98,7 +98,7 @@ public class HotelDaoTest extends AbstractTestNGSpringContextTests {
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testAddNullHotel() {
         hotelDao.addHotel(null);
-        Assert.fail("adding null hotel");
+        Assert.fail("Adding null hotel");
     }
 
     /*
@@ -117,22 +117,22 @@ public class HotelDaoTest extends AbstractTestNGSpringContextTests {
         hotelDao.updateHotel(h1);
 
         String actualName = hotelDao.getHotelById(h1.getId()).getName();
-        Assert.assertEquals(actualName, h1.getName());
+        Assert.assertEquals(actualName, h1.getName(), "Hotel1 name was not updated");
 
         /* Were rooms modified? */
         Collection<Room> actualRooms = hotelDao.getHotelById(h1.getId()).getRooms();
-        Assert.assertEquals(actualRooms, h1.getRooms());
+        Assert.assertEquals(actualRooms, h1.getRooms(), "Hotel1 rooms were changed");
 
         /* Add new room */
         h1.addRoom(r3);
 
         /* Was it really added? */
         actualRooms = hotelDao.getHotelById(h1.getId()).getRooms();
-        Assert.assertNotNull(r3);
-        Assert.assertEquals(actualRooms.size(), h1.getRooms().size());
+        Assert.assertNotNull(r3, "Room was not added to hotel1");
+        Assert.assertEquals(actualRooms.size(), h1.getRooms().size(), "Room was not added to hotel1");
 
         /* Were rooms modified? */
-        Assert.assertEquals(actualRooms, h1.getRooms());
+        Assert.assertEquals(actualRooms, h1.getRooms(), "Rooms of hotel1 were modified");
     }
 
     /*
@@ -144,16 +144,16 @@ public class HotelDaoTest extends AbstractTestNGSpringContextTests {
         h1.addRoom(r1);
         h1.addRoom(r2);
         hotelDao.addHotel(h1);
-        Assert.assertNotNull(h1.getId());
+        Assert.assertNotNull(h1.getId(), "Hotel1 was not added");
 
         /* Was it delete? */
         hotelDao.deleteHotel(h1);
         Hotel actualHotel = hotelDao.getHotelById(h1.getId());
-        Assert.assertNull(actualHotel);
+        Assert.assertNull(actualHotel, "Hotel1 was not deleted");
 
         /* Were rooms delete too? */
         for (Room r : h1.getRooms()) {
-            Assert.assertNull(roomDao.getRoomById(r.getId()));
+            Assert.assertNull(roomDao.getRoomById(r.getId()), "Rooms of hotel1 weren't delete");
         }
     }
 
@@ -168,11 +168,11 @@ public class HotelDaoTest extends AbstractTestNGSpringContextTests {
 
         /* Get it */
         Hotel actualHotel = hotelDao.getHotelById(h1.getId());
-        Assert.assertEquals(actualHotel.getName(), h1.getName());
+        Assert.assertEquals(actualHotel.getName(), h1.getName(), "Name of hotel1 is not the same");
 
         /* Really same? Also with rooms? */
         Collection<Room> actualRoomsOfH1 = actualHotel.getRooms();
-        Assert.assertEquals(actualRoomsOfH1, h1.getRooms());
+        Assert.assertEquals(actualRoomsOfH1, h1.getRooms(), "Hotel1 doesn't have same rooms");
     }
 
     @Test
