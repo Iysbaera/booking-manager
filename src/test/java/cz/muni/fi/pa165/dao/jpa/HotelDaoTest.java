@@ -6,6 +6,7 @@ import cz.muni.fi.pa165.entity.Hotel;
 
 import cz.muni.fi.pa165.entity.Room;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -31,9 +32,6 @@ public class HotelDaoTest extends AbstractTestNGSpringContextTests {
     @Autowired
     private HotelDao hotelDao;
 
-    @Autowired
-    private RoomDao roomDao;
-
     /* Hotels */
     private Hotel h1;
     private Hotel h2;
@@ -45,6 +43,7 @@ public class HotelDaoTest extends AbstractTestNGSpringContextTests {
 
     @BeforeMethod
     public void setUp() {
+        /* Create hotels */
         h1 = new Hotel();
         h2 = new Hotel();
 
@@ -57,6 +56,10 @@ public class HotelDaoTest extends AbstractTestNGSpringContextTests {
      */
     @Test
     public void testAddHotel() {
+        /* Create mock rooms */
+        r1 = Mockito.mock(Room.class);
+        r2 = Mockito.mock(Room.class);
+
         /* Hotel with rooms */
         h1.addRoom(r1);
         h1.addRoom(r2);
@@ -80,7 +83,7 @@ public class HotelDaoTest extends AbstractTestNGSpringContextTests {
                 hotelDao.getHotelById(h1.getId())
                         .getRooms()
                         .size();
-        Assert.assertSame(numberOfRoomsHotel1, h2.getRooms().size(), "Number of hotel1 rooms are not same");
+        Assert.assertSame(numberOfRoomsHotel1, h1.getRooms().size(), "Number of hotel1 rooms are not same");
 
         int numberOfRoomsHotel2 =
                 hotelDao.getHotelById(h2.getId())
@@ -106,6 +109,11 @@ public class HotelDaoTest extends AbstractTestNGSpringContextTests {
      */
     @Test
     public void testUpdateHotel() {
+        /* Create mock rooms */
+        r1 = Mockito.mock(Room.class);
+        r2 = Mockito.mock(Room.class);
+        r3 = Mockito.mock(Room.class);
+
         /* Prepare */
         h1.addRoom(r1);
         h1.addRoom(r2);
@@ -120,19 +128,16 @@ public class HotelDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(actualName, h1.getName(), "Hotel1 name was not updated");
 
         /* Were rooms modified? */
-        Collection<Room> actualRooms = hotelDao.getHotelById(h1.getId()).getRooms();
-        Assert.assertEquals(actualRooms, h1.getRooms(), "Hotel1 rooms were changed");
+        int numberOfHotel1Rooms = hotelDao.getHotelById(h1.getId()).getRooms().size();
+        Assert.assertEquals(numberOfHotel1Rooms, h1.getRooms().size(), "Hotel1 rooms were changed");
 
         /* Add new room */
         h1.addRoom(r3);
 
         /* Was it really added? */
-        actualRooms = hotelDao.getHotelById(h1.getId()).getRooms();
-        Assert.assertNotNull(r3, "Room was not added to hotel1");
-        Assert.assertEquals(actualRooms.size(), h1.getRooms().size(), "Room was not added to hotel1");
-
-        /* Were rooms modified? */
-        Assert.assertEquals(actualRooms, h1.getRooms(), "Rooms of hotel1 were modified");
+        numberOfHotel1Rooms = hotelDao.getHotelById(h1.getId()).getRooms().size();
+        Assert.assertNotNull(r3.getId(), "Room was not added to hotel1");
+        Assert.assertEquals(numberOfHotel1Rooms, h1.getRooms().size(), "Room was not added to hotel1");
     }
 
     /*
@@ -140,6 +145,10 @@ public class HotelDaoTest extends AbstractTestNGSpringContextTests {
      */
     @Test
     public void testDeleteHotel() {
+        /* Create mock rooms */
+        r1 = Mockito.mock(Room.class);
+        r2 = Mockito.mock(Room.class);
+
         /* Prepare */
         h1.addRoom(r1);
         h1.addRoom(r2);
@@ -153,7 +162,7 @@ public class HotelDaoTest extends AbstractTestNGSpringContextTests {
 
         /* Were rooms delete too? */
         for (Room r : h1.getRooms()) {
-            Assert.assertNull(roomDao.getRoomById(r.getId()), "Rooms of hotel1 weren't delete");
+            Assert.assertNull(r.getId(), "Rooms of hotel1 weren't delete");
         }
     }
 
