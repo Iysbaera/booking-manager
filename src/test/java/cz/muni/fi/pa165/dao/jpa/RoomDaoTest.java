@@ -7,7 +7,13 @@
 package cz.muni.fi.pa165.dao.jpa;
 
 import cz.muni.fi.pa165.dao.RoomDao;
+import cz.muni.fi.pa165.entity.Hotel;
+import cz.muni.fi.pa165.entity.Room;
+import cz.muni.fi.pa165.enumeration.RoomType;
+import java.math.BigDecimal;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
@@ -22,13 +28,34 @@ import org.testng.annotations.Test;
  */
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
+
+@ContextConfiguration("classpath:applicationContextTest.xml")
 public class RoomDaoTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private RoomDao roomDao;
+    
+    //rooms
+    private Room room1;
+    private Room room2;
 
+    //hotels
+    @Mock private Hotel hotel1;
+    @Mock private Hotel hotel2;
+    
     @BeforeMethod
     public void setUp() {
+        /*Create first room*/
+        room1 = new Room();
+        room1.setNumber(1);
+        room1.setPrice(new BigDecimal("10"));
+        room1.setType(RoomType.SingleRoom);
+        
+        /*Create second room*/
+        room2 = new Room();
+        room2.setNumber(2);
+        room2.setPrice(new BigDecimal("50"));
+        room2.setType(RoomType.DeluxeRoom);
     }
 
     /**
@@ -36,7 +63,8 @@ public class RoomDaoTest extends AbstractTestNGSpringContextTests {
      */
     @Test
     public void testAddRoom() {
-        Assert.fail("The test case is a prototype.");
+        roomDao.addRoom(room1);
+        Assert.assertEquals(roomDao.getRoomById(room1.getId()).getNumber(), 1);
     }
 
     /**
@@ -44,7 +72,12 @@ public class RoomDaoTest extends AbstractTestNGSpringContextTests {
      */
     @Test
     public void testUpdateRoom() {
-        Assert.fail("The test case is a prototype.");
+        roomDao.addRoom(room1);
+        Assert.assertNotNull(roomDao.getRoomById(room1.getId()));
+        
+        room1.setNumber(5);
+        roomDao.updateRoom(room1);
+        Assert.assertEquals(roomDao.getRoomById(room1.getId()).getNumber(), 5);
     }
 
     /**
@@ -52,7 +85,11 @@ public class RoomDaoTest extends AbstractTestNGSpringContextTests {
      */
     @Test
     public void testDeleteRoom() {
-        Assert.fail("The test case is a prototype.");
+        roomDao.addRoom(room1);
+        Assert.assertNotNull(roomDao.getRoomById(room1.getId()));
+        
+        roomDao.deleteRoom(room1);
+        Assert.assertNull(roomDao.getRoomById(room1.getId()));
     }
 
     /**
@@ -60,7 +97,9 @@ public class RoomDaoTest extends AbstractTestNGSpringContextTests {
      */
     @Test
     public void testGetRoomById() {
-        Assert.fail("The test case is a prototype.");
+        roomDao.addRoom(room1);
+        Room output = roomDao.getRoomById(room1.getId());
+        Assert.assertEquals(room1.getNumber(), output.getNumber());
     }
 
 }

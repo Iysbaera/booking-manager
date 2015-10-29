@@ -9,6 +9,7 @@ package cz.muni.fi.pa165.dao.jpa;
 import cz.muni.fi.pa165.dao.CustomerDao;
 import cz.muni.fi.pa165.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
@@ -23,6 +24,8 @@ import org.testng.annotations.Test;
  */
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
+
+@ContextConfiguration("classpath:applicationContextTest.xml")
 public class CustomerDaoTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
@@ -57,7 +60,7 @@ public class CustomerDaoTest extends AbstractTestNGSpringContextTests {
 
         customer1.setForename("Janko");
         customerDao.updateCustomer(customer1);
-        Assert.assertEquals(customerDao.getCustomerById(customer1.getId()),
+        Assert.assertEquals(customerDao.getCustomerById(customer1.getId()).getForename(),
                             "Janko");
     }
 

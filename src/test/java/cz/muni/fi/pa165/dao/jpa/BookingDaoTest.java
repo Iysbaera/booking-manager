@@ -7,7 +7,15 @@
 package cz.muni.fi.pa165.dao.jpa;
 
 import cz.muni.fi.pa165.dao.BookingDao;
+import cz.muni.fi.pa165.entity.Booking;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import javax.xml.datatype.DatatypeConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
@@ -22,14 +30,27 @@ import org.testng.annotations.Test;
  */
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
+
+@ContextConfiguration("classpath:applicationContextTest.xml")
 public class BookingDaoTest extends AbstractTestNGSpringContextTests{
 
     @Autowired
     private BookingDao bookingDao;
+    
+    private Booking booking1;
+    private Booking booking2;
+    
+    Date d = new Date();
+    
 
     @BeforeMethod
-    public void setUp() {
-
+    public void setUp() throws ParseException {
+        booking1 = new Booking();
+        booking2 = new Booking();
+        String sourceDate = "2012-02-29";
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        d = format.parse(sourceDate);
+        booking1.setCheckIn(d);
     }
 
     /**
@@ -37,7 +58,8 @@ public class BookingDaoTest extends AbstractTestNGSpringContextTests{
      */
     @Test
     public void testAddBooking() {
-        Assert.fail("The test case is a prototype.");
+        bookingDao.addBooking(booking1);
+        Assert.assertEquals(bookingDao.getBookingById(booking1.getId()).getCheckIn(), d);
     }
 
     /**
@@ -45,7 +67,13 @@ public class BookingDaoTest extends AbstractTestNGSpringContextTests{
      */
     @Test
     public void testUpdateBooking() {
-        Assert.fail("The test case is a prototype.");
+     bookingDao.addBooking(booking1);
+     Assert.assertNotNull(bookingDao.getBookingById(booking1.getId()));
+     Date newDate = addDays(d,1);
+     booking1.setCheckIn(newDate);
+     bookingDao.updateBooking(booking1);
+     Assert.assertEquals(bookingDao.getBookingById(booking1.getId()).getCheckIn(), newDate);
+     
     }
 
     /**
@@ -53,7 +81,11 @@ public class BookingDaoTest extends AbstractTestNGSpringContextTests{
      */
     @Test
     public void testDeleteBooking() {
-        Assert.fail("The test case is a prototype.");
+        bookingDao.addBooking(booking1);
+        Assert.assertNotNull(bookingDao.getBookingById(booking1.getId()));
+        
+        bookingDao.deleteBooking(booking1);
+        Assert.assertNull(bookingDao.getBookingById(booking1.getId()));
     }
 
     /**
@@ -61,7 +93,15 @@ public class BookingDaoTest extends AbstractTestNGSpringContextTests{
      */
     @Test
     public void testGetBookingById() {
-        Assert.fail("The test case is a prototype.");
+        bookingDao.addBooking(booking1);
+        Booking output = bookingDao.getBookingById(booking1.getId());
+        Assert.assertEquals(output.getCheckIn(), booking1.getCheckIn());
     }
-
+    
+    public static Date addDays(Date date, int days){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
+    }
 }
