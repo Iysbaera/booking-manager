@@ -7,8 +7,13 @@
 package cz.muni.fi.pa165.dao.jpa;
 
 import cz.muni.fi.pa165.dao.CustomerDao;
+import cz.muni.fi.pa165.entity.Booking;
 import cz.muni.fi.pa165.entity.Customer;
+import java.util.Collection;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
@@ -23,18 +28,27 @@ import org.testng.annotations.Test;
  */
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
+
+@ContextConfiguration("classpath:applicationContextTest.xml")
 public class CustomerDaoTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private CustomerDao customerDao;
 
-    private Customer customer1;
+    private Customer c1;
+    private Customer c2;
+    
+    @Mock private Booking b1;
+    @Mock private Booking b2;
+    @Mock private Booking b3;
 
     @BeforeMethod
     public void setUp() {
-        customer1 = new Customer();
-        customer1.setForename("Jan");
-        customer1.setSurname("Janosik");
+        c1 = new Customer();
+        c1.setForename("Customer 1");
+        
+        c2 = new Customer();
+        c2.setForename("Customer 2");
     }
 
     /**
@@ -42,9 +56,47 @@ public class CustomerDaoTest extends AbstractTestNGSpringContextTests {
      */
     @Test
     public void testAddCustomer() {
-        customerDao.addCustomer(customer1);
-        Assert.assertEquals(customerDao.getCustomerById(customer1.getId()).getForename(),
-                            "Jan");
+        /* Create mock bookings */
+        b1 = Mockito.mock(Booking.class);
+        b2 = Mockito.mock(Booking.class);
+        
+        /* Customer with bookings */
+        c1.addBooking(b1);
+        c1.addBooking(b2);       
+        customerDao.addCustomer(c1);
+        
+        /* Customer without bookings */
+        customerDao.addCustomer(c2);
+        
+        /* Customers were added */
+        Assert.assertNotNull(c1.getId());
+        Assert.assertNotNull(c2.getId());
+        
+        /* Bookings were added too */
+        int customer1Bookings =
+                customerDao.getCustomerById(c1.getId())
+                        .getBookings()
+                        .size();
+        Assert.assertSame(customer1Bookings, c1.getBookings().size(), 
+                "Number of customer 1 bookings is not same");
+        
+        int customer2Bookings =
+                customerDao.getCustomerById(c2.getId())
+                        .getBookings()
+                        .size();
+        Assert.assertSame(customer2Bookings, c2.getBookings().size(), 
+                "Number of customer 2 bookings is not same");
+        
+        /* The same bookings were added */
+        for (Booking b : c1.getBookings()) {
+            Assert.assertNotNull(b.getId(), "Bookings weren't added to customer 1");
+        }
+    }
+    
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testAddNullCustomer() {
+        customerDao.addCustomer(null);
+        Assert.fail("Adding null customer");
     }
 
     /**
@@ -52,13 +104,35 @@ public class CustomerDaoTest extends AbstractTestNGSpringContextTests {
      */
     @Test
     public void testUpdateCustomer() {
-        customerDao.addCustomer(customer1);
-        Assert.assertNotNull(customerDao.getCustomerById(customer1.getId()));
-
-        customer1.setForename("Janko");
-        customerDao.updateCustomer(customer1);
-        Assert.assertEquals(customerDao.getCustomerById(customer1.getId()),
-                            "Janko");
+        /* Create mock bookings */
+        b1 = Mockito.mock(Booking.class);
+        b2 = Mockito.mock(Booking.class);
+        b3 = Mockito.mock(Booking.class);
+        
+        c1.addBooking(b1);
+        c1.addBooking(b2);
+        c1.setForename("Customer");   
+        customerDao.addCustomer(c1);
+        
+        /* Update name */
+        c1.setForename("Customer 1");
+        customerDao.updateCustomer(c1);
+        
+        String actualName = customerDao.getCustomerById(c1.getId()).getForename();
+        Assert.assertEquals(actualName, c1.getForename(), "Customer 1 name was not updated");
+        
+        /* Were bookings modified? */
+        int customer1Bookings = customerDao.getCustomerById(c1.getId()).getBookings().size();
+        Assert.assertEquals(customer1Bookings, c1.getBookings().size(), 
+                "Customer 1 bookings were changed");
+        
+        c1.addBooking(b3);
+        
+        /* Was booking 3 added? */
+        customer1Bookings = customerDao.getCustomerById(c1.getId()).getBookings().size();
+        Assert.assertNotNull(b3.getId(), "Booking was not added to customer 1");
+        Assert.assertEquals(customer1Bookings, c1.getBookings().size(), 
+                "Booking was not added to customer 1");
     }
 
     /**
@@ -66,11 +140,24 @@ public class CustomerDaoTest extends AbstractTestNGSpringContextTests {
      */
     @Test
     public void testDeleteCustomer() {
-        customerDao.addCustomer(customer1);
-        Assert.assertNotNull(customerDao.getCustomerById(customer1.getId()));
-
-        customerDao.deleteCustomer(customer1);
-        Assert.assertNull(customerDao.getCustomerById(customer1.getId()));
+        /* Create mock bookings */
+        b1 = Mockito.mock(Booking.class);
+        b2 = Mockito.mock(Booking.class);
+        
+        c1.addBooking(b1);
+        c1.addBooking(b2);       
+        customerDao.addCustomer(c1);
+        Assert.assertNotNull(c1.getId(), "Customer 1 was not added");
+        
+        /* Was customer deleted? */ 
+        customerDao.deleteCustomer(c1);
+        Customer actualCustomer = customerDao.getCustomerById(c1.getId());
+        Assert.assertNull(actualCustomer, "Customer 1 was not deleted");
+        
+        /* Were bookings deleted? */
+        for (Booking b : c1.getBookings()) {
+            Assert.assertNull(b.getId(), "Bookings of customer 1 weren't deleted");
+        }
     }
 
     /**
@@ -78,9 +165,17 @@ public class CustomerDaoTest extends AbstractTestNGSpringContextTests {
      */
     @Test
     public void testGetCustomerById() {
-        customerDao.addCustomer(customer1);
-        Customer result = customerDao.getCustomerById(customer1.getId());
-        Assert.assertEquals(customer1.getForename(), result.getForename());
+        c1.addBooking(b1);
+        c1.addBooking(b2);       
+        customerDao.addCustomer(c1);
+        
+        Customer actualCustomer = customerDao.getCustomerById(c1.getId());
+        Assert.assertEquals(actualCustomer.getForename(), c1.getForename(), 
+                "Name of customer 1 is not the same");
+
+        Collection<Booking> actualBookingsOfC1 = actualCustomer.getBookings();
+        Assert.assertEquals(actualBookingsOfC1, c1.getBookings(), 
+                "Customer 1 doesn't have the same bookings");
     }
 
 }
