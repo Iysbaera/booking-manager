@@ -54,7 +54,10 @@ public class CustomerDaoImpl extends DAOBase implements CustomerDao {
     }
 
     @Override
-    public Customer getCustomerById(Long Id){
-	return getEntityManager().find(Customer.class, Id);
+    public Customer getCustomerById(Long id){
+        if (null == id) {
+            throw new IllegalArgumentException("id is null");
+        }
+        return getEntityManager().find(Customer.class, id);
     }
 }

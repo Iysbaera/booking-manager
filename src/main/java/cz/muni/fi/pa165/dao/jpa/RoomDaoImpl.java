@@ -43,7 +43,10 @@ public class RoomDaoImpl extends DAOBase implements RoomDao {
 
     @Override
     public void deleteRoom(Room room){
-	try {
+        if (room == null){
+            throw new IllegalArgumentException("Room is null.");
+        }
+        try {
             Room toBeRemoved = getEntityManager().merge(room);
             if (toBeRemoved != null) {
                 getEntityManager().remove(toBeRemoved);
@@ -55,7 +58,10 @@ public class RoomDaoImpl extends DAOBase implements RoomDao {
     }
 
     @Override
-    public Room getRoomById(Long Id){
-	return getEntityManager().find(Room.class, Id);
+    public Room getRoomById(Long id) {
+        if (null == id) {
+            throw new IllegalArgumentException("Id is null");
+        }
+        return getEntityManager().find(Room.class, id);
     }
 }

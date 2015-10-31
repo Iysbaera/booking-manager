@@ -57,8 +57,11 @@ public class HotelDaoImpl extends DAOBase implements HotelDao {
     }
 
     @Override
-    public Hotel getHotelById(Long Id){
-        return getEntityManager().find(Hotel.class, Id);
+    public Hotel getHotelById(Long id){
+        if (null == id) {
+            throw new IllegalArgumentException("id is null");
+        }
+        return getEntityManager().find(Hotel.class, id);
     }
 
     @Override

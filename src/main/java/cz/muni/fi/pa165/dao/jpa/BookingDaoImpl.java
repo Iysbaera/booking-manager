@@ -54,7 +54,10 @@ public class BookingDaoImpl extends DAOBase implements BookingDao {
     }
 
     @Override
-    public Booking getBookingById(Long Id){
-	return getEntityManager().find(Booking.class, Id);
+    public Booking getBookingById(Long id){
+        if (null == id) {
+            throw new IllegalArgumentException("id is null");
+        }
+        return getEntityManager().find(Booking.class, id);
     }
 }
