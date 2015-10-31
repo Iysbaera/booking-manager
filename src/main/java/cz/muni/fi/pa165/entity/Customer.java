@@ -78,4 +78,14 @@ public class Customer {
         result = 19 * result + ((null == getSurname()) ? 0 : getSurname().hashCode());
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", forename='" + forename + '\'' +
+                ", surname='" + surname + '\'' +
+                ", bookings=" + bookings +
+                '}';
+    }
 }

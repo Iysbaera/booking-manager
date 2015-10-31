@@ -105,4 +105,15 @@ public class Room {
         result = 23 * result + getType().ordinal();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + id +
+                ", hotel=" + hotel +
+                ", type=" + type +
+                ", number=" + number +
+                ", price=" + price +
+                '}';
+    }
 }

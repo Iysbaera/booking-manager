@@ -113,4 +113,16 @@ public class Booking {
         result = 29 * result + getCheckOut().getSeconds();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "id=" + id +
+                ", customer=" + customer +
+                ", room=" + room +
+                ", checkIn=" + checkIn +
+                ", checkOut=" + checkOut +
+                ", price=" + price +
+                '}';
+    }
 }

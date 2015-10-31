@@ -64,4 +64,13 @@ public class Hotel {
         result = 31 + ((null == getName()) ? 0 : getName().hashCode());
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Hotel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", rooms=" + rooms +
+                '}';
+    }
 }
