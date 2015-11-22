@@ -3,8 +3,6 @@ language: java
 install: mvn clean install;
 
 jdk:
-  - openjdk7
-  - oraclejdk7
   - oraclejdk8
 
 branches:
