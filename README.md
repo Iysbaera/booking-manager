@@ -1,4 +1,4 @@
-# Booking Manager
+# Booking Manager [![Build Status](https://travis-ci.org/hradecek/booking-manager.svg?branch=master)](https://travis-ci.org/hradecek/booking-manager)
 
 Booking manager is student's project of the [_Enterprise Java_ course](https://is.muni.cz/predmet/fi/podzim2011/PA165?lang=en)  teaching at [Faculty of Informatics](https://www.fi.muni.cz/index.xhtml.en) [Masaryk University](https://www.muni.cz/?lang=en).
 
