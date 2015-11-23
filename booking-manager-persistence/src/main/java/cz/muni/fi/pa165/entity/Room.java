@@ -4,7 +4,6 @@ import cz.muni.fi.pa165.enumeration.RoomType;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Objects;
 
 /**
  * Entity representing a single room.

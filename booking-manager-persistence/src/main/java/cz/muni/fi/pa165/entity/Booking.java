@@ -5,7 +5,6 @@ import org.hibernate.annotations.Formula;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * Entity representing a single booking item in a hotel.
@@ -109,8 +108,8 @@ public class Booking {
         int result;
         result = (null == getCustomer()) ? 0 : getCustomer().hashCode();
         result = 19 * result + ((null == getRoom()) ? 0 : getRoom().hashCode());
-        result = 23 * result + getCheckIn().getSeconds();
-        result = 29 * result + getCheckOut().getSeconds();
+        result = 23 * result + getCheckIn().hashCode();
+        result = 29 * result + getCheckOut().hashCode();
         return result;
     }
 

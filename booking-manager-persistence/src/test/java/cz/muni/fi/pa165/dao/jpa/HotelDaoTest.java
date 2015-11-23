@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.dao.jpa;
 
 import cz.muni.fi.pa165.dao.HotelDao;
+import cz.muni.fi.pa165.entity.Booking;
 import cz.muni.fi.pa165.entity.Hotel;
 import cz.muni.fi.pa165.entity.Room;
 import org.mockito.Mock;
@@ -38,6 +39,10 @@ public class HotelDaoTest extends AbstractTestNGSpringContextTests {
     @Mock private Room r1;
     @Mock private Room r2;
     @Mock private Room r3;
+
+    /* Bookings */
+    @Mock private Booking b1;
+    @Mock private Booking b2;
 
     @BeforeMethod
     public void setUp() {
@@ -184,11 +189,27 @@ public class HotelDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testFindAllHotels() {
+        Collection<Hotel> hotels = hotelDao.findAllHotels();
+        Assert.assertTrue(hotels.isEmpty());
 
-    }
+        /* Add just one hotel */
+        hotelDao.addHotel(h1);
 
-    @Test
-    public void testFindFreeRooms() {
+        /* Was added really just one hotel? */
+        hotels = hotelDao.findAllHotels();
+        Assert.assertEquals(hotels.size(), 1);
 
+        /* Was added really THAT hotel? */
+        Assert.assertTrue(hotels.contains(h1));
+
+        /* Add another one */
+        hotelDao.addHotel(h2);
+
+        /* Are there really two hotels? */
+        hotels = hotelDao.findAllHotels();
+        Assert.assertEquals(hotels.size(), 2);
+
+        /* Same hotels? */
+        Assert.assertTrue(hotels.contains(h1) && hotels.contains(h2));
     }
 }

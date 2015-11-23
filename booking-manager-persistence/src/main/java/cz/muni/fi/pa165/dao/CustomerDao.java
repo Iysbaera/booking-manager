@@ -16,7 +16,7 @@ public interface CustomerDao {
      * @throws IllegalArgumentException if the customer is null
      * @param customer the customer to be added
      */
-    public void addCustomer(Customer customer);
+    void addCustomer(Customer customer);
 
     /**
      * (U)pdates already added (persisted) customer taken as parameter.
@@ -24,7 +24,7 @@ public interface CustomerDao {
      * @throws IllegalArgumentException if the customer is null
      * @param customer the customer to be updated
      */
-    public void updateCustomer(Customer customer);
+    void updateCustomer(Customer customer);
 
     /**
      * (D)elete already added (persisted) customer taken as parameter.
@@ -32,14 +32,15 @@ public interface CustomerDao {
      * @throws IllegalArgumentException if the customer is null
      * @param customer the customer to be updated
      */
-    public void deleteCustomer(Customer customer);
+    void deleteCustomer(Customer customer);
 
     /**
      * (R)etrieve a specific customer, which has een already created.
      *
      * @throws IllegalArgumentException if the id is null
      * @param id the id of the customer to be retrieved
+     * @return found customer, otherwise null
      */
-    public Customer getCustomerById(Long id);
+    Customer getCustomerById(Long id);
 
 }

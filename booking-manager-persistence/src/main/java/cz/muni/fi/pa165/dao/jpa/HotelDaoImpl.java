@@ -3,9 +3,7 @@ package cz.muni.fi.pa165.dao.jpa;
 import cz.muni.fi.pa165.dao.DAOBase;
 import cz.muni.fi.pa165.dao.HotelDao;
 import cz.muni.fi.pa165.entity.Hotel;
-import cz.muni.fi.pa165.entity.Room;
 import org.springframework.stereotype.Repository;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.persistence.PersistenceException;
 import java.util.Collection;
@@ -66,11 +64,7 @@ public class HotelDaoImpl extends DAOBase implements HotelDao {
 
     @Override
     public Collection<Hotel> findAllHotels() {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public Collection<Room> findFreeRooms() {
-        throw new NotImplementedException();
+        return getEntityManager().createQuery("select h from Hotel h", Hotel.class)
+                                 .getResultList();
     }
 }

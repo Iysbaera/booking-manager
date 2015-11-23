@@ -16,7 +16,7 @@ public interface BookingDao {
      * @throws IllegalArgumentException if the booking is null
      * @param booking the booking to be added
      */
-    public void addBooking(Booking booking);
+    void addBooking(Booking booking);
 
     /**
      * (U)pdates already added (persisted) booking taken as parameter.
@@ -24,7 +24,7 @@ public interface BookingDao {
      * @throws IllegalArgumentException if the booking is null
      * @param booking the booking to be updated
      */
-    public void updateBooking(Booking booking);
+    void updateBooking(Booking booking);
 
     /**
      * (D)elete already added (persisted) booking taken as parameter.
@@ -32,14 +32,14 @@ public interface BookingDao {
      * @throws IllegalArgumentException if the booking is null
      * @param booking the booking to be updated
      */
-    public void deleteBooking(Booking booking);
+    void deleteBooking(Booking booking);
 
     /**
      * (R)etrieve a specific booking, which has een already created.
      *
      * @throws IllegalArgumentException if the id is null
      * @param id the id of the booking to be retrieved
+     * @return found booking, otherwise null
      */
-    public Booking getBookingById(Long id);
-
+    Booking getBookingById(Long id);
 }
