@@ -1,56 +1,43 @@
 package cz.muni.fi.pa165.service;
 
 import cz.muni.fi.pa165.dao.HotelDao;
-import cz.muni.fi.pa165.dto.HotelDto;
 import cz.muni.fi.pa165.entity.Hotel;
-import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
 /**
- *
  * @author Jana Cechackova
  */
 @Service("hotelService")
-public class HotelServiceImpl implements HotelService{
-    
-    HotelDao hotelDao;
+public class HotelServiceImpl implements HotelService {
+
     @Autowired
-    DozerBeanMapper mapper;
+    HotelDao hotelDao;
 
     @Override
-    public void addHotel(HotelDto hotelDto) {
-	
-	Hotel hotel;
-	
-	hotel = mapper.map(hotelDto, Hotel.class);
-//	hotelDto.setId(hotel.getId());   not included because the method is not implemented yet
-	hotelDao.addHotel(hotel);    
+    public void addHotel(Hotel hotel) {
+        hotelDao.addHotel(hotel);
     }
 
     @Override
-    public void deleteHotel(HotelDto hotelDto) {
-	
-	Hotel hotel;
-	
-	hotel = mapper.map(hotelDto, Hotel.class);
-	hotelDao.deleteHotel(hotel);    
+    public void deleteHotel(Hotel hotel) {
+        hotelDao.deleteHotel(hotel);
     }
 
     @Override
-    public void updateHotel(HotelDto hotelDto) {
-	
-	Hotel hotel;
-    
-	hotel = mapper.map(hotelDto, Hotel.class);
-	hotelDao.updateHotel(hotel);
+    public void updateHotel(Hotel hotel) {
+        hotelDao.updateHotel(hotel);
     }
 
     @Override
-    public HotelDto getHotelDtoById(Long id) {
-	
-	//not implemented yet
-	
-	return null;    
-    } 
+    public Hotel getHotelById(Long id) {
+        return hotelDao.getHotelById(id);
+    }
+
+    @Override
+    public Collection<Hotel> getAllHotels() {
+        return hotelDao.findAllHotels();
+    }
 }

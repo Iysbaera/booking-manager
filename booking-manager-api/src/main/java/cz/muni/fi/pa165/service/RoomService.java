@@ -1,16 +1,14 @@
 package cz.muni.fi.pa165.service;
 
-import cz.muni.fi.pa165.dto.RoomDto;
+import cz.muni.fi.pa165.entity.Room;
 
 /**
  *
  * @author Jana Cechackova
  */
 public interface RoomService {
-    
-    public void addRoom(RoomDto roomDto);
-    public void deleteRoom(RoomDto roomDto);
-    public void updateRoom(RoomDto roomDto);
-    public RoomDto getRoomDtoById(Long id);
-    
+    void addRoom(Room room);
+    void deleteRoom(Room room);
+    void updateRoom(Room room);
+    Room getRoomDtoById(Long id);
 }

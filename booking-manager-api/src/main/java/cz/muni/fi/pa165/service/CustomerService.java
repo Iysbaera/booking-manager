@@ -1,15 +1,14 @@
 package cz.muni.fi.pa165.service;
 
-import cz.muni.fi.pa165.dto.CustomerDto;
+import cz.muni.fi.pa165.entity.Customer;
 
 /**
  *
  * @author Jana Cechackova
  */
 public interface CustomerService {
-    
-    public void addCustomer(CustomerDto customerDto);
-    public void deleteCustomer(CustomerDto customerDto);
-    public void updateCustomer(CustomerDto customerDto);
-    public CustomerDto getCustomerDtoById(Long id);
+    void addCustomer(Customer customer);
+    void deleteCustomer(Customer customer);
+    void updateCustomer(Customer customer);
+    Customer getCustomerById(Long id);
 }
