@@ -9,7 +9,8 @@ For more information about project see official [Wiki pages](https://github.com/
 * __ORM framework__ - [Hibernate](http://hibernate.org/)
 * __Testing framework__ - [TestNG](http://testng.org/doc/index.html)
 * __Mocking framework__ - [Mockito](http://mockito.org/)
-* __Build tool__ - [Maven](https://maven.apache.org/)
+* __Building tool__ - [Maven](https://maven.apache.org/)
+* __Java Bean mapper__ - [Dozer](http://dozer.sourceforge.net/)
 
 ## Modules
 Whole project is divided to several maven projects representing specific layers:
@@ -29,7 +30,7 @@ $ mvn test
 ## Installation
 For installation use maven command:
 ```
-mvn clean install
+$ mvn clean install
 ```
 
 ## Collaborators

@@ -30,7 +30,7 @@ import java.util.Date;
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
 
-@ContextConfiguration("classpath:applicationContextTest.xml")
+@ContextConfiguration("classpath:application-context-test.xml")
 public class BookingDaoTest extends AbstractTestNGSpringContextTests{
 
     @Autowired
