@@ -16,7 +16,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- VERSIONS -->
-        <jdk.version>1.7</jdk.version>
+        <jdk.version>1.8</jdk.version>
         <dozer.version>5.5.1</dozer.version>
         <slf4j.version>1.7.12</slf4j.version>
         <spring.version>4.2.2.RELEASE</spring.version>
