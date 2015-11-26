@@ -37,7 +37,7 @@ public class CustomerDto {
     }
 
     public Collection<BookingDto> getBookings() {
-        return Collections.unmodifiableCollection(bookings);
+        return bookings;
     }
 
     public void setBookings(Collection<BookingDto> bookings) {

@@ -18,7 +18,7 @@ public interface HotelFacade {
     /**
      * @return hotel as data access object
      */
-    HotelDto getHotelById();
+    HotelDto getHotelById(Long id);
 
     /**
      * @return Collection

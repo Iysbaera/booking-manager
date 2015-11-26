@@ -28,7 +28,7 @@ public class HotelDto {
     }
 
     public Collection<RoomDto> getRooms() {
-        return Collections.unmodifiableCollection(rooms);
+        return rooms;
     }
 
     public void setRooms(Collection<RoomDto> rooms) {
