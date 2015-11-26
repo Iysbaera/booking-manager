@@ -38,7 +38,7 @@ import static org.mockito.Mockito.when;
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
 
-@ContextConfiguration("classpath:application-context-test.xml.xml")
+@ContextConfiguration("classpath:application-context-persistence-test.xml")
 public class RoomDaoTest extends AbstractTestNGSpringContextTests {
 
     @Autowired

@@ -24,7 +24,7 @@ import java.util.Collection;
  * @author Ivo Hradek
  */
 @Transactional
-@ContextConfiguration("classpath:application-context-test.xml.xml")
+@ContextConfiguration("classpath:application-context-persistence-test.xml")
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 public class HotelDaoTest extends AbstractTestNGSpringContextTests {
 

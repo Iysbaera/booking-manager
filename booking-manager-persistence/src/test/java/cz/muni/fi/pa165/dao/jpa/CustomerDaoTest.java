@@ -30,7 +30,7 @@ import java.util.Collection;
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
 
-@ContextConfiguration("classpath:application-context-test.xml")
+@ContextConfiguration("classpath:application-context-persistence-test.xml")
 public class CustomerDaoTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
