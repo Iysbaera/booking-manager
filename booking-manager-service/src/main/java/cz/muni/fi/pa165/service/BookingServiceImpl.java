@@ -5,6 +5,8 @@ import cz.muni.fi.pa165.entity.Booking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
 /**
  * @author Jana Cechackova
  */
@@ -32,5 +34,10 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Booking getBookingById(Long id) {
         return bookingDao.getBookingById(id);
+    }
+
+    @Override
+    public Collection<Booking> getAllBookings() {
+        return bookingDao.findAllBookings();
     }
 }

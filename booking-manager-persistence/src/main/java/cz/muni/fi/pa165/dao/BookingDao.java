@@ -2,6 +2,8 @@ package cz.muni.fi.pa165.dao;
 
 import cz.muni.fi.pa165.entity.Booking;
 
+import java.util.Collection;
+
 /**
  * Data Access Object for <tt>Booking</tt> entity. It provides basic CRUD operations.
  *
@@ -35,11 +37,19 @@ public interface BookingDao {
     void deleteBooking(Booking booking);
 
     /**
-     * (R)etrieve a specific booking, which has een already created.
+     * (R)etrieve a specific booking, which has been already created.
      *
      * @throws IllegalArgumentException if the id is null
      * @param id the id of the booking to be retrieved
      * @return found booking, otherwise null
      */
     Booking getBookingById(Long id);
+
+    /**
+     * (R)etrieve a all bookings, which have been already created.
+     *
+     * @return Collection of found bookings, if there are no bookings
+     *         empty collection will be returned
+     */
+    Collection<Booking> findAllBookings();
 }

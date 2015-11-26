@@ -11,11 +11,5 @@
     <tx:annotation-driven />
 
     <bean id="mapper" class="org.dozer.DozerBeanMapper" />
-        <!--property name="mappingFiles">
-            <list>
-                <value>dozer-entity-dto-mappings.xml</value>
-            </list>
-        </property>
-    </bean -->
 
 </beans>

@@ -6,6 +6,7 @@ import cz.muni.fi.pa165.entity.Booking;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.PersistenceException;
+import java.util.Collection;
 
 /**
  *
@@ -59,5 +60,10 @@ public class BookingDaoImpl extends DAOBase implements BookingDao {
             throw new IllegalArgumentException("id is null");
         }
         return getEntityManager().find(Booking.class, id);
+    }
+
+    @Override
+    public Collection<Booking> findAllBookings() {
+        return getEntityManager().createQuery("from Booking b").getResultList();
     }
 }

@@ -11,10 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collection;
 
 /**
+ * Implementation of {@link cz.muni.fi.pa165.facade.RoomFacade} interface
+ *
+ * @see cz.muni.fi.pa165.facade.RoomFacade
  * @author Ivo Hradek
  */
-@Service
 @Transactional
+@Service("roomFacade")
 public class RoomFacadeImpl implements RoomFacade {
     @Autowired
     private Mapper mapper;
