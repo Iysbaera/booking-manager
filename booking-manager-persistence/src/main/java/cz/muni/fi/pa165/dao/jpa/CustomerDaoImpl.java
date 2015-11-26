@@ -6,6 +6,7 @@ import cz.muni.fi.pa165.entity.Customer;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.PersistenceException;
+import java.util.Collection;
 
 /**
  *
@@ -59,5 +60,10 @@ public class CustomerDaoImpl extends DAOBase implements CustomerDao {
             throw new IllegalArgumentException("id is null");
         }
         return getEntityManager().find(Customer.class, id);
+    }
+
+    @Override
+    public Collection<Customer> findAllCustomers() {
+        return getEntityManager().createQuery("from Customer").getResultList();
     }
 }

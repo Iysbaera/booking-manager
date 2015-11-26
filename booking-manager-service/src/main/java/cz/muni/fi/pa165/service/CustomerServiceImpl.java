@@ -5,6 +5,9 @@ import cz.muni.fi.pa165.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.net.CookieHandler;
+import java.util.Collection;
+
 /**
  * @author Jana Cechackova
  */
@@ -32,5 +35,10 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer getCustomerById(Long id) {
         return customerDao.getCustomerById(id);
+    }
+
+    @Override
+    public Collection<Customer> getAllCustomers() {
+        return customerDao.findAllCustomers();
     }
 }
