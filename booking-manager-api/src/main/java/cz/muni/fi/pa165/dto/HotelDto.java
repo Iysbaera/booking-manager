@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.dto;
 
 import java.util.Collection;
-import java.util.Collections;
 
 /**
  * @author Ivo Hradek
