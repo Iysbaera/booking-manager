@@ -1,6 +1,6 @@
 package service;
 
-import cz.muni.fi.pa165.entity.Hotel;
+import cz.muni.fi.pa165.dao.RoomDao;
 import cz.muni.fi.pa165.entity.Room;
 import cz.muni.fi.pa165.enumeration.RoomType;
 import cz.muni.fi.pa165.service.RoomService;
@@ -9,7 +9,7 @@ import java.text.ParseException;
 import org.dozer.DozerBeanMapper;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
+import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -29,15 +29,14 @@ public class RoomServiceImplTest extends AbstractTransactionalTestNGSpringContex
     @Autowired
     DozerBeanMapper mapper;
             
-    @Mock private Hotel hotel;
-    @Mock private Hotel hotel2;
+    @Mock
+    RoomDao roomDao;
     
     @Autowired	
     @InjectMocks
     private RoomService roomService;
     
     private Room room;
-    private Room room2;
     
     @BeforeClass
     public void beforeClass() {
@@ -47,13 +46,9 @@ public class RoomServiceImplTest extends AbstractTransactionalTestNGSpringContex
     @BeforeMethod
     public void setUp() throws ParseException{
 	room = new Room();
-	room2 = new Room();
-        room.setNumber(1);
-        room2.setNumber(2);
+        room.setNumber(1);      
         room.setPrice(BigDecimal.ONE);
-        room2.setPrice(BigDecimal.TEN);
-        room.setType(RoomType.SingleRoom);
-        room2.setType(RoomType.DoubleRoom);
+        room.setType(RoomType.SingleRoom);      
     }
     
 
@@ -62,19 +57,10 @@ public class RoomServiceImplTest extends AbstractTransactionalTestNGSpringContex
      */
     @Test
     public void testAddRoom() {
-        hotel = Mockito.mock(Hotel.class);
-        hotel2= Mockito.mock(Hotel.class);
-        room.setHotel(hotel);
-        room2.setHotel(hotel2);
         roomService.addRoom(room);
-        roomService.addRoom(room2);
-        Assert.assertNotNull(room.getId());
-        Assert.assertNotNull(room2.getId());
-        int roomNumber = roomService.getRoomDtoById(room.getId()).getNumber();
-        int roomNumber2 = roomService.getRoomDtoById(room2.getId()).getNumber();
-        Assert.assertEquals(roomNumber,room.getNumber());
-        Assert.assertEquals(roomNumber2,room2.getNumber());
-        
+	
+	when(roomDao.getRoomById(room.getId())).thenReturn(room);
+	Assert.assertNotNull(roomService.getRoomDtoById(room.getId()));
     }
 
     /**
@@ -82,23 +68,14 @@ public class RoomServiceImplTest extends AbstractTransactionalTestNGSpringContex
      */
     @Test
     public void testDeleteRoom() {
-        hotel = Mockito.mock(Hotel.class);
-        hotel2 = Mockito.mock(Hotel.class);
-        room.setHotel(hotel);
-        room2.setHotel(hotel2);
-        roomService.addRoom(room);
-        roomService.addRoom(room2);
-        Assert.assertNotNull(room.getId(),"Room not added.");
-        Assert.assertNotNull(room2.getId(),"Room2 not added.");
+	roomService.addRoom(room);
+	
+	when(roomDao.getRoomById(room.getId())).thenReturn(room);
+        Assert.assertNotNull(roomService.getRoomDtoById(room.getId()));
+
         roomService.deleteRoom(room);
-        roomService.deleteRoom(room2);
+	when(roomDao.getRoomById(room.getId())).thenReturn(null);
         Assert.assertNull(roomService.getRoomDtoById(room.getId()));
-        Assert.assertNull(roomService.getRoomDtoById(room2.getId()));
-        
-        Hotel h = room.getHotel();
-        Assert.assertNull(h.getId(), "Hotel of room wasn't removed");
-        Hotel h2 = room2.getHotel();
-        Assert.assertNull(h2.getId(), "Hotel of room wasn't removed");
     }
 
     /**
@@ -106,20 +83,16 @@ public class RoomServiceImplTest extends AbstractTransactionalTestNGSpringContex
      */
     @Test
     public void testUpdateRoom() {
-        hotel = Mockito.mock(Hotel.class);
-        hotel2 = Mockito.mock(Hotel.class);
-        room.setHotel(hotel);
-        roomService.addRoom(room);
-        roomService.addRoom(room2);
-        room.setNumber(3);
-        room2.setNumber(4);
-        room2.setHotel(hotel2);
-        roomService.updateRoom(room);
-        roomService.updateRoom(room2);
-        Assert.assertEquals(room.getNumber(), roomService.getRoomDtoById(room.getId()).getNumber());
-        Assert.assertEquals(room2.getNumber(), roomService.getRoomDtoById(room2.getId()).getNumber());
-        Assert.assertNotNull(hotel2.getId(),"hotel2 not added to room2");
-        
+	roomService.addRoom(room);
+	room.setNumber(3);
+        room.setPrice(BigDecimal.ZERO);
+        room.setType(RoomType.DoubleRoom);
+	roomService.updateRoom(room);
+	
+	when(roomDao.getRoomById(room.getId())).thenReturn(room);
+	Assert.assertEquals(roomService.getRoomDtoById(room.getId()).getNumber(), room.getNumber());
+        Assert.assertEquals(roomService.getRoomDtoById(room.getId()).getType(), room.getType());
+        Assert.assertEquals(roomService.getRoomDtoById(room.getId()).getPrice(), room.getPrice());
     }
 
     /**
@@ -127,13 +100,12 @@ public class RoomServiceImplTest extends AbstractTransactionalTestNGSpringContex
      */
     @Test
     public void testGetRoomDtoById() {
-        hotel = Mockito.mock(Hotel.class);
-        room.setHotel(hotel);
         roomService.addRoom(room);
-        Assert.assertEquals(room.getNumber(), roomService.getRoomDtoById(room.getId()).getNumber());
-        Assert.assertNotNull(room.getId(),"Room was not added.");
-        Assert.assertNotNull(roomService.getRoomDtoById(room.getId())
-                ,"Room Service does not retrieve room by id.");
+	
+	when(roomDao.getRoomById(room.getId())).thenReturn(room);
+        Room output = roomService.getRoomDtoById(room.getId());
+	
+        Assert.assertEquals(output, room);      
     }
     
 }

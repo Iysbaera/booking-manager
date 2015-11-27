@@ -1,5 +1,6 @@
 package service;
 
+import cz.muni.fi.pa165.dao.HotelDao;
 import cz.muni.fi.pa165.entity.Booking;
 import cz.muni.fi.pa165.entity.Hotel;
 import cz.muni.fi.pa165.entity.Room;
@@ -7,7 +8,7 @@ import cz.muni.fi.pa165.service.HotelService;
 import org.dozer.DozerBeanMapper;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
+import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -26,17 +27,15 @@ public class HotelServiceImplTest extends AbstractTransactionalTestNGSpringConte
     
     @Autowired
     DozerBeanMapper mapper;
-
-    @Mock private Room room;
-    @Mock private Room room2;
-    @Mock private Booking booking;
+    
+    @Mock
+    HotelDao hotelDao;
     
     @Autowired	
     @InjectMocks
     private HotelService hotelService;
     
     private Hotel hotel;
-    private Hotel hotel2;
     
     @BeforeClass
     public void beforeClass() {
@@ -46,9 +45,7 @@ public class HotelServiceImplTest extends AbstractTransactionalTestNGSpringConte
     @BeforeMethod
     public void setUp() {
         hotel = new Hotel();
-        hotel2 = new Hotel();
         hotel.setName("hotel");
-        hotel2.setName("hotel2");
     }
     
     /**
@@ -56,33 +53,10 @@ public class HotelServiceImplTest extends AbstractTransactionalTestNGSpringConte
      */
     @Test
     public void testAddHotel() {
-        room = Mockito.mock(Room.class);
-        room2 = Mockito.mock(Room.class);
-        hotel.addRoom(room);
-        hotel.addRoom(room2);
-        hotelService.addHotel(hotel);
-        hotelService.addHotel(hotel2);        
-        Assert.assertNotNull(hotel.getId());
-        Assert.assertNotNull(hotel2.getId());
-        String hotelName = hotelService.getHotelById(hotel.getId()).getName();
-        String hotelName2 = hotelService.getHotelById(hotel2.getId()).getName();
-        Assert.assertEquals(hotelName,hotel.getName());
-        Assert.assertEquals(hotelName2,hotel2.getName());
-        
-        int numberOfRoomsHotel1 =
-                hotelService.getHotelById(hotel.getId())
-                        .getRooms()
-                        .size();
-        Assert.assertSame(numberOfRoomsHotel1, hotel.getRooms().size(), "Number of hotel1 rooms are not same");
-        int numberOfRoomsHotel2 =
-                hotelService.getHotelById(hotel2.getId())
-                        .getRooms()
-                        .size();
-        Assert.assertSame(numberOfRoomsHotel2, hotel2.getRooms().size(), "Number of hotel2 rooms are not same");
-        
-        for (Room r : hotel.getRooms()) {
-            Assert.assertNotNull(r.getId(), "Rooms weren't added to hotel1");
-        }
+	hotelService.addHotel(hotel);
+	
+	when(hotelDao.getHotelById(hotel.getId())).thenReturn(hotel);
+	Assert.assertNotNull(hotelService.getHotelById(hotel.getId()));
     }
 
     /**
@@ -90,18 +64,14 @@ public class HotelServiceImplTest extends AbstractTransactionalTestNGSpringConte
      */
     @Test
     public void testDeleteHotel() {
-        room = Mockito.mock(Room.class);
-        room2 = Mockito.mock(Room.class);
-        hotel.addRoom(room);
-        hotel.addRoom(room2);
         hotelService.addHotel(hotel);
-        Assert.assertNotNull(hotel.getId(),"Hotel not added.");
+	
+	when(hotelDao.getHotelById(hotel.getId())).thenReturn(hotel);
+        Assert.assertNotNull(hotelService.getHotelById(hotel.getId()));
+
         hotelService.deleteHotel(hotel);
+	when(hotelDao.getHotelById(hotel.getId())).thenReturn(null);
         Assert.assertNull(hotelService.getHotelById(hotel.getId()));
-        
-        for (Room r : hotel.getRooms()) {
-            Assert.assertNull(r.getId(), "Rooms of hotel weren't delete");
-        }
     }
 
     /**
@@ -109,33 +79,12 @@ public class HotelServiceImplTest extends AbstractTransactionalTestNGSpringConte
      */
     @Test
     public void testUpdateHotel() {
-        room = Mockito.mock(Room.class);
-        room2 = Mockito.mock(Room.class);
-        hotel.addRoom(room);
         hotelService.addHotel(hotel);
-        hotel.setName("motel");
-        hotel.addRoom(room);
-        hotelService.updateHotel(hotel);
-        Assert.assertEquals(hotel.getName(), hotelService.getHotelById(hotel.getId()).getName());
-        Assert.assertNotNull(room.getId(),"room not added");
-        
-        int numberOfRoomsHotel =
-                hotelService.getHotelById(hotel.getId())
-                        .getRooms()
-                        .size();
-        Assert.assertSame(numberOfRoomsHotel, hotel.getRooms().size(), "Number of hotel rooms wasnt updated");
-        
-        hotel.addRoom(room2);
-        hotelService.updateHotel(hotel);
-        
-        Assert.assertEquals(hotel.getName(), hotelService.getHotelById(hotel.getId()).getName());
-        
-        int numberOfRoomsHotel2 =
-                hotelService.getHotelById(hotel.getId())
-                        .getRooms()
-                        .size();
-        Assert.assertSame(numberOfRoomsHotel2, hotel.getRooms().size(), "Number of hotel rooms wasnt updated");
-        
+	hotel.setName("New name");
+	hotelService.updateHotel(hotel);
+	
+	when(hotelDao.getHotelById(hotel.getId())).thenReturn(hotel);
+	Assert.assertEquals(hotelService.getHotelById(hotel.getId()).getName(), hotel.getName());
     }
 
     /**
@@ -143,17 +92,11 @@ public class HotelServiceImplTest extends AbstractTransactionalTestNGSpringConte
      */
     @Test
     public void testGetHotelById() {
-        room = Mockito.mock(Room.class);
-        hotel.addRoom(room);
         hotelService.addHotel(hotel);
-        Assert.assertEquals(hotel.getName(), hotelService.getHotelById(hotel.getId()).getName());
-        Assert.assertNotNull(hotel.getId(),"Hotel was not added.");
-        Assert.assertNotNull(hotelService.getHotelById(hotel.getId())
-                ,"Hotel Service does not retrieve hotel by id.");
-    }
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testAddNullHotel() {
-        hotelService.addHotel(null);
-        Assert.fail("Adding null hotel");
+	
+	when(hotelDao.getHotelById(hotel.getId())).thenReturn(hotel);
+        Hotel output = hotelService.getHotelById(hotel.getId());
+	
+        Assert.assertEquals(output, hotel);
     }
 }
