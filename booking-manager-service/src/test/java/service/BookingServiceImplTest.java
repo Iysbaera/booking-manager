@@ -95,7 +95,6 @@ public class BookingServiceImplTest extends AbstractTransactionalTestNGSpringCon
         Assert.assertEquals(output.getCheckIn(), booking.getCheckIn());
     }
 
-    @Test
     public static Date addDays(Date date, int days){
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);

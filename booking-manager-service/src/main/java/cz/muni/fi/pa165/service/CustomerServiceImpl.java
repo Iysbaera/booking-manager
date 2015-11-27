@@ -50,8 +50,12 @@ public class CustomerServiceImpl implements CustomerService {
         Collection<Customer> result = new ArrayList<Customer>();
         for (Customer c: customerDao.findAllCustomers()) {
             for (Booking b : c.getBookings()){
-                if ((b.getCheckIn().compareTo(date) < 1) || (date.compareTo(b.getCheckOut()) < 1)) {
-                    if (b.getRoom().getHotel().equals(hotel)) {
+                
+		if ((date.after(b.getCheckIn()) && date.before(b.getCheckOut())) || 
+			(date.equals(b.getCheckIn())) || 
+			(date.equals(b.getCheckOut()))) {
+		    
+		    if (b.getRoom().getHotel().equals(hotel)) {
                         result.add(c);
                     }
                 }

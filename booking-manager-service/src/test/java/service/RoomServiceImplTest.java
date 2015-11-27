@@ -37,6 +37,7 @@ public class RoomServiceImplTest extends AbstractTransactionalTestNGSpringContex
     private RoomService roomService;
     
     private Room room;
+    private Room room2;
     
     @BeforeClass
     public void beforeClass() {
@@ -48,7 +49,12 @@ public class RoomServiceImplTest extends AbstractTransactionalTestNGSpringContex
 	room = new Room();
         room.setNumber(1);      
         room.setPrice(BigDecimal.ONE);
-        room.setType(RoomType.SingleRoom);      
+        room.setType(RoomType.SingleRoom); 
+        
+        room2 = new Room();
+        room2.setNumber(2);
+        room2.setPrice(BigDecimal.ZERO);
+        room2.setType(RoomType.DoubleRoom);
     }
     
 
@@ -108,4 +114,23 @@ public class RoomServiceImplTest extends AbstractTransactionalTestNGSpringContex
         Assert.assertEquals(output, room);      
     }
     
+    /*
+    @Test
+    public void testChangeAllPrices() {
+        roomService.addRoom(room);
+        roomService.addRoom(room2);        
+        
+        BigDecimal price = new BigDecimal("2.5");
+        BigDecimal room1Price = room.getPrice().add(price);
+        BigDecimal room2Price = room2.getPrice().add(price);       
+        
+        roomService.changeAllPrices(price);        
+        
+        Assert.assertEquals(room1Price, roomService.getRoomDtoById(
+                room.getId()).getPrice());
+        Assert.assertEquals(room2Price, roomService.getRoomDtoById(
+                room2.getId()).getPrice());
+        
+    }
+    */
 }

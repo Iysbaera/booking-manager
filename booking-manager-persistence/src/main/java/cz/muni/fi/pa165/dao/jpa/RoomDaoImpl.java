@@ -97,7 +97,7 @@ public class RoomDaoImpl extends DAOBase implements RoomDao {
 
     @Override
     public Collection<Room> findAllRooms() {
-        return getEntityManager().createQuery("from Room r", Room.class)
+        return getEntityManager().createQuery("select r from Room r", Room.class)
                 .getResultList();
     }
 }

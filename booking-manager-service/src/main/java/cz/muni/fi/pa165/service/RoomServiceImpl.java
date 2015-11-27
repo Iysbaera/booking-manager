@@ -43,8 +43,10 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void changeAllPrices(BigDecimal price) {
+        System.out.println(roomDao.findAllRooms());
         for (Room r : roomDao.findAllRooms()) {
-            r.setPrice(r.getPrice().add(price));
+            BigDecimal newPrice = r.getPrice().add(price);
+            r.setPrice(newPrice);
         }
     }
 }
