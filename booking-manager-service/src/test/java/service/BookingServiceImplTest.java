@@ -9,11 +9,14 @@ import java.util.Calendar;
 import java.util.Date;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
@@ -22,10 +25,8 @@ import org.testng.annotations.Test;
 /**
  * @author Jana Cechackova
  */
-@Transactional
 @ContextConfiguration("classpath:application-context-service-test.xml")
-@TestExecutionListeners(TransactionalTestExecutionListener.class)
-public class BookingServiceImplTest {
+public class BookingServiceImplTest extends AbstractTransactionalTestNGSpringContextTests{
     
     @Autowired
     DozerBeanMapper mapper;
@@ -38,6 +39,7 @@ public class BookingServiceImplTest {
     Date d;
 
     @Autowired
+    @InjectMocks
     BookingService bookingService;
     
     @BeforeMethod
@@ -52,8 +54,10 @@ public class BookingServiceImplTest {
     
     @Test
     public void testAddBooking(){
+	when(bookingDao.getBookingById(booking.getId())).thenReturn(booking);
+	
 	bookingService.addBooking(booking);
-	Assert.assertEquals(bookingDao.getBookingById(booking.getId()).getCheckIn(), d);
+	Assert.assertEquals(bookingService.getBookingById(booking.getId()).getCheckIn(), d);
     }
     
     @Test
@@ -62,23 +66,32 @@ public class BookingServiceImplTest {
 	
 	Date newDate = addDays(d,1);
 	booking.setCheckIn(newDate);
-	bookingDao.updateBooking(booking);
-	Assert.assertEquals(bookingDao.getBookingById(booking.getId()).getCheckIn(), newDate);
+	bookingService.updateBooking(booking);
+	
+	when(bookingDao.getBookingById(booking.getId())).thenReturn(booking);
+	Assert.assertEquals(bookingService.getBookingById(booking.getId()).getCheckIn(), newDate);
     }
     
     @Test
     public void testDeleteBooking(){
 	bookingDao.addBooking(booking);
-        Assert.assertNotNull(bookingDao.getBookingById(booking.getId()));
+	
+	when(bookingDao.getBookingById(booking.getId())).thenReturn(booking);
+        Assert.assertNotNull(bookingService.getBookingById(booking.getId()));
 
         bookingDao.deleteBooking(booking);
-        Assert.assertNull(bookingDao.getBookingById(booking.getId()));
+	
+	when(bookingDao.getBookingById(booking.getId())).thenReturn(null);
+        Assert.assertNull(bookingService.getBookingById(booking.getId()));
     }
     
     @Test
     public void testGetBookingById(){
-        bookingDao.addBooking(booking);
-        Booking output = bookingDao.getBookingById(booking.getId());
+        bookingService.addBooking(booking);
+	
+	when(bookingDao.getBookingById(booking.getId())).thenReturn(booking);
+	Booking output = bookingService.getBookingById(booking.getId());
+		
         Assert.assertEquals(output.getCheckIn(), booking.getCheckIn());
     }
 

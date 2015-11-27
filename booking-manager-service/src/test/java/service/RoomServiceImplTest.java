@@ -1,38 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package service;
 
-import cz.muni.fi.pa165.dto.HotelDto;
-import cz.muni.fi.pa165.entity.Booking;
-import cz.muni.fi.pa165.entity.Customer;
 import cz.muni.fi.pa165.entity.Hotel;
 
 import org.testng.Assert;
 import cz.muni.fi.pa165.entity.Room;
 import cz.muni.fi.pa165.enumeration.RoomType;
 import cz.muni.fi.pa165.service.RoomService;
-import cz.muni.fi.pa165.service.RoomServiceImpl;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import org.dozer.DozerBeanMapper;
-import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.annotations.BeforeMethod;
 
 /**
  *
  * @author expres
  */
-public class RoomServiceImplTest {
+@ContextConfiguration("classpath:application-context-service-test.xml")
+public class RoomServiceImplTest extends AbstractTransactionalTestNGSpringContextTests{
     
     public RoomServiceImplTest() {
     }

@@ -37,7 +37,4 @@
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
     
-    <bean id="customerService" class="cz.muni.fi.pa165.service.CustomerServiceImpl" />
-    
-    <bean id="bookingService" class="cz.muni.fi.pa165.service.BookingServiceImpl" />
 </beans>
