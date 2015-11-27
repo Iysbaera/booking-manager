@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
@@ -24,10 +25,8 @@ import org.testng.annotations.Test;
 /**
  * @author Jana Cechackova
  */
-@Transactional
 @ContextConfiguration("classpath:application-context-service-test.xml")
-@TestExecutionListeners(TransactionalTestExecutionListener.class)
-public class BookingServiceImplTest {
+public class BookingServiceImplTest extends AbstractTransactionalTestNGSpringContextTests{
     
     @Autowired
     DozerBeanMapper mapper;
@@ -67,9 +66,9 @@ public class BookingServiceImplTest {
 	
 	Date newDate = addDays(d,1);
 	booking.setCheckIn(newDate);
-	bookingDao.updateBooking(booking);
+	bookingService.updateBooking(booking);
 	
-	when(bookingDao.getBookingById(booking.getId()).getCheckIn()).thenReturn(newDate);
+	when(bookingDao.getBookingById(booking.getId())).thenReturn(booking);
 	Assert.assertEquals(bookingService.getBookingById(booking.getId()).getCheckIn(), newDate);
     }
     
@@ -89,9 +88,10 @@ public class BookingServiceImplTest {
     @Test
     public void testGetBookingById(){
         bookingService.addBooking(booking);
-        Booking output = bookingService.getBookingById(booking.getId());
 	
 	when(bookingDao.getBookingById(booking.getId())).thenReturn(booking);
+	Booking output = bookingService.getBookingById(booking.getId());
+		
         Assert.assertEquals(output.getCheckIn(), booking.getCheckIn());
     }
 
