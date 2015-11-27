@@ -21,9 +21,8 @@ import org.testng.annotations.Test;
  *
  * @author expres
  */
-@ContextConfiguration("classpath:application-context-service-test.xml")
-public class HotelServiceImplTest extends AbstractTransactionalTestNGSpringContextTests{
-    
+@ContextConfiguration(locations = {"classpath:application-context-service-test.xml"})
+public class HotelServiceImplTest extends AbstractTransactionalTestNGSpringContextTests{    
     
     @Autowired
     DozerBeanMapper mapper;
@@ -62,7 +61,7 @@ public class HotelServiceImplTest extends AbstractTransactionalTestNGSpringConte
         hotel.addRoom(room);
         hotel.addRoom(room2);
         hotelService.addHotel(hotel);
-        hotelService.addHotel(hotel);        
+        hotelService.addHotel(hotel2);        
         Assert.assertNotNull(hotel.getId());
         Assert.assertNotNull(hotel2.getId());
         String hotelName = hotelService.getHotelById(hotel.getId()).getName();
@@ -76,10 +75,10 @@ public class HotelServiceImplTest extends AbstractTransactionalTestNGSpringConte
                         .size();
         Assert.assertSame(numberOfRoomsHotel1, hotel.getRooms().size(), "Number of hotel1 rooms are not same");
         int numberOfRoomsHotel2 =
-                hotelService.getHotelById(hotel.getId())
+                hotelService.getHotelById(hotel2.getId())
                         .getRooms()
                         .size();
-        Assert.assertSame(numberOfRoomsHotel2, hotel.getRooms().size(), "Number of hotel2 rooms are not same");
+        Assert.assertSame(numberOfRoomsHotel2, hotel2.getRooms().size(), "Number of hotel2 rooms are not same");
         
         for (Room r : hotel.getRooms()) {
             Assert.assertNotNull(r.getId(), "Rooms weren't added to hotel1");

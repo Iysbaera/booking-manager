@@ -1,15 +1,12 @@
 package service;
 
 import cz.muni.fi.pa165.entity.Hotel;
-
-import org.testng.Assert;
 import cz.muni.fi.pa165.entity.Room;
 import cz.muni.fi.pa165.enumeration.RoomType;
 import cz.muni.fi.pa165.service.RoomService;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import org.dozer.DozerBeanMapper;
-import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -17,17 +14,17 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 /**
  *
  * @author expres
  */
-@ContextConfiguration("classpath:application-context-service-test.xml")
-public class RoomServiceImplTest extends AbstractTransactionalTestNGSpringContextTests{
-    
-    public RoomServiceImplTest() {
-    }
+@ContextConfiguration(locations = {"classpath:application-context-service-test.xml"})
+public class RoomServiceImplTest extends AbstractTransactionalTestNGSpringContextTests{    
     
     @Autowired
     DozerBeanMapper mapper;
@@ -42,9 +39,13 @@ public class RoomServiceImplTest extends AbstractTransactionalTestNGSpringContex
     private Room room;
     private Room room2;
     
+    @BeforeClass
+    public void beforeClass() {
+        MockitoAnnotations.initMocks(this);
+    }
+    
     @BeforeMethod
     public void setUp() throws ParseException{
-        MockitoAnnotations.initMocks(this);
 	room = new Room();
 	room2 = new Room();
         room.setNumber(1);
