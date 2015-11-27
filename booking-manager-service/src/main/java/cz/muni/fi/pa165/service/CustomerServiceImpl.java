@@ -1,12 +1,15 @@
 package cz.muni.fi.pa165.service;
 
 import cz.muni.fi.pa165.dao.CustomerDao;
+import cz.muni.fi.pa165.entity.Booking;
 import cz.muni.fi.pa165.entity.Customer;
+import cz.muni.fi.pa165.entity.Hotel;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.net.CookieHandler;
-import java.util.Collection;
 
 /**
  * @author Jana Cechackova
@@ -40,5 +43,21 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Collection<Customer> getAllCustomers() {
         return customerDao.findAllCustomers();
+    }
+
+    @Override
+    public Collection<Customer> getAllBookedCustomers(Date date, Hotel hotel) {
+        Collection<Customer> result = new ArrayList<Customer>();
+        for (Customer c: customerDao.findAllCustomers()) {
+            for (Booking b : c.getBookings()){
+                if ((b.getCheckIn().compareTo(date) < 1) || (date.compareTo(b.getCheckOut()) < 1)) {
+                    if (b.getRoom().getHotel().equals(hotel)) {
+                        result.add(c);
+                    }
+                }
+            }
+        }                             
+               
+        return result;         
     }
 }
