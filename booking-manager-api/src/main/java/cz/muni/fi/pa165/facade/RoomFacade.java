@@ -9,6 +9,5 @@ import java.util.Collection;
  */
 public interface RoomFacade {
     Collection<RoomDto> getAllRooms();
-    Collection<RoomDto> getAllHotelRooms(Hotel hotel);
     RoomDto getRoomById(Long id);
 }

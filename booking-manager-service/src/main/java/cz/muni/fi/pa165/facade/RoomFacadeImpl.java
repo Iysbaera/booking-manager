@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Implementation of {@link cz.muni.fi.pa165.facade.RoomFacade} interface
@@ -31,12 +33,9 @@ public class RoomFacadeImpl implements RoomFacade {
     }
 
     @Override
-    public Collection<RoomDto> getAllHotelRooms(Hotel hotel) {
-        return null;
-    }
-
-    @Override
     public Collection<RoomDto> getAllRooms() {
-        return null;
+        return (Collection) ((List) roomService.getAllRooms()).stream()
+                .map(b -> mapper.map(b, RoomDto.class))
+                .collect(Collectors.toList());
     }
 }

@@ -94,4 +94,10 @@ public class RoomDaoImpl extends DAOBase implements RoomDao {
                 .setParameter("hotelId", hotel.getId());
         return Collections.unmodifiableCollection(query.getResultList());
     }
+
+    @Override
+    public Collection<Room> findAllRooms() {
+        return getEntityManager().createQuery("from Room r", Room.class)
+                .getResultList();
+    }
 }

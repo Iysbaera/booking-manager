@@ -58,4 +58,12 @@ public interface RoomDao {
      *         if there are no available rooms
      */
     Collection<Room> findFreeRooms(Hotel hotel, Date fromDate, Date uptoDate);
+    
+    /**
+     * (R)etrieve a all rooms, which have been already created.
+     *
+     * @return Collection of found rooms, if there are no rooms
+     *         empty collection will be returned
+     */
+    Collection<Room> findAllRooms();   
 }

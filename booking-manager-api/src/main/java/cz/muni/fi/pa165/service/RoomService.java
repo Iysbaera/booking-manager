@@ -2,6 +2,8 @@ package cz.muni.fi.pa165.service;
 
 import cz.muni.fi.pa165.entity.Room;
 
+import java.util.Collection;
+
 /**
  *
  * @author Jana Cechackova
@@ -11,4 +13,5 @@ public interface RoomService {
     void deleteRoom(Room room);
     void updateRoom(Room room);
     Room getRoomDtoById(Long id);
+    Collection<Room> getAllRooms();
 }
