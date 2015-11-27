@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.util.Date;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ public class CustomerServiceImplTest {
     Date d;
 
     @Autowired
+    @InjectMocks
     CustomerService customerService;
     
     @BeforeMethod

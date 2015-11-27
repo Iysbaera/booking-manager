@@ -16,12 +16,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -31,7 +33,7 @@ import org.testng.annotations.Test;
  * @author expres
  */
 @Transactional
-@ContextConfiguration("classpath:application-context-test.xml")
+@ContextConfiguration("classpath:application-context-service-test.xml")
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 public class HotelServiceImplTest extends AbstractTransactionalTestNGSpringContextTests{
     
@@ -39,8 +41,8 @@ public class HotelServiceImplTest extends AbstractTransactionalTestNGSpringConte
     @Autowired
     DozerBeanMapper mapper;
         
-    @Autowired
-    HotelDto hotelDto;
+//    @Autowired
+//    HotelDto hotelDto;
     
     @Mock private Room room;
     @Mock private Room room2;
@@ -53,9 +55,13 @@ public class HotelServiceImplTest extends AbstractTransactionalTestNGSpringConte
     private Hotel hotel;
     private Hotel hotel2;
     
+    @BeforeClass
+    public void beforeClass() {
+        MockitoAnnotations.initMocks(this);
+    }
+    
     @BeforeMethod
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
         hotel = new Hotel();
         hotel2 = new Hotel();
         hotel.setName("hotel");
