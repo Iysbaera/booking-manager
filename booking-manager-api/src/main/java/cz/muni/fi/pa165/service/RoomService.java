@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.service;
 
 import cz.muni.fi.pa165.entity.Room;
-
+import java.math.BigDecimal;
 import java.util.Collection;
 
 /**
@@ -14,4 +14,5 @@ public interface RoomService {
     void updateRoom(Room room);
     Room getRoomDtoById(Long id);
     Collection<Room> getAllRooms();
+    void changeAllPrices(BigDecimal price);
 }
