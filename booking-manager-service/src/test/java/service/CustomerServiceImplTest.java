@@ -1,7 +1,8 @@
-package cz.muni.fi.pa165.service;
+package service;
 
 import cz.muni.fi.pa165.dao.CustomerDao;
 import cz.muni.fi.pa165.entity.Customer;
+import cz.muni.fi.pa165.service.CustomerService;
 import java.text.ParseException;
 import java.util.Date;
 import org.dozer.DozerBeanMapper;
@@ -21,7 +22,7 @@ import org.testng.annotations.Test;
  * @author Jana Cechackova
  */
 @Transactional
-@ContextConfiguration(locations = {"classpath:/application-context-service-test.xml"})
+@ContextConfiguration(locations = {"classpath:application-context-service-test.xml"})
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 public class CustomerServiceImplTest {
     
@@ -41,7 +42,6 @@ public class CustomerServiceImplTest {
     @BeforeMethod
     public void setUp() throws ParseException{
         MockitoAnnotations.initMocks(this);
-	ReflectionTestUtils.setField(customerService, "customerDao", customerDao);
 	c1 = new Customer();
         c1.setForename("Customer 1");
     }
