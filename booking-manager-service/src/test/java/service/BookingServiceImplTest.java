@@ -1,7 +1,8 @@
-package cz.muni.fi.pa165.service;
+package service;
 
 import cz.muni.fi.pa165.dao.BookingDao;
 import cz.muni.fi.pa165.entity.Booking;
+import cz.muni.fi.pa165.service.BookingService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -23,7 +23,7 @@ import org.testng.annotations.Test;
  * @author Jana Cechackova
  */
 @Transactional
-@ContextConfiguration(locations = {"classpath:/application-context-service-test.xml"})
+@ContextConfiguration("classpath:application-context-service-test.xml")
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 public class BookingServiceImplTest {
     
@@ -43,7 +43,6 @@ public class BookingServiceImplTest {
     @BeforeMethod
     public void setUp() throws ParseException{
         MockitoAnnotations.initMocks(this);
-        ReflectionTestUtils.setField(bookingService, "bookingDao", bookingDao);
 	booking = new Booking();
 	String sourceDate = "2012-02-29";
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
