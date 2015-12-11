@@ -1,11 +1,16 @@
 package cz.muni.fi.pa165.dto;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
+ * Data transfer object for creating a <i>hotel</i> item.
+ *
+ * @author Ivo Hradek
  */
 public class HotelCreateDto {
     @NotNull
+    @Size(min = 3, max = 50)
     private String name;
 
     public String getName() {

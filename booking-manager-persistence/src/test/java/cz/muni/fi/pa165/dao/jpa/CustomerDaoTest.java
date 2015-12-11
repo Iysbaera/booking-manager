@@ -13,25 +13,21 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import javax.persistence.PersistenceException;
+import javax.validation.ConstraintViolationException;
 import java.util.Collection;
+import java.util.List;
 
 /**
- *
  * @author Juraj Bielik
  */
-@TestExecutionListeners(TransactionalTestExecutionListener.class)
-@Transactional
-
 @ContextConfiguration("classpath:application-context-persistence-test.xml")
-public class CustomerDaoTest extends AbstractTestNGSpringContextTests {
+public class CustomerDaoTest extends AbstractTransactionalTestNGSpringContextTests {
 
     @Autowired
     private CustomerDao customerDao;
@@ -39,17 +35,22 @@ public class CustomerDaoTest extends AbstractTestNGSpringContextTests {
     private Customer c1;
     private Customer c2;
 
-    @Mock private Booking b1;
-    @Mock private Booking b2;
-    @Mock private Booking b3;
+    @Mock
+    private Booking b1;
+    @Mock
+    private Booking b2;
+    @Mock
+    private Booking b3;
 
     @BeforeMethod
     public void setUp() {
         c1 = new Customer();
         c1.setForename("Customer 1");
+        c1.setSurname("Customer 1 surname");
 
         c2 = new Customer();
         c2.setForename("Customer 2");
+        c2.setSurname("Customer 2 surname");
     }
 
     /**
@@ -179,4 +180,17 @@ public class CustomerDaoTest extends AbstractTestNGSpringContextTests {
                 "Customer 1 doesn't have the same bookings");
     }
 
+    /**
+     * Test of findAllCustomers method, of class CustomerDaoImpl.
+     */
+    @Test
+    public void testFindAllCustomers() {
+        customerDao.addCustomer(c1);
+        customerDao.addCustomer(c2);
+
+        List<Customer> customerList = (List) customerDao.findAllCustomers();
+        Assert.assertTrue(customerList.size() == 2, "Customer collection's size");
+        Assert.assertTrue(customerList.contains(c1), "Doesn't contain same customer");
+        Assert.assertTrue(customerList.contains(c2), "Doesn't contain same customer");
+    }
 }

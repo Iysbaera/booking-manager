@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.facade;
 
 
-import cz.muni.fi.pa165.dto.BookingDto;
 import cz.muni.fi.pa165.dto.CustomerDto;
 import cz.muni.fi.pa165.service.CustomerService;
 import org.dozer.Mapper;
@@ -16,8 +15,8 @@ import java.util.stream.Collectors;
 /**
  * Implementation of {@link cz.muni.fi.pa165.facade.CustomerFacade} interface
  *
- * @see cz.muni.fi.pa165.facade.CustomerFacade
  * @author Ivo Hradek
+ * @see cz.muni.fi.pa165.facade.CustomerFacade
  */
 @Transactional
 @Service("customerFacade")
@@ -38,5 +37,10 @@ public class CustomerFacadeImpl implements CustomerFacade {
     @Override
     public CustomerDto getCustomerById(Long id) {
         return mapper.map(customerService.getCustomerById(id), CustomerDto.class);
+    }
+
+    @Override
+    public void deleteCustomer(Long id) {
+        customerService.deleteCustomer(customerService.getCustomerById(id));
     }
 }

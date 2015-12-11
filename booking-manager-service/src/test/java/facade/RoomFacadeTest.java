@@ -12,13 +12,8 @@ import cz.muni.fi.pa165.entity.Room;
 import cz.muni.fi.pa165.enumeration.RoomType;
 import cz.muni.fi.pa165.facade.RoomFacade;
 import cz.muni.fi.pa165.service.RoomService;
-import java.math.BigDecimal;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collection;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -27,6 +22,13 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import static org.mockito.Mockito.when;
 
 /**
  *
@@ -43,15 +45,15 @@ public class RoomFacadeTest  extends AbstractTransactionalTestNGSpringContextTes
 
     @Autowired
     private RoomFacade roomFacade;
-    
+
     private Room r1;
     private Room r2;
-    
+
     @BeforeClass
     public void beforeClass() {
         MockitoAnnotations.initMocks(this);
     }
-    
+
     @BeforeMethod
     public void beforeMethod() throws ParseException{
         r1 = new Room();
@@ -63,7 +65,7 @@ public class RoomFacadeTest  extends AbstractTransactionalTestNGSpringContextTes
         r1.setType(RoomType.SingleRoom);
         r2.setType(RoomType.DoubleRoom);
     }
-    
+
     @Test
     public void testGetRoomById() {
         /* Prepare test */

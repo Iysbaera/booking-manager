@@ -8,7 +8,6 @@ import javax.persistence.PersistenceContext;
 /**
  * @author Jana Cechackova
  */
-
 public class DAOBase {
 
     private EntityManager entityManager;

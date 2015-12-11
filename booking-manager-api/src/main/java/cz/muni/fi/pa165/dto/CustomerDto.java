@@ -1,9 +1,10 @@
 package cz.muni.fi.pa165.dto;
 
 import java.util.Collection;
-import java.util.Collections;
 
 /**
+ * Data transfer object for <i>customer</i> item.
+ *
  * @author Ivo Hradek
  */
 public class CustomerDto {
@@ -51,8 +52,8 @@ public class CustomerDto {
 
         final CustomerDto customer = (CustomerDto) o;
 
-        return customer.getId().equals(getId())             &&
-                customer.getSurname().equals(getSurname())   &&
+        return customer.getId().equals(getId()) &&
+                customer.getSurname().equals(getSurname()) &&
                 customer.getBookings().equals(getBookings()) &&
                 customer.getForename().equals(getForename());
     }

@@ -3,24 +3,25 @@ package cz.muni.fi.pa165.entity;
 import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
  * Entity representing a single booking item in a hotel.
- * <p>
+ * <p/>
  * Booking is made by exactly one customer who books exactly one room for this
  * booking. Booking has check-in and check-out dates. These dates are used
  * to calculate whole price of customer's booking. Calculation is defined by
  * simple formula: number_of_days * room_price.
- * <p>
+ * <p/>
  * Difference between check-out date and check-in date should be more than
  * one day. So there are not allowed less than 1-day bookings.
  * Hence whole booking price should be non-negative.
  *
+ * @author Ivo Hradek
  * @see Room
  * @see Customer
- * @author Ivo Hradek
  */
 @Entity
 public class Booking {
@@ -36,17 +37,19 @@ public class Booking {
     @OneToOne
     private Room room;
 
+    @NotNull
     @Temporal(TemporalType.DATE)
     @Column(name = "check_in", nullable = false)
     private Date checkIn;
 
+    @NotNull
     @Temporal(TemporalType.DATE)
     @Column(name = "check_out", nullable = false)
     private Date checkOut;
 
     @Formula("SELECT DATEDIFF(check_out, check_in) * price " +
-             "FROM Booking " +
-             "JOIN Room")
+            "FROM Booking " +
+            "JOIN Room")
     private BigDecimal price;
 
     public Long getId() {
@@ -96,11 +99,11 @@ public class Booking {
 
         final Booking booking = (Booking) o;
 
-        return booking.getId().equals(getId())             &&
-               booking.getRoom().equals(getRoom())         &&
-               booking.getCheckIn().equals(getCheckIn())   &&
-               booking.getCheckOut().equals(getCheckOut()) &&
-               booking.getCustomer().equals(getCustomer());
+        return booking.getId().equals(getId()) &&
+                booking.getRoom().equals(getRoom()) &&
+                booking.getCheckIn().equals(getCheckIn()) &&
+                booking.getCheckOut().equals(getCheckOut()) &&
+                booking.getCustomer().equals(getCustomer());
     }
 
     @Override

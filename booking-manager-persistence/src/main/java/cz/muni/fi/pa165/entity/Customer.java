@@ -1,5 +1,7 @@
 package cz.muni.fi.pa165.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
@@ -7,12 +9,12 @@ import java.util.HashSet;
 
 /**
  * Entity representing a customer.
- * <p>
+ * <p/>
  * Every customer has forename and surname. Customer is able to make one or
  * more bookings in the hotels.
  *
- * @see Booking
  * @author Ivo Hradek
+ * @see Booking
  */
 @Entity
 public class Customer {
@@ -20,9 +22,11 @@ public class Customer {
     @GeneratedValue
     private Long id;
 
+    @NotEmpty
     @Column(nullable = false)
     private String forename;
 
+    @NotEmpty
     @Column(nullable = false)
     private String surname;
 
@@ -64,10 +68,10 @@ public class Customer {
 
         final Customer customer = (Customer) o;
 
-        return customer.getId().equals(getId())             &&
-               customer.getSurname().equals(getSurname())   &&
-               customer.getBookings().equals(getBookings()) &&
-               customer.getForename().equals(getForename());
+        return customer.getId().equals(getId()) &&
+                customer.getSurname().equals(getSurname()) &&
+                customer.getBookings().equals(getBookings()) &&
+                customer.getForename().equals(getForename());
     }
 
     @Override

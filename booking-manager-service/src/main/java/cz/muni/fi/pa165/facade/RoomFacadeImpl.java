@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.facade;
 
 import cz.muni.fi.pa165.dto.RoomDto;
-import cz.muni.fi.pa165.entity.Hotel;
 import cz.muni.fi.pa165.service.RoomService;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;

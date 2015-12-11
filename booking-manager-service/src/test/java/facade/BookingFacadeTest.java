@@ -2,12 +2,12 @@ package facade;
 
 import cz.muni.fi.pa165.dao.BookingDao;
 import cz.muni.fi.pa165.dto.BookingDto;
+import cz.muni.fi.pa165.dto.CreateBookingDto;
 import cz.muni.fi.pa165.entity.Booking;
 import cz.muni.fi.pa165.entity.Hotel;
 import cz.muni.fi.pa165.entity.Room;
 import cz.muni.fi.pa165.facade.BookingFacade;
 import cz.muni.fi.pa165.service.BookingService;
-
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -81,8 +81,13 @@ public class BookingFacadeTest extends AbstractTransactionalTestNGSpringContextT
     public void testGetAllBookings() {
         /* Prepare mock */
         when(bookingDao.findAllBookings()).thenReturn(new ArrayList<Booking>() {
-            { add(b1); }
-            { add(b2); }
+            {
+                add(b1);
+            }
+
+            {
+                add(b2);
+            }
         });
 
         /* Are there two bookings */
@@ -92,32 +97,55 @@ public class BookingFacadeTest extends AbstractTransactionalTestNGSpringContextT
 
     @Test
     public void testGetHotelBookings() {
-        /* Prepare tests */
+        /* Prepare test */
         Long hId = 1L;
         when(h.getId()).thenReturn(hId);
         when(r.getHotel()).thenReturn(h);
         when(bookingDao.findAllBookings()).thenReturn(new ArrayList<Booking>() {
-            { add(b1); }
-            { add(b2); }
+            {
+                add(b1);
+            }
+
+            {
+                add(b2);
+            }
         });
         b1.setRoom(r);
         b2.setRoom(r);
 
-        Collection<BookingDto> dtos = bookingFacade.getAllHotelBookings(h);
+        Collection<BookingDto> dtos = bookingFacade.getAllHotelBookings(h.getId());
         Assert.assertTrue(dtos.size() == 2, "Number of bookings");
 
     }
+
     @Test
     public void testGetRoomBookings() {
-        /* Prepare tests */
+        /* Prepare test */
+        Long roomId = 1L;
+        when(r.getId()).thenReturn(roomId);
         when(bookingDao.findAllBookings()).thenReturn(new ArrayList<Booking>() {
-            { add(b1); }
-            { add(b2); }
+            {
+                add(b1);
+            }
+
+            {
+                add(b2);
+            }
         });
         b1.setRoom(r);
         b2.setRoom(r);
 
-        Collection<BookingDto> dtos = bookingFacade.getAllRoomBookings(r);
+        Collection<BookingDto> dtos = bookingFacade.getAllRoomBookings(r.getId());
         Assert.assertTrue(dtos.size() == 2, "Number of bookings");
+    }
+
+    @Test
+    public void testCreateBooking() {
+        /* Prepare test */
+        CreateBookingDto booking = new CreateBookingDto();
+        booking.setCustomerId(1L);
+        booking.setRoomId(1L);
+
+        // Assert.assertNotNull(id, "Booking was not created");
     }
 }

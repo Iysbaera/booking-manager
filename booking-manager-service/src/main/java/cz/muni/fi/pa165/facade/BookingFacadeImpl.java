@@ -1,10 +1,13 @@
 package cz.muni.fi.pa165.facade;
 
 import cz.muni.fi.pa165.dto.BookingDto;
+import cz.muni.fi.pa165.dto.CreateBookingDto;
 import cz.muni.fi.pa165.entity.Booking;
 import cz.muni.fi.pa165.entity.Hotel;
 import cz.muni.fi.pa165.entity.Room;
 import cz.muni.fi.pa165.service.BookingService;
+import cz.muni.fi.pa165.service.HotelService;
+import cz.muni.fi.pa165.service.RoomService;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +20,8 @@ import java.util.stream.Collectors;
 /**
  * Implementation of {@link cz.muni.fi.pa165.facade.BookingFacade} interface
  *
- * @see cz.muni.fi.pa165.facade.BookingFacade
  * @author Ivo Hradek
+ * @see cz.muni.fi.pa165.facade.BookingFacade
  */
 @Transactional
 @Service("bookingFacade")
@@ -26,6 +29,12 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Autowired
     BookingService bookingService;
+
+    @Autowired
+    RoomService roomService;
+
+    @Autowired
+    HotelService hotelService;
 
     @Autowired
     Mapper mapper;
@@ -36,7 +45,8 @@ public class BookingFacadeImpl implements BookingFacade {
     }
 
     @Override
-    public Collection<BookingDto> getAllRoomBookings(Room room) {
+    public Collection<BookingDto> getAllRoomBookings(Long id) {
+        Room room = roomService.getRoomDtoById(id);
         return (Collection) ((List<Booking>) bookingService.getAllBookings()).stream()
                 .filter(b -> b.getRoom().getId() == room.getId())
                 .map(b -> mapper.map(b, BookingDto.class))
@@ -44,7 +54,8 @@ public class BookingFacadeImpl implements BookingFacade {
     }
 
     @Override
-    public Collection<BookingDto> getAllHotelBookings(Hotel hotel) {
+    public Collection<BookingDto> getAllHotelBookings(Long id) {
+        Hotel hotel = hotelService.getHotelById(id);
         return (Collection) ((List<Booking>) bookingService.getAllBookings()).stream()
                 .filter(b -> b.getRoom().getHotel().getId() == hotel.getId())
                 .map(b -> mapper.map(b, BookingDto.class))
@@ -56,5 +67,17 @@ public class BookingFacadeImpl implements BookingFacade {
         return (Collection) ((List) bookingService.getAllBookings()).stream()
                 .map(b -> mapper.map(b, BookingDto.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void cancelBooking(Long id) {
+
+    }
+
+    @Override
+    public Long createBooking(CreateBookingDto bookingDto) {
+        Booking booking = mapper.map(bookingDto, Booking.class);
+        Booking newBooking = bookingService.createBooking(booking);
+        return newBooking.getId();
     }
 }

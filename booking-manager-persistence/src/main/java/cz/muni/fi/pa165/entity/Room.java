@@ -3,23 +3,24 @@ package cz.muni.fi.pa165.entity;
 import cz.muni.fi.pa165.enumeration.RoomType;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
  * Entity representing a single room.
- * <p>
+ * <p/>
  * Every room is associated to exactly one hotel. Every room in a single hotel
  * has always its own unique room number. Room is always unavailable only for a
  * range of time determined by check-in and check-out date of concrete
  * customer's booking. So every room is either available or not for another
  * customer's booking.
- * <p>
+ * <p/>
  * Room's price depends only on its type. There are no specialised services
  * for certain types of rooms.
  *
+ * @author Ivo Hradek
  * @see Hotel
  * @see RoomType
- * @author Ivo Hradek
  */
 @Entity
 public class Room {
@@ -32,6 +33,7 @@ public class Room {
     @JoinColumn(name = "fk_hotel", nullable = false)
     private Hotel hotel;
 
+    @NotNull
     @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
     private RoomType type;
@@ -89,11 +91,11 @@ public class Room {
 
         final Room room = (Room) o;
 
-        return room.getId().equals(getId())       &&
-               room.getNumber() ==  getNumber()   &&
-               room.getType().equals(getType())   &&
-               room.getHotel().equals(getHotel()) &&
-               room.getPrice().equals(getPrice());
+        return room.getId().equals(getId()) &&
+                room.getNumber() == getNumber() &&
+                room.getType().equals(getType()) &&
+                room.getHotel().equals(getHotel()) &&
+                room.getPrice().equals(getPrice());
     }
 
     @Override

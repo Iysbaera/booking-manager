@@ -6,22 +6,37 @@ import cz.muni.fi.pa165.dto.HotelDto;
 import java.util.Collection;
 
 /**
- * Facade
+ * Facade for customer operations.
+ *
+ * @author Ivo Hradek
  */
 public interface HotelFacade {
     /**
-     * @param hotelCreateDto -
-     * @return id of created hotel
+     * Create a single hotel.
+     *
+     * @param hotelCreateDto - DTO for creating a hotel.
+     * @return Id of created hotel.
      */
     Long createHotel(HotelCreateDto hotelCreateDto);
 
     /**
-     * @return hotel as data access object
+     * Remove hotel depending on its id.
+     *
+     * @param id of hotel to be deleted.
+     */
+    void deleteHotel(Long id);
+
+    /**
+     * Get hotel by its id.
+     *
+     * @return hotel as data transfer object.
      */
     HotelDto getHotelById(Long id);
 
     /**
-     * @return Collection
+     * Get all hotels.
+     *
+     * @return Collection of hotel DTOs.
      */
     Collection<HotelDto> getAllHotels();
 }

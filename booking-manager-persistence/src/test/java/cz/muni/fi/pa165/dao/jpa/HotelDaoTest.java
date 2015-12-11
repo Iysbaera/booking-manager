@@ -19,7 +19,6 @@ import org.testng.annotations.Test;
 import java.util.Collection;
 
 /**
- *
  * @author Juraj Bielik
  * @author Ivo Hradek
  */
@@ -36,13 +35,18 @@ public class HotelDaoTest extends AbstractTestNGSpringContextTests {
     private Hotel h2;
 
     /* Rooms */
-    @Mock private Room r1;
-    @Mock private Room r2;
-    @Mock private Room r3;
+    @Mock
+    private Room r1;
+    @Mock
+    private Room r2;
+    @Mock
+    private Room r3;
 
     /* Bookings */
-    @Mock private Booking b1;
-    @Mock private Booking b2;
+    @Mock
+    private Booking b1;
+    @Mock
+    private Booking b2;
 
     @BeforeMethod
     public void setUp() {

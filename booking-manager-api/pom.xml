@@ -12,14 +12,13 @@
 
     <artifactId>booking-manager-api</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>Booking Manager API layer</name>
+    <name>Booking Manager - API layer</name>
 
     <dependencies>
-        <!-- Internal -->
         <dependency>
-            <groupId>cz.muni.fi.pa165</groupId>
-            <artifactId>booking-manager-persistence</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${javax-validation.version}</version>
         </dependency>
     </dependencies>
 </project>

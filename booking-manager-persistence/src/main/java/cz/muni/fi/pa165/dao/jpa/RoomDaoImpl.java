@@ -14,8 +14,6 @@ import java.util.Collections;
 import java.util.Date;
 
 /**
- *
- *
  * @author Jana Cechackova
  */
 @Repository
@@ -23,33 +21,31 @@ public class RoomDaoImpl extends DAOBase implements RoomDao {
 
     @Override
     public void addRoom(Room room) {
-	if (room == null){
-	    throw new IllegalArgumentException("Room is null.");
-	}
-	try {
-	    getEntityManager().persist(room);
-	}
-	catch (Exception ex){
-	    throw new PersistenceException("Transaction failed.\n"+ ex.getMessage(), ex);
-	}
+        if (room == null) {
+            throw new IllegalArgumentException("Room is null.");
+        }
+        try {
+            getEntityManager().persist(room);
+        } catch (Exception ex) {
+            throw new PersistenceException("Transaction failed.\n" + ex.getMessage(), ex);
+        }
     }
 
     @Override
     public void updateRoom(Room room) {
-	if (room == null){
-	    throw new IllegalArgumentException("Room is null.");
-	}
-	try {
-	    getEntityManager().merge(room);
-	}
-	catch (Exception ex){
-	    throw new PersistenceException("Transaction failed.\n" + ex.getMessage(), ex);
-	}
+        if (room == null) {
+            throw new IllegalArgumentException("Room is null.");
+        }
+        try {
+            getEntityManager().merge(room);
+        } catch (Exception ex) {
+            throw new PersistenceException("Transaction failed.\n" + ex.getMessage(), ex);
+        }
     }
 
     @Override
-    public void deleteRoom(Room room){
-        if (room == null){
+    public void deleteRoom(Room room) {
+        if (room == null) {
             throw new IllegalArgumentException("Room is null.");
         }
         try {
@@ -57,8 +53,7 @@ public class RoomDaoImpl extends DAOBase implements RoomDao {
             if (toBeRemoved != null) {
                 getEntityManager().remove(toBeRemoved);
             }
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             throw new PersistenceException("Transaction failed.\n" + ex.getMessage(), ex);
         }
     }
@@ -88,7 +83,7 @@ public class RoomDaoImpl extends DAOBase implements RoomDao {
                         "(b.checkIn >= :fromDate and b.checkOut <= :uptoDate) or " +
                         "(b.checkIn >= :fromDate and b.checkOut <= :uptoDate) or " +
                         "(b.checkIn <= :fromDate and b.checkOut >= :uptoDate)" +
-                        "and r.hotel = :hotelId)",Room.class)
+                        "and r.hotel = :hotelId)", Room.class)
                 .setParameter("fromDate", fromDate, TemporalType.DATE)
                 .setParameter("uptoDate", uptoDate, TemporalType.DATE)
                 .setParameter("hotelId", hotel.getId());

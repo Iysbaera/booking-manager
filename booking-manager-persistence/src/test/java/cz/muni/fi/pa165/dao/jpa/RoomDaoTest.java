@@ -32,7 +32,6 @@ import java.util.Date;
 import static org.mockito.Mockito.when;
 
 /**
- *
  * @author Juraj Bielik
  */
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
@@ -49,12 +48,16 @@ public class RoomDaoTest extends AbstractTestNGSpringContextTests {
     private Room room2;
 
     // bookings
-    @Mock private Booking booking1;
-    @Mock private Booking booking2;
+    @Mock
+    private Booking booking1;
+    @Mock
+    private Booking booking2;
 
     //hotels
-    @Mock private Hotel hotel1;
-    @Mock private Hotel hotel2;
+    @Mock
+    private Hotel hotel1;
+    @Mock
+    private Hotel hotel2;
 
     @BeforeMethod
     public void setUp() {
@@ -126,7 +129,9 @@ public class RoomDaoTest extends AbstractTestNGSpringContextTests {
         hotel1 = Mockito.mock(Hotel.class);
         when(hotel1.getRooms()).thenReturn(
                 new ArrayList<Room>() {
-                    { add(room1); }
+                    {
+                        add(room1);
+                    }
                 });
 
         booking1 = Mockito.mock(Booking.class);

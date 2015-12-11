@@ -2,10 +2,11 @@ package cz.muni.fi.pa165.service;
 
 import cz.muni.fi.pa165.dao.RoomDao;
 import cz.muni.fi.pa165.entity.Room;
-import java.math.BigDecimal;
-import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.Collection;
 
 /**
  * @author Jana Cechackova

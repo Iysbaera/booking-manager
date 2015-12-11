@@ -3,6 +3,8 @@ package cz.muni.fi.pa165.dto;
 import java.util.Collection;
 
 /**
+ * Data transfer object for <i>hotel</i> item.
+ *
  * @author Ivo Hradek
  */
 public class HotelDto {

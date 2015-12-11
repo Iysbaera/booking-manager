@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
+ * Data transfer object for <i>booking</i> item.
+ *
  * @author Ivo Hradek
  */
 public class BookingDto {
@@ -79,9 +81,9 @@ public class BookingDto {
 
         final BookingDto booking = (BookingDto) o;
 
-        return booking.getId().equals(getId())              &&
-                booking.getRoom().equals(getRoom())         &&
-                booking.getCheckIn().equals(getCheckIn())   &&
+        return booking.getId().equals(getId()) &&
+                booking.getRoom().equals(getRoom()) &&
+                booking.getCheckIn().equals(getCheckIn()) &&
                 booking.getCheckOut().equals(getCheckOut()) &&
                 booking.getCustomer().equals(getCustomer());
     }

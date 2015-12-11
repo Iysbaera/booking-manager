@@ -1,19 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package cz.muni.fi.pa165.dao.jpa;
 
 import cz.muni.fi.pa165.dao.BookingDao;
 import cz.muni.fi.pa165.entity.Booking;
+import cz.muni.fi.pa165.entity.Customer;
+import cz.muni.fi.pa165.entity.Room;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -22,34 +17,42 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
- *
  * @author Juraj Bielik
  */
-@TestExecutionListeners(TransactionalTestExecutionListener.class)
-@Transactional
-
 @ContextConfiguration("classpath:application-context-persistence-test.xml")
-public class BookingDaoTest extends AbstractTestNGSpringContextTests{
+public class BookingDaoTest extends AbstractTransactionalTestNGSpringContextTests {
 
     @Autowired
     private BookingDao bookingDao;
 
     private Booking booking1;
-    private Booking booking2;
+
+    @Mock
+    private Room room1;
+    @Mock
+    private Customer customer1;
+
 
     Date d = new Date();
 
+    public static Date addDays(Date date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
+    }
 
     @BeforeMethod
     public void setUp() throws ParseException {
         booking1 = new Booking();
-        booking2 = new Booking();
-        String sourceDate = "2012-02-29";
+        String sourceDateCheckIn = "2012-02-29";
+        String sourceDateCheckOut = "2012-02-30";
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        d = format.parse(sourceDate);
-        booking1.setCheckIn(d);
+        booking1.setCheckIn(format.parse(sourceDateCheckIn));
+        booking1.setCheckOut(format.parse(sourceDateCheckOut));
     }
 
     /**
@@ -58,6 +61,7 @@ public class BookingDaoTest extends AbstractTestNGSpringContextTests{
     @Test
     public void testAddBooking() {
         bookingDao.addBooking(booking1);
+        Assert.assertNotNull(booking1.getId());
         Assert.assertEquals(bookingDao.getBookingById(booking1.getId()).getCheckIn(), d);
     }
 
@@ -66,13 +70,12 @@ public class BookingDaoTest extends AbstractTestNGSpringContextTests{
      */
     @Test
     public void testUpdateBooking() {
-     bookingDao.addBooking(booking1);
-     Assert.assertNotNull(bookingDao.getBookingById(booking1.getId()));
-     Date newDate = addDays(d,1);
-     booking1.setCheckIn(newDate);
-     bookingDao.updateBooking(booking1);
-     Assert.assertEquals(bookingDao.getBookingById(booking1.getId()).getCheckIn(), newDate);
-
+        bookingDao.addBooking(booking1);
+        Assert.assertNotNull(bookingDao.getBookingById(booking1.getId()));
+        Date newDate = addDays(d, 1);
+        booking1.setCheckIn(newDate);
+        bookingDao.updateBooking(booking1);
+        Assert.assertEquals(bookingDao.getBookingById(booking1.getId()).getCheckIn(), newDate);
     }
 
     /**
@@ -97,10 +100,15 @@ public class BookingDaoTest extends AbstractTestNGSpringContextTests{
         Assert.assertEquals(output.getCheckIn(), booking1.getCheckIn());
     }
 
-    public static Date addDays(Date date, int days){
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.add(Calendar.DATE, days); //minus number would decrement the days
-        return cal.getTime();
+    /**
+     * Test of findAllBookings method, of class BookingDaoImpl.
+     */
+    @Test
+    public void testFindAllBookings() {
+        bookingDao.addBooking(booking1);
+        List<Booking> bookings = (List) bookingDao.findAllBookings();
+
+        Assert.assertTrue(bookings.size() == 1, "Collection of bookings size");
+        Assert.assertSame(bookings.get(0), booking1, "Different booking");
     }
 }

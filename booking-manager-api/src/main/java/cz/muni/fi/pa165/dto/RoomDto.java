@@ -5,6 +5,8 @@ import cz.muni.fi.pa165.enumeration.RoomType;
 import java.math.BigDecimal;
 
 /**
+ * Data transfer object for <i>hotel</i> item.
+ *
  * @author Ivo Hradek
  */
 public class RoomDto {
@@ -61,9 +63,9 @@ public class RoomDto {
 
         final RoomDto room = (RoomDto) o;
 
-        return room.getId().equals(getId())        &&
-                room.getNumber() ==  getNumber()   &&
-                room.getType().equals(getType())   &&
+        return room.getId().equals(getId()) &&
+                room.getNumber() == getNumber() &&
+                room.getType().equals(getType()) &&
                 room.getHotel().equals(getHotel()) &&
                 room.getPrice().equals(getPrice());
     }

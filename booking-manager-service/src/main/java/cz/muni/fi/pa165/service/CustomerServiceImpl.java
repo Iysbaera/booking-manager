@@ -4,12 +4,12 @@ import cz.muni.fi.pa165.dao.CustomerDao;
 import cz.muni.fi.pa165.entity.Booking;
 import cz.muni.fi.pa165.entity.Customer;
 import cz.muni.fi.pa165.entity.Hotel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * @author Jana Cechackova
@@ -50,18 +50,18 @@ public class CustomerServiceImpl implements CustomerService {
         Collection<Customer> result = new ArrayList<Customer>();
         for (Customer c: customerDao.findAllCustomers()) {
             for (Booking b : c.getBookings()){
-                
-		if ((date.after(b.getCheckIn()) && date.before(b.getCheckOut())) || 
-			(date.equals(b.getCheckIn())) || 
+
+		if ((date.after(b.getCheckIn()) && date.before(b.getCheckOut())) ||
+			(date.equals(b.getCheckIn())) ||
 			(date.equals(b.getCheckOut()))) {
-		    
+
 		    if (b.getRoom().getHotel().equals(hotel)) {
                         result.add(c);
                     }
                 }
             }
-        }                             
-               
-        return result;         
+        }
+
+        return result;
     }
 }

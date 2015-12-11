@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,5 +46,10 @@ public class HotelFacadeImpl implements HotelFacade {
         hotel.setName(hotelCreateDto.getName());
         hotelService.addHotel(hotel);
         return hotel.getId();
+    }
+
+    @Override
+    public void deleteHotel(Long id) {
+        hotelService.deleteHotel(hotelService.getHotelById(id));
     }
 }

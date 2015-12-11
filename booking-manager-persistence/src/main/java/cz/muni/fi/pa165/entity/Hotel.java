@@ -1,18 +1,22 @@
 package cz.muni.fi.pa165.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 
 /**
  * Entity representing a single hotel.
- * <p>
+ * <p/>
  * Every hotel has collection of rooms, which are available for booking.
  * Hotel may have his own name.
  *
- * @see Room
  * @author Ivo Hradek
+ * @see Room
  */
 @Entity
 public class Hotel {
@@ -21,6 +25,8 @@ public class Hotel {
     @Column(nullable = false, unique = true)
     private Long id;
 
+    @NotEmpty
+    @Size(min = 3, max = 50)
     @Column(nullable = false)
     private String name;
 
@@ -55,7 +61,7 @@ public class Hotel {
         final Hotel hotel = (Hotel) o;
 
         return hotel.getId().equals(getId()) &&
-               hotel.getName().equals(getName());
+                hotel.getName().equals(getName());
     }
 
     @Override
