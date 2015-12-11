@@ -19,11 +19,21 @@
         <jdk.version>1.8</jdk.version>
         <dozer.version>5.5.1</dozer.version>
         <slf4j.version>1.7.12</slf4j.version>
+        <tomcat.version>7.0.65</tomcat.version>
         <spring.version>4.2.2.RELEASE</spring.version>
+        <bootstrap.version>3.3.6</bootstrap.version>
         <hibernate.version>5.0.2.Final</hibernate.version>
+        <war-plugin.version>2.5</war-plugin.version>
+        <spring-boot.version>1.3.0.RELEASE</spring-boot.version>
         <spring-data.version>1.9.0.RELEASE</spring-data.version>
+        <spring-social.version>1.1.4.RELEASE</spring-social.version>
+        <spring-security.version>4.0.3.RELEASE</spring-security.version>
+        <javax-validation.version>1.1.0.Final</javax-validation.version>
+        <taglibs-standard.version>1.2.5</taglibs-standard.version>
+        <tomcat-maven-plugin.version>2.3-SNAPSHOT</tomcat-maven-plugin.version>
 
         <!-- Testing -->
+        <derby.version>10.12.1.1</derby.version>
         <testng.version>6.9.8</testng.version>
         <mockito.version>1.9.5</mockito.version>
     </properties>
@@ -47,5 +57,7 @@
         <module>booking-manager-api</module>
         <module>booking-manager-persistence</module>
         <module>booking-manager-service</module>
+        <module>booking-manager-rest</module>
+        <module>booking-manager-web</module>
     </modules>
 </project>
