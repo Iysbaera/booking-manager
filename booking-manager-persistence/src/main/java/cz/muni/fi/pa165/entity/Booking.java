@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.entity;
 import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -37,19 +38,21 @@ public class Booking {
     @OneToOne
     private Room room;
 
+    @Future
     @NotNull
     @Temporal(TemporalType.DATE)
     @Column(name = "check_in", nullable = false)
     private Date checkIn;
 
+    @Future
     @NotNull
     @Temporal(TemporalType.DATE)
     @Column(name = "check_out", nullable = false)
     private Date checkOut;
 
-    @Formula("SELECT DATEDIFF(check_out, check_in) * price " +
-            "FROM Booking " +
-            "JOIN Room")
+    // @Formula("SELECT DATEDIFF(check_out, check_in) * price " +
+    //          "FROM Booking " +
+    //          "JOIN Room")
     private BigDecimal price;
 
     public Long getId() {

@@ -28,15 +28,17 @@ public class BookingDaoTest extends AbstractTransactionalTestNGSpringContextTest
     @Autowired
     private BookingDao bookingDao;
 
-    private Booking booking1;
-
     @Mock
     private Room room1;
     @Mock
     private Customer customer1;
 
+    private Booking booking1;
 
-    Date d = new Date();
+    /* Helper */
+    private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    private Date checkIn;
+    private Date checkOut;
 
     public static Date addDays(Date date, int days) {
         Calendar cal = Calendar.getInstance();
@@ -47,12 +49,11 @@ public class BookingDaoTest extends AbstractTransactionalTestNGSpringContextTest
 
     @BeforeMethod
     public void setUp() throws ParseException {
+        checkIn = format.parse("2116-02-29");
+        checkOut = format.parse("2116-02-30");
         booking1 = new Booking();
-        String sourceDateCheckIn = "2012-02-29";
-        String sourceDateCheckOut = "2012-02-30";
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        booking1.setCheckIn(format.parse(sourceDateCheckIn));
-        booking1.setCheckOut(format.parse(sourceDateCheckOut));
+        booking1.setCheckIn(checkIn);
+        booking1.setCheckOut(checkOut);
     }
 
     /**
@@ -62,7 +63,7 @@ public class BookingDaoTest extends AbstractTransactionalTestNGSpringContextTest
     public void testAddBooking() {
         bookingDao.addBooking(booking1);
         Assert.assertNotNull(booking1.getId());
-        Assert.assertEquals(bookingDao.getBookingById(booking1.getId()).getCheckIn(), d);
+        Assert.assertEquals(bookingDao.getBookingById(booking1.getId()).getCheckIn(), checkIn);
     }
 
     /**
@@ -72,7 +73,7 @@ public class BookingDaoTest extends AbstractTransactionalTestNGSpringContextTest
     public void testUpdateBooking() {
         bookingDao.addBooking(booking1);
         Assert.assertNotNull(bookingDao.getBookingById(booking1.getId()));
-        Date newDate = addDays(d, 1);
+        Date newDate = addDays(checkIn, 1);
         booking1.setCheckIn(newDate);
         bookingDao.updateBooking(booking1);
         Assert.assertEquals(bookingDao.getBookingById(booking1.getId()).getCheckIn(), newDate);

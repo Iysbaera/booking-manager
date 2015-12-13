@@ -60,6 +60,6 @@ public class BookingDaoImpl extends DAOBase implements BookingDao {
 
     @Override
     public Collection<Booking> findAllBookings() {
-        return getEntityManager().createQuery("from Booking b").getResultList();
+        return getEntityManager().createQuery("select b from Booking b").getResultList();
     }
 }
