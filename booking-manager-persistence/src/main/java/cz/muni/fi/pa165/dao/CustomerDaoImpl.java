@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.dao.jpa;
+package cz.muni.fi.pa165.dao;
 
 import cz.muni.fi.pa165.dao.CustomerDao;
 import cz.muni.fi.pa165.dao.DAOBase;

@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.dao.jpa;
+package cz.muni.fi.pa165.dao;
 
 import cz.muni.fi.pa165.dao.BookingDao;
 import cz.muni.fi.pa165.dao.DAOBase;
@@ -60,6 +60,6 @@ public class BookingDaoImpl extends DAOBase implements BookingDao {
 
     @Override
     public Collection<Booking> findAllBookings() {
-        return getEntityManager().createQuery("select b from Booking b").getResultList();
+        return getEntityManager().createQuery("from Booking b").getResultList();
     }
 }
