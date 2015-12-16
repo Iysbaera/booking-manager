@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.dto;
 
-import cz.muni.fi.pa165.entity.Hotel;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -13,7 +12,7 @@ public class CreateRoomDto {
     private int number;
     
     @NotNull
-    private Hotel hotel;
+    private Long hotelId;
 
     public int getNumber() {
         return number;
@@ -35,6 +34,6 @@ public class CreateRoomDto {
 
     @Override
     public int hashCode() {
-        return this.getNumber()+hotel.hashCode();
+        return this.getNumber()+hotelId.hashCode();
     }
 }

@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.web.controllers;
 
+import cz.muni.fi.pa165.dto.CreateCustomerDto;
 import cz.muni.fi.pa165.dto.CustomerDto;
 import cz.muni.fi.pa165.facade.CustomerFacade;
 import java.util.Locale;
@@ -49,35 +50,16 @@ public class CustomerController {
         return "redirect:" + uriBuilder.path("/customer/list").build();
     }
     
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String update(@Valid @ModelAttribute("customer") CustomerDto customer, BindingResult bindingResult, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
-        log.debug("update(locale={}, customer={})", locale, customer);
-        log.debug("--------------------------------------------------------");
-        log.debug("customerDTO{" + "id=" + customer.getId() + ", Forename=" + customer.getForename() 
-                + ", Surname=" + customer.getSurname() + '}');
-        if (bindingResult.hasErrors()) {
-            log.debug("binding errors");
-            for (ObjectError ge : bindingResult.getGlobalErrors()) {
-                log.debug("ObjectError: {}", ge);
-            }
-            for (FieldError fe : bindingResult.getFieldErrors()) {
-                log.debug("FieldError: {}", fe);
-            }
-            return customer.getId()==null?"customer/list":"customer/edit";
-        }
-        if (customer.getId() == null) {
-            customerFacade.addcustomer(customer);
-            redirectAttributes.addFlashAttribute(
-                    "message",
-                    messageSource.getMessage("customer.add.message", new Object[]{customer.getForename(), customer.getSurname()}, locale)
-            );
-        } else {
-            customerFacade.updateCustomer(customer);
-            redirectAttributes.addFlashAttribute(
-                    "message",
-                    messageSource.getMessage("customer.updated.message", new Object[]{customer.getForename(), customer.getSurname()}, locale)
-            );
-        }
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public String create(BindingResult bindingResult, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
+        
+	   CreateCustomerDto customer = new CreateCustomerDto();
+           customerFacade.createCustomer(customer);
+//           redirectAttributes.addFlashAttribute(
+//                    "message",
+//                    messageSource.getMessage("customer.add.message", new Object[]{customer.getForename(), customer.getSurname()}, locale)
+//            );
+        
         return "redirect:" + uriBuilder.path("/customer/list").build();
     }
     

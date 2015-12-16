@@ -34,10 +34,8 @@
             </c:forEach>
         </table>
 
-    <form:form method="post" action="${pageContext.request.contextPath}/customer/update" modelAttribute="customer">
-	<fieldset><legend>New Customer</legend>
-	<%@include file="form.jsp"%>
-	<input type="submit" value="New Customer">
-	</fieldset>
+    <form:form method="post" action="${pageContext.request.contextPath}/customer/create" modelAttribute="customer">
+	<%-- <%@include file="form.jsp"%> --%>
+	<input type="submit" value="New Customer">	
     </form:form>
 
