@@ -1,16 +1,17 @@
 package cz.muni.fi.pa165.sampledata;
 
+import cz.muni.fi.pa165.config.ServiceConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.Import;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 
 @Configuration
-@ImportResource("classpath:application-context-service.xml")
-@ComponentScan(basePackageClasses = { SampleDataLoadingFacadeImpl.class })
+@Import(ServiceConfiguration.class)
+@ComponentScan("cz.muni.fi.pa165.sample")
 public class SampleDataConfiguration {
 
     @Autowired

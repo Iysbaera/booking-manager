@@ -4,13 +4,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+
+import javax.inject.Singleton;
 
 
 /**
@@ -19,7 +20,6 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
  * @author Ivo Hradek
  */
 @Configuration
-@EnableJpaRepositories
 @EnableTransactionManagement
 @ComponentScan("cz.muni.fi.pa165.dao")
 public class ApplicationContextPersistence {
@@ -32,9 +32,8 @@ public class ApplicationContextPersistence {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-        factoryBean.setPersistenceUnitName("cz.muni.fi.pa165.test");
+        factoryBean.setPersistenceUnitName("default");
         factoryBean.setJpaVendorAdapter(vendorAdapter);
         factoryBean.afterPropertiesSet();
 
