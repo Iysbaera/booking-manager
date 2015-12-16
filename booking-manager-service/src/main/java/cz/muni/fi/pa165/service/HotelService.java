@@ -13,8 +13,9 @@ public interface HotelService {
      * Method to add a new hotel.
      *
      * @param hotel new hotel to be added
+     * @return added hotel
      */
-    void addHotel(Hotel hotel);
+    Hotel addHotel(Hotel hotel);
 
     /**
      * Method to delete a specific hotel.

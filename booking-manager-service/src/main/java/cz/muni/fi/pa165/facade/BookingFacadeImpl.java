@@ -77,7 +77,7 @@ public class BookingFacadeImpl implements BookingFacade {
     @Override
     public Long createBooking(CreateBookingDto bookingDto) {
         Booking booking = mapper.map(bookingDto, Booking.class);
-        Booking newBooking = bookingService.createBooking(booking);
+        Booking newBooking = bookingService.addBooking(booking);
         return newBooking.getId();
     }
 }

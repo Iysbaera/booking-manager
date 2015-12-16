@@ -18,8 +18,9 @@ public class RoomServiceImpl implements RoomService {
     RoomDao roomDao;
 
     @Override
-    public void addRoom(Room room) {
+    public Room addRoom(Room room) {
         roomDao.addRoom(room);
+	return room;
     }
 
     @Override

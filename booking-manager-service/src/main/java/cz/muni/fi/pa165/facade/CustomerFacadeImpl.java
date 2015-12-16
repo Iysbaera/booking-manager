@@ -1,7 +1,11 @@
 package cz.muni.fi.pa165.facade;
 
 
+import cz.muni.fi.pa165.dto.CreateBookingDto;
+import cz.muni.fi.pa165.dto.CreateCustomerDto;
 import cz.muni.fi.pa165.dto.CustomerDto;
+import cz.muni.fi.pa165.entity.Booking;
+import cz.muni.fi.pa165.entity.Customer;
 import cz.muni.fi.pa165.service.CustomerService;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +46,12 @@ public class CustomerFacadeImpl implements CustomerFacade {
     @Override
     public void deleteCustomer(Long id) {
         customerService.deleteCustomer(customerService.getCustomerById(id));
+    }
+    
+    @Override
+    public Long createCustomer(CreateCustomerDto customerDto) {
+        Customer customer = mapper.map(customerDto, Customer.class);
+        Customer newCustomer = customerService.addCustomer(customer);
+        return newCustomer.getId();
     }
 }

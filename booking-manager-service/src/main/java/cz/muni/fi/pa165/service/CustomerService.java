@@ -15,8 +15,9 @@ public interface CustomerService {
      * Method to add a new customer
      *
      * @param customer customer to be added
+     * @return added customer
      */
-    void addCustomer(Customer customer);
+    Customer addCustomer(Customer customer);
 
     /**
      * Method to delete a specific customer

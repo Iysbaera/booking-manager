@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.facade;
 
-import cz.muni.fi.pa165.dto.HotelCreateDto;
+import cz.muni.fi.pa165.dto.CreateHotelDto;
 import cz.muni.fi.pa165.dto.HotelDto;
 import cz.muni.fi.pa165.entity.Hotel;
 import cz.muni.fi.pa165.service.HotelService;
@@ -41,7 +41,7 @@ public class HotelFacadeImpl implements HotelFacade {
     }
 
     @Override
-    public Long createHotel(HotelCreateDto hotelCreateDto) {
+    public Long createHotel(CreateHotelDto hotelCreateDto) {
         Hotel hotel = new Hotel();
         hotel.setName(hotelCreateDto.getName());
         hotelService.addHotel(hotel);

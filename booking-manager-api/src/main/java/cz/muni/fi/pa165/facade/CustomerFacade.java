@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.facade;
 
+import cz.muni.fi.pa165.dto.CreateCustomerDto;
 import cz.muni.fi.pa165.dto.CustomerDto;
 
 import java.util.Collection;
@@ -32,4 +33,12 @@ public interface CustomerFacade {
      * @param id of a customer to be deleted.
      */
     void deleteCustomer(Long id);
+    
+    /**
+     * Create new customer.
+     * 
+     * @param customerDto
+     * @return id of new customer
+     */
+    Long createCustomer(CreateCustomerDto customerDto);
 }

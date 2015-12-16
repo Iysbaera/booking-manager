@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
  *
  * @author Ivo Hradek
  */
-public class HotelCreateDto {
+public class CreateHotelDto {
     @NotNull
     @Size(min = 3, max = 50)
     private String name;
@@ -24,9 +24,9 @@ public class HotelCreateDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof HotelCreateDto)) return false;
+        if (!(o instanceof CreateHotelDto)) return false;
 
-        final HotelCreateDto hotel = (HotelCreateDto) o;
+        final CreateHotelDto hotel = (CreateHotelDto) o;
 
         return hotel.getName().equals(getName());
     }

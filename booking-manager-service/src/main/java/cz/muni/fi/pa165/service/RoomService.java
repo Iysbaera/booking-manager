@@ -15,8 +15,9 @@ public interface RoomService {
      * Method to add a new room.
      *
      * @param room new room to be added
+     * @return added room
      */
-    void addRoom(Room room);
+    Room addRoom(Room room);
 
     /**
      * Method to delete a specific room.

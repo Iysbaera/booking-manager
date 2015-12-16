@@ -13,8 +13,9 @@ public interface BookingService {
      * Method to add a new booking.
      *
      * @param booking new booking to add
+     * @return added booking
      */
-    void addBooking(Booking booking);
+    Booking addBooking(Booking booking);
 
     /**
      * Method to delete a specific booking.
@@ -44,12 +45,4 @@ public interface BookingService {
      * @return a collection of all bookings
      */
     Collection<Booking> getAllBookings();
-
-    /**
-     * Create a booking.
-     *
-     * @param booking to be created.
-     * @return Created booking.
-     */
-    Booking createBooking(Booking booking);
 }

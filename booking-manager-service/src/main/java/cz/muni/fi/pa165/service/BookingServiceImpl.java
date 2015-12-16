@@ -17,8 +17,9 @@ public class BookingServiceImpl implements BookingService {
     BookingDao bookingDao;
 
     @Override
-    public void addBooking(Booking booking) {
+    public Booking addBooking(Booking booking) {
         bookingDao.addBooking(booking);
+	return booking;
     }
 
     @Override
@@ -29,12 +30,6 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public void updateBooking(Booking booking) {
         bookingDao.updateBooking(booking);
-    }
-
-    @Override
-    public Booking createBooking(Booking booking) {
-        bookingDao.addBooking(booking);
-        return booking;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.facade;
 
-import cz.muni.fi.pa165.dto.HotelCreateDto;
+import cz.muni.fi.pa165.dto.CreateHotelDto;
 import cz.muni.fi.pa165.dto.HotelDto;
 
 import java.util.Collection;
@@ -17,7 +17,7 @@ public interface HotelFacade {
      * @param hotelCreateDto - DTO for creating a hotel.
      * @return Id of created hotel.
      */
-    Long createHotel(HotelCreateDto hotelCreateDto);
+    Long createHotel(CreateHotelDto hotelCreateDto);
 
     /**
      * Remove hotel depending on its id.
