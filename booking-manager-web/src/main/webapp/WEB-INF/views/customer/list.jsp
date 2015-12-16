@@ -10,7 +10,11 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-      <table class="basic">
+<my:layout title="Customer">
+<jsp:attribute name="body">
+    
+    <h1> Customers </h1>
+      <table class="table">
             <tr>
                 <th>First name</th>
                 <th>Surname</th>
@@ -34,8 +38,12 @@
             </c:forEach>
         </table>
 
-    <form:form method="post" action="${pageContext.request.contextPath}/customer/create" modelAttribute="customer">
-	<%-- <%@include file="form.jsp"%> --%>
+    <%--    <form:form method="post" action="${pageContext.request.contextPath}/customer/create">
+	<%-- <%@include file="form.jsp"%> 
 	<input type="submit" value="New Customer">	
-    </form:form>
+    </form:form>--%>
+	
+	<a class ="btn btn-info" href="${pageContext.request.contextPath}/customer/create">Create</a>
+</jsp:attribute>
+</my:layout>
 

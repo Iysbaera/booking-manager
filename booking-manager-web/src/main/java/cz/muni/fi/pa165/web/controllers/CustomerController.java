@@ -40,6 +40,12 @@ public class CustomerController {
         return "customer/list";
     }
     
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public String create(Model model) {
+        
+        return "customer/create";
+    }
+    
      @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public String delete(@PathVariable long id, RedirectAttributes redirectAttributes, Locale locale, UriComponentsBuilder uriBuilder) {
         log.debug("delete({})", id);
@@ -49,19 +55,19 @@ public class CustomerController {
 	
         return "redirect:" + uriBuilder.path("/customer/list").build();
     }
-    
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String create(BindingResult bindingResult, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
-        
-	   CreateCustomerDto customer = new CreateCustomerDto();
-           customerFacade.createCustomer(customer);
+//    
+//    @RequestMapping(value = "/create", method = RequestMethod.POST)
+//    public String create(BindingResult bindingResult, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
+//        
+//	   CreateCustomerDto customer = new CreateCustomerDto();
+//           customerFacade.createCustomer(customer);
 //           redirectAttributes.addFlashAttribute(
 //                    "message",
 //                    messageSource.getMessage("customer.add.message", new Object[]{customer.getForename(), customer.getSurname()}, locale)
 //            );
-        
-        return "redirect:" + uriBuilder.path("/customer/list").build();
-    }
+//        
+//        return "redirect:" + uriBuilder.path("/customer/list").build();
+//    }
     
     
 }

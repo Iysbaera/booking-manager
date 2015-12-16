@@ -10,7 +10,7 @@
             <form:input path="forename"/>
             <form:errors path="forename" cssClass="error"/>
     
-            <form:label path="surname">></form:label>
+            <form:label path="surname">Surname</form:label>
             <form:input path="surname"/>
             <form:errors path="surname" cssClass="error"/>
    
