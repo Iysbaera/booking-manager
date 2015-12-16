@@ -35,7 +35,7 @@
                     <version>2.2</version>
                     <configuration>
                         <path>/pa165</path>
-                        <port>8080</port>
+                        <port>1234</port>
                     </configuration>
                 </plugin>
             </plugins>
@@ -48,6 +48,12 @@
             <groupId>${project.parent.groupId}</groupId>
             <artifactId>booking-manager-sample-data</artifactId>
             <version>${project.parent.version}</version>
+        </dependency>
+	
+	<dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>1.9.1.RELEASE</version>
         </dependency>
 
         <dependency>
@@ -94,11 +100,38 @@
             <version>${spring.version}</version>
         </dependency>
 
-        <dependency>
+
+	<dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
+            <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
+            <scope>compile</scope>
         </dependency>
+        <dependency>
+	    <groupId>org.hibernate</groupId>
+	    <artifactId>hibernate-validator</artifactId>
+	    <version>5.0.3.Final</version>
+	</dependency>
+
+		
+	<dependency>
+	    <groupId>org.hibernate</groupId>
+	    <artifactId>hibernate-entitymanager</artifactId>
+	    <version>5.0.3.Final</version>
+	</dependency>
+	
+	<dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>1.0.0.Final</version>
+        </dependency>
+
+	
+	<dependency>
+      <groupId>javax.transaction</groupId>
+      <artifactId>jta</artifactId>
+      <version>1.1</version>
+	 </dependency>
 
         <dependency>
             <groupId>org.webjars</groupId>
@@ -135,6 +168,7 @@
             <artifactId>spring-security-taglibs</artifactId>
             <version>${spring-security.version}</version>
         </dependency>
+	
 
         <!-- Testing Dependencies -->
         <dependency>

@@ -11,11 +11,11 @@ import java.io.IOException;
 
 @Configuration
 @Import(ServiceConfiguration.class)
-@ComponentScan("cz.muni.fi.pa165.sample")
+@ComponentScan(basePackageClasses={SampleDataLoadingFacadeImpl.class})
 public class SampleDataConfiguration {
 
     @Autowired
-    SampleDataLoadingFacadeImpl sampleDataLoadingFacade;
+    SampleDataLoadingFacade sampleDataLoadingFacade;
 
     @PostConstruct
     public void dataLoading() throws IOException {
