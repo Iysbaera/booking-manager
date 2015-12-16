@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author Ivo Hradek
  */
 @Controller
-@RequestMapping("/hotels")
+@RequestMapping("/hotel")
 public class HotelController {
 
     final static Logger log = LoggerFactory.getLogger(HotelController.class);
@@ -22,10 +22,10 @@ public class HotelController {
     @Autowired
     private HotelFacade hotelFacade;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String hotels(Model model) {
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String list(Model model) {
         log.info("hotels = {}", hotelFacade.getAllHotels());
         model.addAttribute("hotels", hotelFacade.getAllHotels());
-        return "hotels";
+        return "hotel/list";
     }
 }
