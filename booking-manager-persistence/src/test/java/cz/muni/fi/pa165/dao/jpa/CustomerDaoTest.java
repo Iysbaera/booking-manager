@@ -12,6 +12,7 @@ import cz.muni.fi.pa165.entity.Customer;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.Assert;
@@ -95,7 +96,7 @@ public class CustomerDaoTest extends AbstractTransactionalTestNGSpringContextTes
         }
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
     public void testAddNullCustomer() {
         customerDao.addCustomer(null);
         Assert.fail("Adding null customer");

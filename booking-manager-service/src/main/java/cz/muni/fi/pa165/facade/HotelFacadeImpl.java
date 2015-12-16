@@ -14,13 +14,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Implementation of {@link cz.muni.fi.pa165.facade.HotelFacade} interface
+ * Implementation of {@link HotelFacade} interface
  *
- * @see cz.muni.fi.pa165.facade.HotelFacade
  * @author Ivo Hradek
+ * @see HotelFacade
  */
+@Service
 @Transactional
-@Service("hotelFacade")
 public class HotelFacadeImpl implements HotelFacade {
     @Autowired
     HotelService hotelService;

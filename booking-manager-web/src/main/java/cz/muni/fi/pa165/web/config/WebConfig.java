@@ -1,11 +1,11 @@
 package cz.muni.fi.pa165.web.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import cz.muni.fi.pa165.sampledata.SampleDataConfiguration;
+import org.springframework.context.annotation.*;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -14,9 +14,10 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
  *
  * @author Ivo Hradek
  */
-@Configuration
 @EnableWebMvc
-@ComponentScan("cz.muni.fi.pa165.web")
+@Configuration
+@Import(SampleDataConfiguration.class)
+@ComponentScan("cz.muni.fi.pa165.web.controllers")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     /**
@@ -32,6 +33,17 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         resolver.setSuffix(".jsp");
         resolver.setExposeContextBeansAsAttributes(true);
         return resolver;
+    }
+
+    /**
+     * Add resource folder.
+     *
+     * @param registry - resource handler
+     */
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("/webjars/");
     }
 
     /**

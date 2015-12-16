@@ -4,11 +4,13 @@
        xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <context:annotation-config />
-    <context:component-scan base-package="cz.muni.fi.pa165"/>
+    <import resource="classpath:application-context-persistence.xml" />
 
-    <tx:jta-transaction-manager/>
+    <context:annotation-config />
+    <context:component-scan base-package="cz.muni.fi.pa165.service, cz.muni.fi.pa165.service.facade" />
+
     <tx:annotation-driven />
+    <tx:jta-transaction-manager/>
 
     <bean id="mapper" class="org.dozer.DozerBeanMapper" />
 

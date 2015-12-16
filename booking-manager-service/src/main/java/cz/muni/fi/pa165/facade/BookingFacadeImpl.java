@@ -18,13 +18,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Implementation of {@link cz.muni.fi.pa165.facade.BookingFacade} interface
+ * Implementation of {@link BookingFacade} interface
  *
  * @author Ivo Hradek
- * @see cz.muni.fi.pa165.facade.BookingFacade
+ * @see BookingFacade
  */
+@Service
 @Transactional
-@Service("bookingFacade")
 public class BookingFacadeImpl implements BookingFacade {
 
     @Autowired

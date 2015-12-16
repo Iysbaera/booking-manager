@@ -14,7 +14,7 @@ import java.util.Date;
 /**
  * @author Jana Cechackova
  */
-@Service("customerService")
+@Service
 public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
@@ -48,14 +48,14 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Collection<Customer> getAllBookedCustomers(Date date, Hotel hotel) {
         Collection<Customer> result = new ArrayList<Customer>();
-        for (Customer c: customerDao.findAllCustomers()) {
-            for (Booking b : c.getBookings()){
+        for (Customer c : customerDao.findAllCustomers()) {
+            for (Booking b : c.getBookings()) {
 
-		if ((date.after(b.getCheckIn()) && date.before(b.getCheckOut())) ||
-			(date.equals(b.getCheckIn())) ||
-			(date.equals(b.getCheckOut()))) {
+                if ((date.after(b.getCheckIn()) && date.before(b.getCheckOut())) ||
+                        (date.equals(b.getCheckIn())) ||
+                        (date.equals(b.getCheckOut()))) {
 
-		    if (b.getRoom().getHotel().equals(hotel)) {
+                    if (b.getRoom().getHotel().equals(hotel)) {
                         result.add(c);
                     }
                 }

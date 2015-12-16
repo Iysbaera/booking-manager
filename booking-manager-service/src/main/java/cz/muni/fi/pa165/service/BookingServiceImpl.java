@@ -10,7 +10,7 @@ import java.util.Collection;
 /**
  * @author Jana Cechackova
  */
-@Service("bookingService")
+@Service
 public class BookingServiceImpl implements BookingService {
 
     @Autowired

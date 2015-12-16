@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Implementation of {@link cz.muni.fi.pa165.facade.RoomFacade} interface
+ * Implementation of {@link RoomFacade} interface
  *
- * @see cz.muni.fi.pa165.facade.RoomFacade
  * @author Ivo Hradek
+ * @see RoomFacade
  */
+@Service
 @Transactional
-@Service("roomFacade")
 public class RoomFacadeImpl implements RoomFacade {
     @Autowired
     private Mapper mapper;

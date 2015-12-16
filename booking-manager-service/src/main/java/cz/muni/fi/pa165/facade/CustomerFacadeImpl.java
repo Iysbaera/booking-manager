@@ -13,13 +13,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Implementation of {@link cz.muni.fi.pa165.facade.CustomerFacade} interface
+ * Implementation of {@link CustomerFacade} interface
  *
  * @author Ivo Hradek
- * @see cz.muni.fi.pa165.facade.CustomerFacade
+ * @see CustomerFacade
  */
+@Service
 @Transactional
-@Service("customerFacade")
 public class CustomerFacadeImpl implements CustomerFacade {
     @Autowired
     CustomerService customerService;

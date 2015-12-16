@@ -11,7 +11,7 @@ import java.util.Collection;
 /**
  * @author Jana Cechackova
  */
-@Service("roomService")
+@Service
 public class RoomServiceImpl implements RoomService {
 
     @Autowired

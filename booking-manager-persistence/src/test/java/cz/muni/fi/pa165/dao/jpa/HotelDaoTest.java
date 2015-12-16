@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.entity.Room;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -105,7 +106,7 @@ public class HotelDaoTest extends AbstractTestNGSpringContextTests {
 
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
     public void testAddNullHotel() {
         hotelDao.addHotel(null);
         Assert.fail("Adding null hotel");
