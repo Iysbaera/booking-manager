@@ -75,18 +75,17 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 	    room5 = room(5, new BigDecimal(20), RoomType.DoubleRoom, hotel2);
 	    
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	    Date d1 = sdf.parse("2015-01-01");
-	    Date d2 = sdf.parse("2015-01-07");
-	    Date d3 = sdf.parse("2015-01-05");
-	    Date d4 = sdf.parse("2015-01-15");
-	    Date d5 = sdf.parse("2015-01-18");
+	    Date d1 = sdf.parse("2017-01-01");
+	    Date d2 = sdf.parse("2017-01-07");
+	    Date d3 = sdf.parse("2017-01-05");
+	    Date d4 = sdf.parse("2017-01-15");
+	    Date d5 = sdf.parse("2017-01-18");
 	    
 	    booking1 =  booking(d1, d2, customer1, room1);
 	    booking2 = booking(d1, d2, customer2, room2);
 	    booking3 = booking(d4, d5, customer2, room2);
-	    booking4 = booking(d3, d4, customer3, room4);	
-	
-	    
+	    booking4 = booking(d3, d4, customer3, room4);
+	    	    
     }
     
      private Room room(int number, BigDecimal price, RoomType roomType, Hotel hotel){
@@ -115,6 +114,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 	 booking.setCheckOut(checkOut);
 	 booking.setCustomer(customer);
 	 booking.setRoom(room);
+	 booking.setPrice(new BigDecimal("10"));
 	 bookingService.addBooking(booking);
 	 
 	 return booking;    
