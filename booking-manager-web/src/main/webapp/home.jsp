@@ -1,7 +1,7 @@
 <%-- 
     Document   : home
     Created on : Dec 16, 2015, 3:32:03 PM
-    Author     : janca
+    Author     : Jana Cechackova
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
