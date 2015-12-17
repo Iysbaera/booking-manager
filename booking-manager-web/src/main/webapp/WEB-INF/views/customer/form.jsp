@@ -13,4 +13,8 @@
             <form:label path="surname">Surname</form:label>
             <form:input path="surname" id="surname"/>
             <form:errors path="surname" cssClass="error"/>
-   
+	    
+<%--	    <form:label path="email">Email</form:label>
+            <form:input path="email" id="email"/>
+            <form:errors path="email" cssClass="error"/>
+--%>   

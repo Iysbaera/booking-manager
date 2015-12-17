@@ -3,13 +3,17 @@ package cz.muni.fi.pa165.web.controllers;
 import cz.muni.fi.pa165.dto.CreateCustomerDto;
 import cz.muni.fi.pa165.dto.CustomerDto;
 import cz.muni.fi.pa165.facade.CustomerFacade;
+import cz.muni.fi.pa165.web.validators.CustomerValidator;
 import java.util.Locale;
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +31,13 @@ public class CustomerController {
     
      final static Logger log = LoggerFactory.getLogger(HotelController.class);
 
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        if (binder.getTarget() instanceof CreateCustomerDto) {
+            binder.addValidators(new CustomerValidator());
+        }
+    }
+    
     @ModelAttribute("customer")
     public CreateCustomerDto getCustomer(){
 	return new CreateCustomerDto();
@@ -45,8 +56,7 @@ public class CustomerController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String customers(Model model) {
         log.info("customers = {}", customerFacade.getAllCustomers());	
-	
-        model.addAttribute("customers", customerFacade.getAllCustomers());
+	model.addAttribute("customers", customerFacade.getAllCustomers());
         return "customer/list";
     }
     /**
@@ -68,12 +78,14 @@ public class CustomerController {
      * @param id
      * @param locale
      * @param uriBuilder
+     * @param redirectAttributes
      * @return 
      */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-    public String delete(@PathVariable long id, Locale locale, UriComponentsBuilder uriBuilder) {
+    public String delete(@PathVariable long id, Locale locale, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
         log.debug("delete({})", id);
         customerFacade.deleteCustomer(id);
+	redirectAttributes.addFlashAttribute("alert_success", "User was successfully deleted.");
 	
         return "redirect:" + uriBuilder.path("/customer/list").build();
     }
@@ -90,16 +102,19 @@ public class CustomerController {
      * @return 
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String create(@ModelAttribute("customer") CreateCustomerDto customer, BindingResult bindingResult, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
+    public String create(@Valid @ModelAttribute("customer") CreateCustomerDto customer, BindingResult bindingResult, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
         
 	  if (bindingResult.hasErrors()){
-	       return "error";
+	      
+		redirectAttributes.addFlashAttribute("alert_failure", "Forename or surname was not filled!");
+	       return "redirect:" + uriBuilder.path("/customer/create").build();
 	   }
-	   
-	  customerFacade.createCustomer(customer);
-        
-        return "redirect:" + uriBuilder.path("/customer/list").build();
+	  
 
+	    customerFacade.createCustomer(customer);
+	    redirectAttributes.addFlashAttribute("alert_success", "User was successfully created.");
+	    return "redirect:" + uriBuilder.path("/customer/list").build();
+	
     }
     /**
      * Method to update a form = fill with user's data.
@@ -128,23 +143,22 @@ public class CustomerController {
      * @return 
      */
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
-    public String edit(@PathVariable long id, @ModelAttribute("customer") CreateCustomerDto customer, BindingResult bindingResult, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
+    public String edit(@PathVariable long id, @Valid @ModelAttribute("customer") CreateCustomerDto customer, BindingResult bindingResult, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
         
 	  if (bindingResult.hasErrors()){
-	       return "error";
+	       redirectAttributes.addFlashAttribute("alert_failure", "Forename or surname was not filled!");
+	       return "redirect:" + uriBuilder.path("/customer/edit/"+id).build();
 	   }
-	    
-//	  customer.setId(id);
-	  
+	    	  
 	  CustomerDto updatedCustomer = customerFacade.getCustomerById(id);
 	  updatedCustomer.setForename(customer.getForename());
 	  updatedCustomer.setSurname(customer.getSurname());
 	  
-	  customerFacade.updateCustomer(updatedCustomer);
-//	  
+	customerFacade.updateCustomer(updatedCustomer);
+	redirectAttributes.addFlashAttribute("alert_success", "User was successfully updated.");
         
-        return "redirect:" + uriBuilder.path("/customer/list").build();
-
+	return "redirect:" + uriBuilder.path("/customer/list").build();
+	
     }
     
-}
+ }

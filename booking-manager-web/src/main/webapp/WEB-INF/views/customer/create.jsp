@@ -20,5 +20,8 @@
         <input type="submit" value="Save">
     </fieldset>
 </form:form>
+    <c:if test="${not empty alert_failure}">
+	<div class="alert alert-danger" role="alert"><c:out value="${alert_failure}"/></div>
+    </c:if>
 </jsp:attribute>
 </my:layout>

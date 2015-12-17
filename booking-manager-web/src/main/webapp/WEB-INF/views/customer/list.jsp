@@ -38,6 +38,14 @@
                 </tr>
             </c:forEach>
         </table>
+    
+    <c:if test="${not empty alert_success}">
+	<div class="alert alert-success" role="alert"><c:out value="${alert_success}"/></div>
+    </c:if>
+	
+    <c:if test="${not empty alert_failure}">
+	<div class="alert alert-danger" role="alert"><c:out value="${alert_failure}"/></div>
+    </c:if>
 
     <%--    <form:form method="post" action="${pageContext.request.contextPath}/customer/create">
 	<%-- <%@include file="form.jsp"%> 
