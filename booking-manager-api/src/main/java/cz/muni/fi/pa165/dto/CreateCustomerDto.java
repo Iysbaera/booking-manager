@@ -7,12 +7,27 @@ import javax.validation.constraints.NotNull;
  * @author Jana Cechackova
  */
 public class CreateCustomerDto {
-    
+
     @NotNull
     private String forename;
     @NotNull
     private String surname;
-    
+
+    @NotNull
+    private Long id;
+    @NotNull
+    private String email;
+    @NotNull
+    private String password;
+
+    public Long getId() {
+	return id;
+    }
+
+    public void setId(Long id) {
+	this.id = id;
+    }
+
     public String getForename() {
         return forename;
     }
@@ -27,6 +42,22 @@ public class CreateCustomerDto {
 
     public void setForename(String forename) {
         this.forename = forename;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
@@ -47,5 +78,5 @@ public class CreateCustomerDto {
         return customer.getForename().equals(getForename()) &&
                 customer.getSurname().equals(getSurname());
     }
-    
+
 }

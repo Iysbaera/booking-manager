@@ -33,20 +33,30 @@ public interface CustomerFacade {
      * @param id of a customer to be deleted.
      */
     void deleteCustomer(Long id);
-    
+
     /**
      * Create new customer.
-     * 
+     *
      * @param customerDto
      * @return id of new customer
      */
     Long createCustomer(CreateCustomerDto customerDto);
-    
+
     /**
      * Update a customer.
-     * 
+     *
      * @param customerDto
      * @return id of updated customer
      */
     Long updateCustomer(CustomerDto customerDto);
+
+    /**
+     * Find customer by his email. If there are no customer
+     * with such an email, null will be returned.
+     *
+     * @param email
+     * @return Customer DTO. If there is no customer
+     *         for specified email then null.
+     */
+    CustomerDto getCustomerByEmail(String email);
 }

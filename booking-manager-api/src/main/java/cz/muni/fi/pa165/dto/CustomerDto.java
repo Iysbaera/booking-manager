@@ -11,6 +11,9 @@ public class CustomerDto {
     private Long id;
     private String forename;
     private String surname;
+    private String email;
+    private String password;
+    private boolean isAdmin;
     private Collection<BookingDto> bookings;
 
     public Long getId() {
@@ -43,6 +46,30 @@ public class CustomerDto {
 
     public void setBookings(Collection<BookingDto> bookings) {
         this.bookings = bookings;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     @Override
