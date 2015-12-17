@@ -54,4 +54,6 @@ public interface RoomService {
      * @param price number which will be added to prices of all rooms
      */
     void changeAllPrices(BigDecimal price);
+
+    void changePrice(BigDecimal price_bd, Long id);
 }
