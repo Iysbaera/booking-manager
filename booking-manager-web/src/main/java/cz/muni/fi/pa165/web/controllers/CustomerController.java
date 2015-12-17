@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.web.controllers;
 
 import cz.muni.fi.pa165.dto.CreateCustomerDto;
+import cz.muni.fi.pa165.dto.CustomerDto;
 import cz.muni.fi.pa165.facade.CustomerFacade;
 import java.util.Locale;
 import org.slf4j.Logger;
@@ -43,7 +44,8 @@ public class CustomerController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String customers(Model model) {
-        log.info("customers = {}", customerFacade.getAllCustomers());
+        log.info("customers = {}", customerFacade.getAllCustomers());	
+	
         model.addAttribute("customers", customerFacade.getAllCustomers());
         return "customer/list";
     }
@@ -99,13 +101,50 @@ public class CustomerController {
         return "redirect:" + uriBuilder.path("/customer/list").build();
 
     }
+    /**
+     * Method to update a form = fill with user's data.
+     * 
+     * @param id
+     * @param model
+     * @return 
+     */
+     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String edit_form(@PathVariable long id, Model model) {
+
+        model.addAttribute("customer", customerFacade.getCustomerById(id));
+        log.debug("update_form(model={})", model);
+        return "customer/edit";
+    }
     
-//     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-//    public String update_form(@PathVariable long id, Model model) {
-//
-//        model.addAttribute("resident", customerFacade.getCustomerById(id));
-//        log.debug("update_form(model={})", model);
-//        return "customer/update";
-//    }
-//    
+    /**
+     * Method to update a customer in a database.
+     * 
+     * @param id
+     * @param customer
+     * @param bindingResult
+     * @param redirectAttributes
+     * @param uriBuilder
+     * @param locale
+     * @return 
+     */
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+    public String edit(@PathVariable long id, @ModelAttribute("customer") CreateCustomerDto customer, BindingResult bindingResult, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
+        
+	  if (bindingResult.hasErrors()){
+	       return "error";
+	   }
+	    
+//	  customer.setId(id);
+	  
+	  CustomerDto updatedCustomer = customerFacade.getCustomerById(id);
+	  updatedCustomer.setForename(customer.getForename());
+	  updatedCustomer.setSurname(customer.getSurname());
+	  
+	  customerFacade.updateCustomer(updatedCustomer);
+//	  
+        
+        return "redirect:" + uriBuilder.path("/customer/list").build();
+
+    }
+    
 }

@@ -25,7 +25,7 @@
                     <td><c:out value="${customer.forename}"/></td>
                     <td><c:out value="${customer.surname}"/></td>
                     <td>
-                        <form method="get" action="${pageContext.request.contextPath}/customer/update/${customer.id}">
+                        <form method="get" action="${pageContext.request.contextPath}/customer/edit/${customer.id}">
                             <input type="submit" value="Edit">
                         </form>
                     </td>

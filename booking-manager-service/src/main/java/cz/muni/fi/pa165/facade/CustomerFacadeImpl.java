@@ -1,10 +1,8 @@
 package cz.muni.fi.pa165.facade;
 
 
-import cz.muni.fi.pa165.dto.CreateBookingDto;
 import cz.muni.fi.pa165.dto.CreateCustomerDto;
 import cz.muni.fi.pa165.dto.CustomerDto;
-import cz.muni.fi.pa165.entity.Booking;
 import cz.muni.fi.pa165.entity.Customer;
 import cz.muni.fi.pa165.service.CustomerService;
 import org.dozer.Mapper;
@@ -53,5 +51,14 @@ public class CustomerFacadeImpl implements CustomerFacade {
         Customer customer = mapper.map(customerDto, Customer.class);
         Customer newCustomer = customerService.addCustomer(customer);
         return newCustomer.getId();
+    }
+    
+     @Override
+    public Long updateCustomer(CustomerDto customerDto) {
+	Customer customer = customerService.getCustomerById(customerDto.getId());
+	customer.setForename(customerDto.getForename());
+	customer.setSurname(customerDto.getSurname());
+	customerService.updateCustomer(customer);
+        return customer.getId();
     }
 }
