@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.facade.RoomFacade;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,17 +55,7 @@ public class RoomController {
         model.addAttribute("rooms", roomFacade.getAllRooms());
         return "room/list";
     }
-    /**
-     * Method to run a new page with a form for new rooms.
-     *
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String create(Model model) {
-        log.debug("create new");
-        return "room/create";
-    }
+
     /**
      * Method to delete a room.
      *
@@ -80,6 +71,20 @@ public class RoomController {
 
         return "redirect:" + uriBuilder.path("/room/list").build();
     }
+
+    /**
+     * Method to run a new page with a form for new rooms.
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public String create(Model model) {
+        log.debug("create new");
+        model.addAttribute("createRoom", new CreateRoomDto());
+        return "room/create";
+    }
+
     /**
      * Method to create new room.
      *
@@ -93,13 +98,17 @@ public class RoomController {
      * @return
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String create(@ModelAttribute("room") CreateRoomDto room, BindingResult bindingResult, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
+    public String create(@Valid @ModelAttribute("room") CreateRoomDto room, BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
+
 
         if (bindingResult.hasErrors()){
-            return "error";
+            redirectAttributes.addFlashAttribute("alert_failure", "Some data were not filled!");
+            return "redirect:" + uriBuilder.path("/room/create").build();
         }
-
         roomFacade.createRoom(room);
+
+        redirectAttributes.addFlashAttribute("alert_success", "Room was successfully created.");
 
         return "redirect:" + uriBuilder.path("/room/list").build();
 
@@ -133,7 +142,7 @@ public class RoomController {
          */
 
         if (bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("alert_failure", "Forename or surname was not filled!");
+            redirectAttributes.addFlashAttribute("alert_failure", "Price was not filled!");
             return "redirect:" + uriBuilder.path("/room/update/"+id).build();
         }
         NumberFormat nf = NumberFormat.getInstance(locale);

@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.dto;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 /**
  *  Data transfer object for creating a Room item.
@@ -13,6 +14,17 @@ public class CreateRoomDto {
     
     @NotNull
     private Long hotelId;
+
+    @NotNull
+    private BigDecimal price;
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 
     public int getNumber() {
         return number;
@@ -36,4 +48,6 @@ public class CreateRoomDto {
     public int hashCode() {
         return this.getNumber()+hotelId.hashCode();
     }
+
+
 }
