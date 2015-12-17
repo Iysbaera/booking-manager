@@ -1,0 +1,80 @@
+/* Author: Ivo Hradek */
+@font-face {
+    font-family: "Avenir";
+    src: url("../fonts/avenir_roman.otf");
+}
+
+@font-face {
+    font-family: "Avenir";
+    font-style: italic;
+    src: url("../fonts/avenir_oblique.otf");
+}
+
+@font-face {
+    font-family: "Avenir";
+    font-weight: bold;
+    src: url("../fonts/avenir_heavy.otf");
+}
+
+@font-face {
+    font-family: "Avenir";
+    font-weight: 900;
+    src: url("../fonts/avenir_black.otf");
+}
+
+@font-face {
+    font-family: "Avenir";
+    font-weight: 300;
+    src: url("../fonts/avenir_medium.otf");
+}
+
+@font-face {
+    font-family: "Avenir";
+    font-weight: 100;
+    src: url("../fonts/avenir_light.otf");
+}
+
+@font-face {
+    font-family: "Avenir";
+    src: url("../fonts/avenir_roman.ttf");
+}
+
+@font-face {
+    font-family: "Avenir";
+    font-style: italic;
+    src: url("../fonts/avenir_oblique.ttf");
+}
+
+@font-face {
+    font-family: "Avenir";
+    font-weight: bold;
+    src: url("../fonts/avenir_heavy.ttf");
+}
+
+@font-face {
+    font-family: "Avenir";
+    font-weight: 900;
+    src: url("../fonts/avenir_black.ttf");
+}
+
+@font-face {
+    font-family: "Avenir";
+    font-weight: 300;
+    src: url("../fonts/avenir_medium.ttf");
+}
+
+@font-face {
+    font-family: "Avenir";
+    font-weight: 100;
+    src: url("../fonts/avenir_light.ttf");
+}
+
+body {
+    font-family: "Avenir", 'helvetica neue', 'helvetica', 'arial' !important;
+    background: white;
+    background-size: 108px 108px;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: "Avenir";
+}

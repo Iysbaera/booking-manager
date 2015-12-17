@@ -19,6 +19,7 @@ public class BookingWebAppInitializer extends AbstractAnnotationConfigDispatcher
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
+        // return new Class<?>[] { WebConfig.class };
         return null;
     }
 

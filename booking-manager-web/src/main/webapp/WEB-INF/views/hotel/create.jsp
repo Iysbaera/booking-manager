@@ -7,18 +7,13 @@
 
 <booking:layout title="hotel">
 <jsp:attribute name="body">
-    <c:if test="${empty hotels}">
-        <p>There are no hotels</p>
-    </c:if>
-    <c:if test="${not empty hotels}">
-        <ul>
-       <c:forEach items="${hotels}" var="hotel">
-       <li>
-       <c:out value="${hotel.name}" />
-       </li>
-       </c:forEach>
-       </ul>
-    </c:if>
-    <a class="btn btn-info" href="${pageContext.request.contextPath}/hotel/create">Create</a>
+    <form:form method="post" action="${pageContext.request.contextPath}/hotel/create">
+        modelAttribute="hotelCreate" cssClass="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-10">
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">${submit-name}</button>
+    </form:form>
 </jsp:attribute>
 </booking:layout>
