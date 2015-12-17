@@ -36,7 +36,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * Add resource folder.
+     * Add resources such as css, js files etc.
      *
      * @param registry - resource handler
      */
@@ -48,8 +48,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     /**
      *  Configure static content handling
-     *
-     *  @return void
      */
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {

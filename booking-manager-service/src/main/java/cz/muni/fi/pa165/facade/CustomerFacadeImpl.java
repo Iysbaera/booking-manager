@@ -1,10 +1,8 @@
 package cz.muni.fi.pa165.facade;
 
 
-import cz.muni.fi.pa165.dto.CreateBookingDto;
 import cz.muni.fi.pa165.dto.CreateCustomerDto;
 import cz.muni.fi.pa165.dto.CustomerDto;
-import cz.muni.fi.pa165.entity.Booking;
 import cz.muni.fi.pa165.entity.Customer;
 import cz.muni.fi.pa165.service.CustomerService;
 import org.dozer.Mapper;
@@ -25,6 +23,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class CustomerFacadeImpl implements CustomerFacade {
+
     @Autowired
     CustomerService customerService;
 
@@ -47,11 +46,30 @@ public class CustomerFacadeImpl implements CustomerFacade {
     public void deleteCustomer(Long id) {
         customerService.deleteCustomer(customerService.getCustomerById(id));
     }
-    
+
     @Override
     public Long createCustomer(CreateCustomerDto customerDto) {
         Customer customer = mapper.map(customerDto, Customer.class);
         Customer newCustomer = customerService.addCustomer(customer);
         return newCustomer.getId();
+    }
+
+    @Override
+    public Long updateCustomer(CustomerDto customerDto) {
+        Customer customer = customerService.getCustomerById(customerDto.getId());
+        customer.setForename(customerDto.getForename());
+        customer.setSurname(customerDto.getSurname());
+        customerService.updateCustomer(customer);
+        return customer.getId();
+    }
+
+    @Override
+    public CustomerDto getCustomerByEmail(String email) {
+        for (Customer c : customerService.getAllCustomers()) {
+            if (c.getEmail().equals(email)) {
+                return mapper.map(c, CustomerDto.class);
+            }
+        }
+        return null;
     }
 }

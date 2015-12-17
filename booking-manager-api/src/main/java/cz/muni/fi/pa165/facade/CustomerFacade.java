@@ -41,4 +41,12 @@ public interface CustomerFacade {
      * @return id of new customer
      */
     Long createCustomer(CreateCustomerDto customerDto);
+    
+    /**
+     * Update a customer.
+     * 
+     * @param customerDto
+     * @return id of updated customer
+     */
+    Long updateCustomer(CustomerDto customerDto);
 }

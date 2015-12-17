@@ -1,13 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="booking" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
+<booking:layout>
+<jsp:attribute name="body">
     <div>
         <h1><spring:message code="label.user.login.page.title"/></h1>
     </div>
@@ -53,5 +50,5 @@
     <sec:authorize access="isAuthenticated()">
         <p><spring:message code="text.login.page.authenticated.user.help"/></p>
     </sec:authorize>
-</body>
-</html>
+</jsp:attribute>
+</booking:layout>

@@ -18,6 +18,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import static org.mockito.Matchers.any;
 
 import static org.mockito.Mockito.when;
 
@@ -53,6 +54,7 @@ public class CustomerServiceImplTest extends AbstractTransactionalTestNGSpringCo
         c1 = new Customer();
         c1.setForename("Customer 1");
 
+
     }
 
     @Test
@@ -69,8 +71,8 @@ public class CustomerServiceImplTest extends AbstractTransactionalTestNGSpringCo
         c1.setForename("Customer 2");
         customerService.updateCustomer(c1);
 
-        when(customerDao.getCustomerById(c1.getId())).thenReturn(c1);
-        Assert.assertEquals(customerService.getCustomerById(c1.getId()).getForename(), c1.getForename());
+	when(customerDao.getCustomerById(1L).getForename()).thenReturn("Customer 2");
+        Assert.assertEquals(customerService.getCustomerById(1L).getForename(), c1.getForename());
     }
 
     @Test
