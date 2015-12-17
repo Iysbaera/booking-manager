@@ -71,7 +71,7 @@ public class CustomerController {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public String delete(@PathVariable long id, Locale locale, UriComponentsBuilder uriBuilder) {
         log.debug("delete({})", id);
-        customerFacade.deleteCustomer(getCustomer().getId());        
+        customerFacade.deleteCustomer(id);
 	
         return "redirect:" + uriBuilder.path("/customer/list").build();
     }
