@@ -1,18 +1,14 @@
 package cz.muni.fi.pa165.web.controllers;
 
 import cz.muni.fi.pa165.dto.CreateCustomerDto;
-import cz.muni.fi.pa165.dto.CustomerDto;
 import cz.muni.fi.pa165.facade.CustomerFacade;
 import java.util.Locale;
-import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,44 +26,86 @@ public class CustomerController {
     
      final static Logger log = LoggerFactory.getLogger(HotelController.class);
 
+    @ModelAttribute("customer")
+    public CreateCustomerDto getCustomer(){
+	return new CreateCustomerDto();
+    }
+    
+     
     @Autowired
     private CustomerFacade customerFacade;
 
+    /**
+     * Method to list all customers stored in a database.
+     * 
+     * @param model
+     * @return 
+     */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String customers(Model model) {
         log.info("customers = {}", customerFacade.getAllCustomers());
         model.addAttribute("customers", customerFacade.getAllCustomers());
         return "customer/list";
     }
-    
+    /**
+     * Method to run a new page with a form for new customers.
+     * 
+     * @param model
+     * @return 
+     */
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String create(Model model) {
-        
+        log.debug("create new");
         return "customer/create";
     }
     
-     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-    public String delete(@PathVariable long id, RedirectAttributes redirectAttributes, Locale locale, UriComponentsBuilder uriBuilder) {
+    /**
+     * Method to delete a customer. Customer's ID is used to find him in a database.
+     * FIX ME : Exception - ID is null.
+     * 
+     * @param id
+     * @param locale
+     * @param uriBuilder
+     * @return 
+     */
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public String delete(@PathVariable long id, Locale locale, UriComponentsBuilder uriBuilder) {
         log.debug("delete({})", id);
-        CustomerDto customer = customerFacade.getCustomerById(id);
-        customerFacade.deleteCustomer(customer.getId());
-        
+        customerFacade.deleteCustomer(getCustomer().getId());        
 	
         return "redirect:" + uriBuilder.path("/customer/list").build();
     }
-//    
-//    @RequestMapping(value = "/create", method = RequestMethod.POST)
-//    public String create(BindingResult bindingResult, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
-//        
-//	   CreateCustomerDto customer = new CreateCustomerDto();
-//           customerFacade.createCustomer(customer);
-//           redirectAttributes.addFlashAttribute(
-//                    "message",
-//                    messageSource.getMessage("customer.add.message", new Object[]{customer.getForename(), customer.getSurname()}, locale)
-//            );
-//        
-//        return "redirect:" + uriBuilder.path("/customer/list").build();
+    /**
+     * Method to create new customer. 
+     * 
+     * Parameter's order has to be exactly like this! @ModelAttribute(name_of_the_entity) ..., BindingResult, and the rest
+     * 
+     * @param customer
+     * @param bindingResult
+     * @param redirectAttributes
+     * @param uriBuilder
+     * @param locale
+     * @return 
+     */
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public String create(@ModelAttribute("customer") CreateCustomerDto customer, BindingResult bindingResult, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
+        
+	  if (bindingResult.hasErrors()){
+	       return "error";
+	   }
+	   
+	  customerFacade.createCustomer(customer);
+        
+        return "redirect:" + uriBuilder.path("/customer/list").build();
+
+    }
+    
+//     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+//    public String update_form(@PathVariable long id, Model model) {
+//
+//        model.addAttribute("resident", customerFacade.getCustomerById(id));
+//        log.debug("update_form(model={})", model);
+//        return "customer/update";
 //    }
-    
-    
+//    
 }

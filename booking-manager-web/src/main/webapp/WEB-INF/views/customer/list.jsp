@@ -1,6 +1,7 @@
+
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="utf-8" trimDirectiveWhitespaces="true" %>
 <%-- 
-    Document   : edit
+    Document   : list
     Created on : Dec 16, 2015, 6:10:35 PM
     Author     : Jana Cechackova
 --%>

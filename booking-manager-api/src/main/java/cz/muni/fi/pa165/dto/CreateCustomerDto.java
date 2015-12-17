@@ -12,8 +12,18 @@ public class CreateCustomerDto {
     private String forename;
     @NotNull
     private String surname;
+    @NotNull
+    private Long id;
 
-    public String getCustomerForename() {
+    public Long getId() {
+	return id;
+    }
+
+    public void setId(Long id) {
+	this.id = id;
+    }
+    
+    public String getForename() {
         return forename;
     }
 
@@ -25,7 +35,7 @@ public class CreateCustomerDto {
 	this.surname = surname;
     }
 
-    public void setCustomerForename(String forename) {
+    public void setForename(String forename) {
         this.forename = forename;
     }
 
@@ -44,7 +54,7 @@ public class CreateCustomerDto {
 
         final CreateCustomerDto customer = (CreateCustomerDto) o;
 
-        return customer.getCustomerForename().equals(getCustomerForename()) &&
+        return customer.getForename().equals(getForename()) &&
                 customer.getSurname().equals(getSurname());
     }
     
