@@ -33,10 +33,9 @@
                   <td><c:out value="${room.price}"/></td>
                   <td>
                       <form method="get" action="${pageContext.request.contextPath}/room/update/${room.id}">
-                          <input type="submit" value="Change price">
+                          <input type="submit" value="Update price">
                       </form>
                   </td>
-
               </tr>
           </c:forEach>
       </table>
@@ -46,7 +45,6 @@
     <input type="submit" value="New Customer">
     </form:form>--%>
 
-    <a class="btn btn-info" href="${pageContext.request.contextPath}/room/create">Create</a>
 </jsp:attribute>
 </my:layout>
 

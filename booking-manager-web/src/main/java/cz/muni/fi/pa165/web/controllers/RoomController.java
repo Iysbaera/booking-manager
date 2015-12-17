@@ -104,5 +104,49 @@ public class RoomController {
         return "redirect:" + uriBuilder.path("/room/list").build();
 
     }
+    /**
+     * Method to change room price.
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+    public String update(@PathVariable long id,Model model) {
+        RoomDto room = roomFacade.getRoomById(id);
+
+        if(room == null) {
+            // throw exception
+        }
+        String price= "";
+        model.addAttribute("room", room);
+        model.addAttribute("price", price);
+
+        log.debug("change price");
+        return "room/update";
+    }
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    public String update(@ModelAttribute("price") String price, @PathVariable long id,Model model,
+                              BindingResult bindingResult, RedirectAttributes redirectAttributes, Locale locale,
+                              UriComponentsBuilder uriBuilder) {
+        /*
+        Nutne vyriesit importy na zaklade locale.
+         */
+
+        if (bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("alert_failure", "Forename or surname was not filled!");
+            return "redirect:" + uriBuilder.path("/room/update/"+id).build();
+        }
+        NumberFormat nf = NumberFormat.getInstance(locale);
+        try{
+            BigDecimal price_bd = new BigDecimal(nf.parse(price).toString());
+            if (price_bd.compareTo(BigDecimal.ZERO) > 0){
+                roomFacade.changePrice(id,price_bd);
+            }
+        }catch(ParseException e){
+            e.printStackTrace();
+        }
+        log.debug("change price");
+        return "redirect:" + uriBuilder.path("/room/list").build();
+    }
 
 }
