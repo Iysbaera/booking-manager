@@ -30,7 +30,7 @@ public class Customer {
     @Column(nullable = false)
     private String surname;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer",cascade = {CascadeType.REMOVE})
     private Collection<Booking> bookings = new HashSet<>();
 
     public Long getId() {
