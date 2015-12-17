@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.entity.Booking;
 import cz.muni.fi.pa165.entity.Customer;
 import cz.muni.fi.pa165.entity.Hotel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,12 +19,15 @@ import java.util.Date;
 public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
+    private PasswordEncoder encoder;
+
+    @Autowired
     CustomerDao customerDao;
 
     @Override
     public Customer addCustomer(Customer customer) {
         customerDao.addCustomer(customer);
-	return customer;
+        return customer;
     }
 
     @Override

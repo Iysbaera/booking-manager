@@ -51,4 +51,12 @@ public class RoomServiceImpl implements RoomService {
             r.setPrice(newPrice);
         }
     }
+
+    @Override
+    public void changePrice(BigDecimal price_bd, Long id) {
+        Room room = roomDao.getRoomById(id);
+        if(room != null){
+            room.setPrice(price_bd);
+        }
+    }
 }

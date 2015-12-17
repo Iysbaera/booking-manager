@@ -1,8 +1,10 @@
 package cz.muni.fi.pa165.entity;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -30,7 +32,20 @@ public class Customer {
     @Column(nullable = false)
     private String surname;
 
-    @OneToMany(mappedBy = "customer",cascade = {CascadeType.REMOVE})
+    @NotEmpty
+    @Size(min = 6)
+    @Column(nullable = false)
+    private String password;
+
+    @Email
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "is_admin", nullable = false)
+    @Transient
+    private boolean isAdmin = false;
+
+    @OneToMany(mappedBy = "customer", cascade = {CascadeType.REMOVE})
     private Collection<Booking> bookings = new HashSet<>();
 
     public Long getId() {
@@ -57,8 +72,32 @@ public class Customer {
         return Collections.unmodifiableCollection(bookings);
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public void addBooking(Booking booking) {
         bookings.add(booking);
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
     }
 
     @Override
