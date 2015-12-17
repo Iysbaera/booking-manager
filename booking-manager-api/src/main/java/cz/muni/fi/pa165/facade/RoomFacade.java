@@ -1,7 +1,9 @@
 package cz.muni.fi.pa165.facade;
 
+import cz.muni.fi.pa165.dto.CreateRoomDto;
 import cz.muni.fi.pa165.dto.RoomDto;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 
 /**
@@ -24,4 +26,20 @@ public interface RoomFacade {
      * @return Room as data transfer object.
      */
     RoomDto getRoomById(Long id);
+    /**
+     * Delete customer depending on his id.
+     *
+     * @param id of a customer to be deleted.
+     */
+    void deleteRoom(Long id);
+
+    /**
+     * Create new customer.
+     *
+     * @param roomDto
+     * @return id of new customer
+     */
+    Long createRoom(CreateRoomDto roomDto);
+
+    void changePrice(Long id, BigDecimal price_bd);
 }

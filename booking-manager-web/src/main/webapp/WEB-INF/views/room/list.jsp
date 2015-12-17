@@ -19,39 +19,34 @@
 
     <h1> Rooms </h1>
       <table class="table">
-        <tr>
-          <th>Hotel</th>
-          <th>Room type</th>
-          <th>Number</th>
-          <th>Price</th>
-        </tr>
-        <c:forEach items="${rooms}" var="room">
           <tr>
-            <td><c:out value="${room.hotel.name}"/></td>
-            <td><c:out value="${room.type}"/></td>
-            <td><c:out value="${room.number}"/></td>
-            <td><c:out value="${room.price}"/></td>
-            <td>
-              <form method="get" action="${pageContext.request.contextPath}/room/update/${room.id}">
-                <input type="submit" value="Edit">
-              </form>
-            </td>
-            <td>
-              <form method="post" action="${pageContext.request.contextPath}/room/delete/${room.id}">
-                <input type="submit" value="Delete">
-              </form>
-            </td>
-
+              <th>Hotel</th>
+              <th>Room type</th>
+              <th>Number</th>
+              <th>Price</th>
           </tr>
-        </c:forEach>
+          <c:forEach items="${rooms}" var="room">
+              <tr>
+                  <td><c:out value="${room.hotel.name}"/></td>
+                  <td><c:out value="${room.type}"/></td>
+                  <td><c:out value="${room.number}"/></td>
+                  <td><c:out value="${room.price}"/></td>
+                  <td>
+                      <form method="get" action="${pageContext.request.contextPath}/room/update/${room.id}">
+                          <input type="submit" value="Change price">
+                      </form>
+                  </td>
+
+              </tr>
+          </c:forEach>
       </table>
 
-  <%--    <form:form method="post" action="${pageContext.request.contextPath}/customer/create">
-  <%-- <%@include file="form.jsp"%>
-  <input type="submit" value="New Customer">
-  </form:form>--%>
+    <%--    <form:form method="post" action="${pageContext.request.contextPath}/customer/create">
+    <%-- <%@include file="form.jsp"%>
+    <input type="submit" value="New Customer">
+    </form:form>--%>
 
-  <a class ="btn btn-info" href="${pageContext.request.contextPath}/room/create">Create</a>
+    <a class="btn btn-info" href="${pageContext.request.contextPath}/room/create">Create</a>
 </jsp:attribute>
 </my:layout>
 

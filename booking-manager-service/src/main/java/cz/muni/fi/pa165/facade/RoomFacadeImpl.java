@@ -1,12 +1,15 @@
 package cz.muni.fi.pa165.facade;
 
+import cz.muni.fi.pa165.dto.CreateRoomDto;
 import cz.muni.fi.pa165.dto.RoomDto;
+import cz.muni.fi.pa165.entity.Room;
 import cz.muni.fi.pa165.service.RoomService;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,5 +39,21 @@ public class RoomFacadeImpl implements RoomFacade {
         return (Collection) ((List) roomService.getAllRooms()).stream()
                 .map(b -> mapper.map(b, RoomDto.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteRoom(Long id) {
+        roomService.deleteRoom(roomService.getRoomDtoById(id));
+    }
+    @Override
+    public Long createRoom(CreateRoomDto roomDto) {
+        Room room = mapper.map(roomDto, Room.class);
+        Room newRoom = roomService.addRoom(room);
+        return newRoom.getId();
+    }
+
+    @Override
+    public void changePrice(Long id, BigDecimal price_bd) {
+        roomService.changePrice(price_bd,id);
     }
 }
