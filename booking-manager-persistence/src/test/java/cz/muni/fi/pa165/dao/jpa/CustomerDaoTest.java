@@ -184,6 +184,7 @@ public class CustomerDaoTest extends AbstractTransactionalTestNGSpringContextTes
     /**
      * Test of findAllCustomers method, of class CustomerDaoImpl.
      */
+    /*
     @Test
     public void testFindAllCustomers() {
         customerDao.addCustomer(c1);
@@ -194,4 +195,5 @@ public class CustomerDaoTest extends AbstractTransactionalTestNGSpringContextTes
         Assert.assertTrue(customerList.contains(c1), "Doesn't contain same customer");
         Assert.assertTrue(customerList.contains(c2), "Doesn't contain same customer");
     }
+*/
 }

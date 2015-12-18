@@ -29,7 +29,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping("/customer")
 public class CustomerController {
     
-     final static Logger log = LoggerFactory.getLogger(HotelController.class);
+     final static Logger log = LoggerFactory.getLogger(CustomerController.class);
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {

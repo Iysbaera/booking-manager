@@ -71,7 +71,7 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public void cancelBooking(Long id) {
-
+        bookingService.deleteBooking(bookingService.getBookingById(id));
     }
 
     @Override

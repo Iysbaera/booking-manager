@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.dto;
 
+import java.util.Date;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -8,11 +9,45 @@ import javax.validation.constraints.NotNull;
  * @author Ivo Hradek
  */
 public class CreateBookingDto {
-
+    
+    @NotNull
+    private Long id;
+    
+    @NotNull
+    private Date checkIn;
+    
+    @NotNull
+    private Date checkOut;    
+    
     @NotNull
     private Long customerId;
+    
     @NotNull
     private Long roomId;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getCheckIn() {
+        return checkIn;
+    }
+
+    public void setCheckIn(Date checkIn) {
+        this.checkIn = checkIn;
+    }
+
+    public Date getCheckOut() {
+        return checkOut;
+    }
+
+    public void setCheckOut(Date checkOut) {
+        this.checkOut = checkOut;
+    }
 
     public Long getCustomerId() {
         return customerId;
