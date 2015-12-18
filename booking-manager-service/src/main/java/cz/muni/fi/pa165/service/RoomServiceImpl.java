@@ -1,7 +1,9 @@
 package cz.muni.fi.pa165.service;
 
 import cz.muni.fi.pa165.dao.RoomDao;
+import cz.muni.fi.pa165.entity.Hotel;
 import cz.muni.fi.pa165.entity.Room;
+import cz.muni.fi.pa165.enumeration.RoomType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,5 +60,17 @@ public class RoomServiceImpl implements RoomService {
         if(room != null){
             room.setPrice(price_bd);
         }
+    }
+
+    @Override
+    public void setRoomType(Room room, RoomType roomType) {
+        room.setType(roomType);
+        roomDao.updateRoom(room);
+    }
+
+    @Override
+    public void setHotel(Room room, Hotel hotel) {
+        room.setHotel(hotel);
+        roomDao.updateRoom(room);
     }
 }

@@ -1,5 +1,7 @@
 package cz.muni.fi.pa165.dto;
 
+import cz.muni.fi.pa165.enumeration.RoomType;
+
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
@@ -11,15 +13,29 @@ import java.math.BigDecimal;
 public class CreateRoomDto {
     @NotNull
     private int number;
-    
+
     @NotNull
     private Long hotelId;
+    @NotNull
+    private RoomType roomType;
 
     @NotNull
     private BigDecimal price;
 
     public BigDecimal getPrice() {
         return price;
+    }
+
+    public Long getHotelId() {
+        return hotelId;
+    }
+
+    public RoomType getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(RoomType roomType) {
+        this.roomType = roomType;
     }
 
     public void setPrice(BigDecimal price) {
@@ -33,6 +49,7 @@ public class CreateRoomDto {
     public void setNumber(int number) {
         this.number = number;
     }
+    public void setHotelId(Long id){this.hotelId = id;}
 
     @Override
     public boolean equals(Object o) {
@@ -46,6 +63,7 @@ public class CreateRoomDto {
 
     @Override
     public int hashCode() {
+        System.out.println("");
         return this.getNumber()+hotelId.hashCode();
     }
 

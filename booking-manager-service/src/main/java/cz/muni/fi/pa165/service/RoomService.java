@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.service;
 
+import cz.muni.fi.pa165.entity.Hotel;
 import cz.muni.fi.pa165.entity.Room;
+import cz.muni.fi.pa165.enumeration.RoomType;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -56,4 +58,6 @@ public interface RoomService {
     void changeAllPrices(BigDecimal price);
 
     void changePrice(BigDecimal price_bd, Long id);
+    void setRoomType(Room room,RoomType roomType);
+    void setHotel(Room room, Hotel hotel);
 }

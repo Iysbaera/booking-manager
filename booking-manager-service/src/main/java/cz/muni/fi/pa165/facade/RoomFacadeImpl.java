@@ -2,7 +2,10 @@ package cz.muni.fi.pa165.facade;
 
 import cz.muni.fi.pa165.dto.CreateRoomDto;
 import cz.muni.fi.pa165.dto.RoomDto;
+import cz.muni.fi.pa165.entity.Hotel;
 import cz.muni.fi.pa165.entity.Room;
+import cz.muni.fi.pa165.enumeration.RoomType;
+import cz.muni.fi.pa165.service.HotelService;
 import cz.muni.fi.pa165.service.RoomService;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,8 @@ public class RoomFacadeImpl implements RoomFacade {
 
     @Autowired
     private RoomService roomService;
+    @Autowired
+    private HotelService hotelService;
 
     @Override
     public RoomDto getRoomById(Long id) {
@@ -48,6 +53,11 @@ public class RoomFacadeImpl implements RoomFacade {
     @Override
     public Long createRoom(CreateRoomDto roomDto) {
         Room room = mapper.map(roomDto, Room.class);
+        RoomType roomType = roomDto.getRoomType();
+        Long hotelId = roomDto.getHotelId();
+        Hotel hotel = hotelService.getHotelById(hotelId);
+        room.setHotel(hotel);
+        room.setType(roomType);
         Room newRoom = roomService.addRoom(room);
         return newRoom.getId();
     }

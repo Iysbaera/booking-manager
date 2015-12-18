@@ -3,9 +3,13 @@ package cz.muni.fi.pa165.web.controllers;
 import cz.muni.fi.pa165.dto.CreateCustomerDto;
 import cz.muni.fi.pa165.dto.CreateRoomDto;
 import cz.muni.fi.pa165.dto.RoomDto;
+import cz.muni.fi.pa165.entity.Room;
+import cz.muni.fi.pa165.facade.BookingFacade;
+import cz.muni.fi.pa165.facade.HotelFacade;
 import cz.muni.fi.pa165.facade.RoomFacade;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
+import cz.muni.fi.pa165.enumeration.RoomType;
 import org.slf4j.LoggerFactory;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +26,9 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -42,6 +49,11 @@ public class RoomController {
     @Autowired
     RoomFacade roomFacade;
 
+    @Autowired
+    HotelFacade hotelFacade;
+    @Autowired
+    BookingFacade bookingFacade;
+
 
     /**
      * Method to list all rooms stored in a database.
@@ -52,7 +64,14 @@ public class RoomController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String rooms(Model model) {
         log.info("rooms = {}", roomFacade.getAllRooms());
+        Collection<Long> toDelete = new ArrayList<Long>();
+        for(RoomDto r: roomFacade.getAllRooms()) {
+          if(bookingFacade.getAllRoomBookings(r.getId()).isEmpty()){
+              toDelete.add(r.getId());
+          }
+        }
         model.addAttribute("rooms", roomFacade.getAllRooms());
+        model.addAttribute("toDelete", toDelete);
         return "room/list";
     }
 
@@ -82,6 +101,8 @@ public class RoomController {
     public String create(Model model) {
         log.debug("create new");
         model.addAttribute("createRoom", new CreateRoomDto());
+        model.addAttribute("hotels", hotelFacade.getAllHotels());
+        model.addAttribute("roomTypes", RoomType.values());
         return "room/create";
     }
 

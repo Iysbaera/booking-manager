@@ -36,6 +36,16 @@
                           <input type="submit" value="Update price">
                       </form>
                   </td>
+                  <td>
+                      <c:forEach var="item" items="${toDelete}">
+                          <c:if test="${item eq room.id}">
+                      <form method="post" action="${pageContext.request.contextPath}/room/delete/${room.id}">
+                          <input type="submit" value="Delete">
+                      </form
+                          </c:if>
+
+                      </c:forEach>
+                  </td>
               </tr>
           </c:forEach>
       </table>
