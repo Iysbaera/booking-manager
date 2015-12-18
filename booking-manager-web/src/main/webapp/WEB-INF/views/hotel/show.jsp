@@ -12,11 +12,20 @@
 <jsp:attribute name="body">
     <div class="container">
         <h1>${hotel.name}</h1>
+
         <h2>Rooms</h2>
         <ul class="list-group">
             <c:forEach items="${hotel.rooms}" var="room">
                 <li class="list-group-item">
-                    ${room.number}
+                        ${room.number} &nbsp;
+
+                    <c:forEach var="item" items="${freeRooms}">
+                        <c:if test="${item eq room.id}">
+                            <span class="badge">Free</span>
+                        </c:if>
+
+                    </c:forEach>
+
                 </li>
             </c:forEach>
         </ul>

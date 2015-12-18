@@ -29,6 +29,6 @@
                </ul>
             </div>
     </c:if>
-    <%-- a class="btn btn-info" href="${pageContext.request.contextPath}/hotel/create">Create</a--%>
+    <a class ="btn btn-info" href="${pageContext.request.contextPath}/hotel/create">Create</a>
 </jsp:attribute>
 </booking:layout>
