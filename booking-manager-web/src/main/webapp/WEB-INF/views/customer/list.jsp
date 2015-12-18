@@ -19,11 +19,13 @@
             <tr>
                 <th>First name</th>
                 <th>Surname</th>
+                <th>Email</th>
             </tr>
             <c:forEach items="${customers}" var="customer">
                 <tr>
                     <td><c:out value="${customer.forename}"/></td>
                     <td><c:out value="${customer.surname}"/></td>
+                    <td><c:out value="${customer.email}"/></td>
                     <td>
                         <form method="get" action="${pageContext.request.contextPath}/customer/edit/${customer.id}">
                             <input type="submit" value="Edit">

@@ -14,8 +14,10 @@ public class CustomerValidator implements Validator {
     public void validate(Object target, Errors errors) {
 	
         CreateCustomerDto customer = (CreateCustomerDto) target;
-        if ((customer.getForename() == null)|| (customer.getForename().trim().isEmpty())) errors.reject("NULL");
-	if ((customer.getSurname() == null)|| (customer.getSurname().trim().isEmpty())) errors.reject("NULL");
+        if ((customer.getForename() == null)|| (
+                customer.getForename().trim().isEmpty())) errors.reject("NULL");
+	if ((customer.getSurname() == null)|| (
+            customer.getSurname().trim().isEmpty())) errors.reject("NULL");
 	
     }
 

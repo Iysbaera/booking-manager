@@ -14,19 +14,10 @@ public class CreateCustomerDto {
     private String surname;
 
     @NotNull
-    private Long id;
-    @NotNull
     private String email;
     @NotNull
     private String password;
 
-    public Long getId() {
-	return id;
-    }
-
-    public void setId(Long id) {
-	this.id = id;
-    }
 
     public String getForename() {
         return forename;

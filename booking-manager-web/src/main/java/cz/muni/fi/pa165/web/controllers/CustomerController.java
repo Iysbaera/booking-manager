@@ -2,8 +2,13 @@ package cz.muni.fi.pa165.web.controllers;
 
 import cz.muni.fi.pa165.dto.CreateCustomerDto;
 import cz.muni.fi.pa165.dto.CustomerDto;
+import cz.muni.fi.pa165.entity.Customer;
 import cz.muni.fi.pa165.facade.CustomerFacade;
 import cz.muni.fi.pa165.web.validators.CustomerValidator;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 import javax.validation.Valid;
 import org.slf4j.Logger;
@@ -12,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -55,7 +62,9 @@ public class CustomerController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String customers(Model model) {
-        log.info("customers = {}", customerFacade.getAllCustomers());	
+        log.info("customers = {}", customerFacade.getAllCustomers());
+        Collection<CustomerDto> test = new ArrayList<CustomerDto>();
+        test = customerFacade.getAllCustomers();
 	model.addAttribute("customers", customerFacade.getAllCustomers());
         return "customer/list";
     }
@@ -68,6 +77,7 @@ public class CustomerController {
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String create(Model model) {
         log.debug("create new");
+        model.addAttribute("customer", new CreateCustomerDto());
         return "customer/create";
     }
     
@@ -103,7 +113,20 @@ public class CustomerController {
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(@Valid @ModelAttribute("customer") CreateCustomerDto customer, BindingResult bindingResult, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
-        
+
+        for (Object object : bindingResult.getAllErrors()) {
+            if(object instanceof FieldError) {
+                FieldError fieldError = (FieldError) object;
+
+                System.out.println(fieldError.getCode());
+            }
+
+            if(object instanceof ObjectError) {
+                ObjectError objectError = (ObjectError) object;
+
+                System.out.println(objectError.getCode());
+            }
+        }
 	  if (bindingResult.hasErrors()){
 	      
 		redirectAttributes.addFlashAttribute("alert_failure", "Forename or surname was not filled!");
