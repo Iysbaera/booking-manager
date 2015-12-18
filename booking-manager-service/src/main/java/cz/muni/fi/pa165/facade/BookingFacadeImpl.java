@@ -92,9 +92,15 @@ public class BookingFacadeImpl implements BookingFacade {
         DateTime date2 = bookingDto.getCheckOut()==null? null:new DateTime(bookingDto.getCheckOut());
 
         //calculate final price of booking
-        BigDecimal price= room.getPrice().multiply(
-                new BigDecimal(String.valueOf(Days.daysBetween(date1, date2).getDays())));
+        BigDecimal price;
+        if(date1 == null || date2 == null){
+             price = BigDecimal.ZERO;
+        }
+        else {
+             price = room.getPrice().multiply(
+                    new BigDecimal(String.valueOf(Days.daysBetween(date1, date2).getDays())));
 
+        }
         booking.setPrice(price);
         booking.setCustomer(customer);
         booking.setRoom(room);
