@@ -90,13 +90,11 @@ public class BookingController {
     public String create(@Valid @ModelAttribute("booking") CreateBookingDto booking, BindingResult bindingResult,
                          RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
 
-        System.out.println("stop");
         if (bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("alert_failure", "Some data were not filled!");
             return "redirect:" + uriBuilder.path("/booking/create").build();
         }
-        Long ids=bookingFacade.createBooking(booking);
-        BookingDto test = bookingFacade.getBookingById(ids);
+        bookingFacade.createBooking(booking);
 
 
         redirectAttributes.addFlashAttribute("alert_success", "Booking was successfully created.");
