@@ -23,7 +23,7 @@
                    <c:forEach items="${hotels}" var="hotel">
                        <li class="list-group-item">
                            <span class="badge">${fn:length(hotel.rooms)}</span>
-                           ${hotel.name}
+                           <a href="${pageContext.request.contextPath}/hotel/${hotel.id}/show">${hotel.name}</a>
                        </li>
                    </c:forEach>
                </ul>
