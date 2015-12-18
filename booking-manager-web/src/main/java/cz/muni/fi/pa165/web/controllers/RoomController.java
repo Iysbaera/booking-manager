@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.entity.Room;
 import cz.muni.fi.pa165.facade.BookingFacade;
 import cz.muni.fi.pa165.facade.HotelFacade;
 import cz.muni.fi.pa165.facade.RoomFacade;
+import cz.muni.fi.pa165.web.validators.RoomValidator;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
 import cz.muni.fi.pa165.enumeration.RoomType;
@@ -16,10 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 import java.text.NumberFormat;
@@ -54,6 +53,12 @@ public class RoomController {
     @Autowired
     BookingFacade bookingFacade;
 
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        if (binder.getTarget() instanceof CreateRoomDto) {
+            binder.addValidators(new RoomValidator());
+        }
+    }
 
     /**
      * Method to list all rooms stored in a database.

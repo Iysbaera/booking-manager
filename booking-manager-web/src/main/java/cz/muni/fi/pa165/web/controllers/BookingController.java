@@ -2,22 +2,26 @@ package cz.muni.fi.pa165.web.controllers;
 
 import cz.muni.fi.pa165.dto.BookingDto;
 import cz.muni.fi.pa165.dto.CreateBookingDto;
+import cz.muni.fi.pa165.dto.CreateRoomDto;
 import cz.muni.fi.pa165.entity.Booking;
 import cz.muni.fi.pa165.facade.BookingFacade;
 import cz.muni.fi.pa165.facade.CustomerFacade;
 import cz.muni.fi.pa165.facade.RoomFacade;
 import java.util.Locale;
 import javax.validation.Valid;
+
+import cz.muni.fi.pa165.web.validators.BookingValidator;
+import cz.muni.fi.pa165.web.validators.RoomValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -54,7 +58,13 @@ public class BookingController {
         model.addAttribute("bookings", bookingFacade.getAllBookings());
         return "booking/list";
     }
-    
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        if (binder.getTarget() instanceof CreateBookingDto) {
+            binder.addValidators(new BookingValidator());
+        }
+    }
     /**
      * Method to run a new page with a form for new bookings.
      * 
@@ -89,7 +99,6 @@ public class BookingController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(@Valid @ModelAttribute("booking") CreateBookingDto booking, BindingResult bindingResult,
                          RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
-
         if (bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("alert_failure", "Some data were not filled!");
             return "redirect:" + uriBuilder.path("/booking/create").build();

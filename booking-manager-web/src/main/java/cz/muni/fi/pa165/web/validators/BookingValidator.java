@@ -32,9 +32,10 @@ public class BookingValidator implements Validator{
         if (booking.getCustomerId() == null){
             errors.reject("Customer id is null.");
         }
-        
-        if (booking.getCheckIn().after(booking.getCheckOut()) || 
-            booking.getCheckIn().equals(booking.getCheckOut())) {
+        if (booking.getCheckIn().after(booking.getCheckOut())){
+            errors.reject("Invalid check in date.");
+        }
+        if (booking.getCheckIn().equals(booking.getCheckOut())) {
             errors.reject("Invalid check in date.");            
         }
         
@@ -45,8 +46,9 @@ public class BookingValidator implements Validator{
         if (booking.getCheckOut().before(new Date())) {
             errors.reject("Invalid checkout date.");
         }
-       
-        if (booking.getRoomId() > 0) {
+       Long zero = 0L;
+        Long roomId = booking.getRoomId();
+        if (roomId < zero) {
             errors.reject("Invalid room number");
         }
     }
