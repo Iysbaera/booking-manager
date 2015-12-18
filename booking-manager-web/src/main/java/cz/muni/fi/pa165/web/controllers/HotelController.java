@@ -45,7 +45,8 @@ public class HotelController {
         log.info("hotels = {}", hotelFacade.getAllHotels());
         Collection<Long> toDelete = new ArrayList<Long>();
         for(HotelDto h: hotelFacade.getAllHotels()){
-            if(bookingFacade.getAllHotelBookings(h.getId()).isEmpty()){
+            if(bookingFacade.getAllHotelBookings(h.getId()).isEmpty()
+                    && h.getRooms().isEmpty()){
                 toDelete.add(h.getId());
             }
         }
