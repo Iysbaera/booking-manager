@@ -4,21 +4,31 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <booking:layout title="hotel">
 <jsp:attribute name="body">
     <c:if test="${empty hotels}">
-        <p>There are no hotels</p>
+        <div class="row">
+            <div class="col-md-2 col-md-offset-5">
+                <h1>There are not any hotels in our offer.</h1>
+            </div>
+        </div>
     </c:if>
     <c:if test="${not empty hotels}">
-        <ul>
-       <c:forEach items="${hotels}" var="hotel">
-       <li>
-       <c:out value="${hotel.name}" />
-       </li>
-       </c:forEach>
-       </ul>
+            <h1 class="text-center">Our Hotels</h1>
+            <div class="container">
+                <ul class="list-group">
+                   <c:forEach items="${hotels}" var="hotel">
+                       <li class="list-group-item">
+                           <span class="badge">${fn:length(hotel.rooms)}</span>
+                           ${hotel.name}
+                       </li>
+                   </c:forEach>
+               </ul>
+            </div>
     </c:if>
-    <a class="btn btn-info" href="${pageContext.request.contextPath}/hotel/create">Create</a>
+    <%-- a class="btn btn-info" href="${pageContext.request.contextPath}/hotel/create">Create</a--%>
 </jsp:attribute>
 </booking:layout>

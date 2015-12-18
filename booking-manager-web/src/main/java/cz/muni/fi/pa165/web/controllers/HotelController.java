@@ -28,4 +28,9 @@ public class HotelController {
         model.addAttribute("hotels", hotelFacade.getAllHotels());
         return "hotel/list";
     }
+
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public String create() {
+        return "hotel/create";
+    }
 }

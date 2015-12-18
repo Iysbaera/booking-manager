@@ -3,52 +3,42 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<booking:layout>
-<jsp:attribute name="body">
-    <div>
-        <h1><spring:message code="label.user.login.page.title"/></h1>
-    </div>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-    <sec:authorize access="isAnonymous()">
-        <div>
-            <div>
-                <h2><spring:message code="label.login.form.title"/></h2>
-            </div>
-            <c:if test="${param.error eq 'bad_credentials'}">
-                <div>
-                    <button type="button" data-dismiss="alert" aria-hidden="true">&times</button>
-                    <spring:message code="text.login.page.failed.error"/>
-                </div>
-            </c:if>
-            <form action="${pageContext.request.contextPath}/login/authenticate" method="post" role="form">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                <div class="row">
+<booking:layout title="Sign In">
+<jsp:attribute name="body">
+<div class="wrapper">
+    <div class="top_wrapper">
+        <div class="container">
+            <div class="col-sm-12 header"><span class="icon-logo"></span></div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 login_content_wrapper">
+            <div class="content_wrapper">
+                <h1 class="title">Sign in to your account</h1>
+                <form:form method="post" action="${pageContext.request.contextPath}/auth/login" modelAttribute="customer">
                     <div id="form-group-email" class="form-group col-lg-4">
-                        <label class="control-label" for="user-email"><spring:message code="label.user.email"/>:</label>
-                        <input id="user-email" name="username" type="text" class="form-control"/>
+                        <form:label path="email">Email:</form:label>
+                        <form:input path="email" id="email" type="email" />
+                        <form:errors path="email" cssClass="error"/>
                     </div>
-                </div>
-                <div class="row">
+                    <br>
                     <div id="form-group-password" class="form-group col-lg-4">
-                        <label class="control-label" for="user-password"><spring:message code="label.user.password"/>:</label>
-                        <input id="user-password" name="password" type="password" class="form-control"/>
+                        <form:label path="password" cssClass="control-label">Surname</form:label>
+                        <form:input path="password" id="surname"/>
+                        <form:errors path="password" cssClass="error"/>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-lg-4">
-                        <button type="submit" class="btn btn-default"><spring:message code="label.user.login.submit.button"/></button>
+                    <div class="col-xs-12 col-sm-6 text-right">
+                        <button class="btn btn-default btn-success" type="submit">Sign In</button>
                     </div>
-                </div>
-            </form>
-            <div class="row">
-                <div class="form-group col-lg-4">
-                    <a href="${pageContext.request.contextPath}/user/register"><spring:message code="label.navigation.registration.link"/></a>
-                </div>
+                </form:form>
             </div>
         </div>
-    </sec:authorize>
-    <sec:authorize access="isAuthenticated()">
-        <p><spring:message code="text.login.page.authenticated.user.help"/></p>
-    </sec:authorize>
+    </div>
+</div>
 </jsp:attribute>
 </booking:layout>
+
