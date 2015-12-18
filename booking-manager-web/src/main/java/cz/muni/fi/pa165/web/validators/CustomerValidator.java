@@ -18,7 +18,8 @@ public class CustomerValidator implements Validator {
                 customer.getForename().trim().isEmpty())) errors.reject("NULL");
 	if ((customer.getSurname() == null)|| (
             customer.getSurname().trim().isEmpty())) errors.reject("NULL");
-	
+	if (customer.getEmail() == null ||
+            customer.getEmail().trim().isEmpty()) errors.reject("Invalid email");
     }
 
     @Override

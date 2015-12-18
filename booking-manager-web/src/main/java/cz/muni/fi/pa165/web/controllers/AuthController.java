@@ -43,6 +43,8 @@ public class AuthController {
 
     @RequestMapping(value = "/login", method = POST)
     public String postLogin(Model model) {
+
+
         return "auth/login";
     }
 }
