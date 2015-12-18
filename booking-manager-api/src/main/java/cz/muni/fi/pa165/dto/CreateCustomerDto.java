@@ -71,7 +71,7 @@ public class CreateCustomerDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CreateBookingDto)) return false;
+        if (!(o instanceof CreateCustomerDto)) return false;
 
         final CreateCustomerDto customer = (CreateCustomerDto) o;
 

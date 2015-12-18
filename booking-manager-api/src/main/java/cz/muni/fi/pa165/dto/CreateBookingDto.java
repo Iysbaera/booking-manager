@@ -11,9 +11,6 @@ import javax.validation.constraints.NotNull;
 public class CreateBookingDto {
     
     @NotNull
-    private Long id;
-    
-    @NotNull
     private Date checkIn;
     
     @NotNull
@@ -24,14 +21,6 @@ public class CreateBookingDto {
     
     @NotNull
     private Long roomId;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Date getCheckIn() {
         return checkIn;
