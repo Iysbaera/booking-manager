@@ -18,6 +18,9 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="${pageContext.request.contextPath}/hotel/list" role="button">Hotels</a></li>
+                <li><a href="${pageContext.request.contextPath}/room/list" role="button">Rooms</a></li>
+                <li><a href="${pageContext.request.contextPath}/customer/list" role="button">Customers</a></li>
+                <li><a href="${pageContext.request.contextPath}/booking/list" role="button">Booking</a></li>
                 <li><a href="${pageContext.request.contextPath}/about" role="button">About</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sign In<span class="caret"></span></a>
