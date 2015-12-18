@@ -1,9 +1,6 @@
 package cz.muni.fi.pa165.web.controllers;
 
-import cz.muni.fi.pa165.dto.BookingDto;
-import cz.muni.fi.pa165.dto.CreateHotelDto;
-import cz.muni.fi.pa165.dto.CreateRoomDto;
-import cz.muni.fi.pa165.dto.RoomDto;
+import cz.muni.fi.pa165.dto.*;
 import cz.muni.fi.pa165.entity.Room;
 import cz.muni.fi.pa165.facade.BookingFacade;
 import cz.muni.fi.pa165.facade.HotelFacade;
@@ -46,7 +43,14 @@ public class HotelController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model) {
         log.info("hotels = {}", hotelFacade.getAllHotels());
+        Collection<Long> toDelete = new ArrayList<Long>();
+        for(HotelDto h: hotelFacade.getAllHotels()){
+            if(bookingFacade.getAllHotelBookings(h.getId()).isEmpty()){
+                toDelete.add(h.getId());
+            }
+        }
         model.addAttribute("hotels", hotelFacade.getAllHotels());
+        model.addAttribute("toDelete", toDelete);
         return "hotel/list";
     }
 
@@ -90,5 +94,20 @@ public class HotelController {
         model.addAttribute("hotel", hotelFacade.getHotelById(id));
         model.addAttribute("freeRooms", freeRooms);
         return "hotel/show";
+    }
+    /**
+     * Method to delete a room.
+     *
+     * @param id
+     * @param locale
+     * @param uriBuilder
+     * @return
+     */
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public String delete(@PathVariable long id, Locale locale, UriComponentsBuilder uriBuilder) {
+        log.debug("delete({})", id);
+        hotelFacade.deleteHotel(id);
+
+        return "redirect:" + uriBuilder.path("/hotel/list").build();
     }
 }

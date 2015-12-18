@@ -17,18 +17,30 @@
         </div>
     </c:if>
     <c:if test="${not empty hotels}">
-            <h1 class="text-center">Our Hotels</h1>
-            <div class="container">
-                <ul class="list-group">
-                   <c:forEach items="${hotels}" var="hotel">
-                       <li class="list-group-item">
-                           <span class="badge">${fn:length(hotel.rooms)}</span>
-                           <a href="${pageContext.request.contextPath}/hotel/${hotel.id}/show">${hotel.name}</a>
-                       </li>
-                   </c:forEach>
-               </ul>
-            </div>
+        <h1 class="text-center">Our Hotels</h1>
+
+        <div class="container">
+            <ul class="list-group">
+                <c:forEach items="${hotels}" var="hotel">
+                    <li class="list-group-item">
+                        <span class="badge">${fn:length(hotel.rooms)}</span>
+                        <a href="${pageContext.request.contextPath}/hotel/${hotel.id}/show">${hotel.name}</a>
+                           <span class="button">
+                            <td>
+                                <c:forEach var="item" items="${toDelete}">
+                                <c:if test="${item eq hotel.id}">
+                                <form method="post" action="${pageContext.request.contextPath}/hotel/delete/${hotel.id}">
+                                    <input type="submit" value="Delete">
+                                </form
+                               </c:if>
+
+                               </c:forEach>
+                           </span>
+                    </li>
+                </c:forEach>
+            </ul>
+        </div>
     </c:if>
-    <a class ="btn btn-info" href="${pageContext.request.contextPath}/hotel/create">Create</a>
+    <a class="btn btn-info" href="${pageContext.request.contextPath}/hotel/create">Create</a>
 </jsp:attribute>
 </booking:layout>
