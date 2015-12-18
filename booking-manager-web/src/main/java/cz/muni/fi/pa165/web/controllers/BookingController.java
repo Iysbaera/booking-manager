@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.web.controllers;
 
+import cz.muni.fi.pa165.dto.BookingDto;
 import cz.muni.fi.pa165.dto.CreateBookingDto;
+import cz.muni.fi.pa165.entity.Booking;
 import cz.muni.fi.pa165.facade.BookingFacade;
 import cz.muni.fi.pa165.facade.CustomerFacade;
 import cz.muni.fi.pa165.facade.RoomFacade;
@@ -62,6 +64,10 @@ public class BookingController {
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String create(Model model) {
         log.debug("create new");
+        String startDate = "";
+        String endDate = "";
+        Booking a;
+
         model.addAttribute("createBooking", new CreateBookingDto());
         model.addAttribute("customers", customerFacade.getAllCustomers());
         model.addAttribute("rooms", roomFacade.getAllRooms());
@@ -84,12 +90,14 @@ public class BookingController {
     public String create(@Valid @ModelAttribute("booking") CreateBookingDto booking, BindingResult bindingResult,
                          RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
 
-
+        System.out.println("stop");
         if (bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("alert_failure", "Some data were not filled!");
             return "redirect:" + uriBuilder.path("/booking/create").build();
         }
-        bookingFacade.createBooking(booking);
+        Long ids=bookingFacade.createBooking(booking);
+        BookingDto test = bookingFacade.getBookingById(ids);
+
 
         redirectAttributes.addFlashAttribute("alert_success", "Booking was successfully created.");
 

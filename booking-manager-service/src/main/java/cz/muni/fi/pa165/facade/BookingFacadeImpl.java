@@ -3,16 +3,22 @@ package cz.muni.fi.pa165.facade;
 import cz.muni.fi.pa165.dto.BookingDto;
 import cz.muni.fi.pa165.dto.CreateBookingDto;
 import cz.muni.fi.pa165.entity.Booking;
+import cz.muni.fi.pa165.entity.Customer;
 import cz.muni.fi.pa165.entity.Hotel;
 import cz.muni.fi.pa165.entity.Room;
 import cz.muni.fi.pa165.service.BookingService;
+import cz.muni.fi.pa165.service.CustomerService;
 import cz.muni.fi.pa165.service.HotelService;
 import cz.muni.fi.pa165.service.RoomService;
 import org.dozer.Mapper;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,6 +38,8 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Autowired
     RoomService roomService;
+    @Autowired
+    CustomerService customerService;
 
     @Autowired
     HotelService hotelService;
@@ -77,6 +85,20 @@ public class BookingFacadeImpl implements BookingFacade {
     @Override
     public Long createBooking(CreateBookingDto bookingDto) {
         Booking booking = mapper.map(bookingDto, Booking.class);
+        Customer customer = customerService.getCustomerById(bookingDto.getCustomerId());
+        Room room = roomService.getRoomDtoById(bookingDto.getRoomId());
+
+        //convert to yoda time
+        DateTime date1 = bookingDto.getCheckIn()==null? null:new DateTime(bookingDto.getCheckIn());
+        DateTime date2 = bookingDto.getCheckOut()==null? null:new DateTime(bookingDto.getCheckOut());
+
+        //calculate final price of booking
+        BigDecimal price= room.getPrice().multiply(
+                new BigDecimal(String.valueOf(Days.daysBetween(date1, date2).getDays())));
+
+        booking.setPrice(price);
+        booking.setCustomer(customer);
+        booking.setRoom(room);
         Booking newBooking = bookingService.addBooking(booking);
         return newBooking.getId();
     }
