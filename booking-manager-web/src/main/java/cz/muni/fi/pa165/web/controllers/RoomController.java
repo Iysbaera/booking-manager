@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import org.springframework.validation.FieldError;
 
 /**
  *
@@ -128,10 +129,30 @@ public class RoomController {
                          RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
 
 
-        if (bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("alert_failure", "Some data were not filled!");
+       if (bindingResult.hasFieldErrors()){           
+            
+            for(FieldError error: bindingResult.getFieldErrors()){
+
+                  if (error.getField().equals("roomNumber")) 
+                      redirectAttributes.addFlashAttribute("alert_failure", "Invalid room number!");
+                  if (error.getField().equals("price")) 
+                      redirectAttributes.addFlashAttribute("alert_failure", "Price is empty!");
+                  if (error.getField().equals("hotel")) 
+                      redirectAttributes.addFlashAttribute("alert_failure", "Hotel is empty!");
+                  if (error.getField().equals("roomType")) 
+                      redirectAttributes.addFlashAttribute("alert_failure", "Room type is empty!");	      
+              }          
             return "redirect:" + uriBuilder.path("/room/create").build();
-        }
+       }  
+                        
+            if (bindingResult.hasErrors()){
+                
+                redirectAttributes.addFlashAttribute("alert_failure", "Price is incorrect!");
+            
+            return "redirect:" + uriBuilder.path("/room/create").build();
+       }
+
+       
         Collection<RoomDto> roomsInHotel = hotelFacade.getHotelById(room.getHotelId()).getRooms();
         for(RoomDto item : roomsInHotel){
             if(item.getNumber() == room.getNumber()){
@@ -168,28 +189,33 @@ public class RoomController {
         return "room/update";
     }
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    public String update(@ModelAttribute("price") String price, @PathVariable long id,Model model,
+    public String update(@Valid @ModelAttribute("room") CreateRoomDto room,
                               BindingResult bindingResult, RedirectAttributes redirectAttributes, Locale locale,
                               UriComponentsBuilder uriBuilder) {
-        /*
-        Nutne vyriesit importy na zaklade locale.
-         */
 
-        if (bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("alert_failure", "Price was not filled!");
-            return "redirect:" + uriBuilder.path("/room/update/"+id).build();
-        }
-        NumberFormat nf = NumberFormat.getInstance(locale);
-        try{
-            BigDecimal price_bd = new BigDecimal(nf.parse(price).toString());
-            if (price_bd.compareTo(BigDecimal.ZERO) > 0){
-                roomFacade.changePrice(id,price_bd);
-            }
-        }catch(ParseException e){
-            e.printStackTrace();
-        }
-        log.debug("change price");
-        return "redirect:" + uriBuilder.path("/room/list").build();
-    }
+        if (bindingResult.hasFieldErrors()){  
+                for(FieldError error: bindingResult.getFieldErrors()){
 
-}
+                 if (error.getField().equals("price")) 
+                      redirectAttributes.addFlashAttribute("alert_failure", "Price is empty!");	      
+              }          
+            return "redirect:" + uriBuilder.path("/room/create").build();
+       }  
+                        
+            if (bindingResult.hasErrors()){
+                
+                redirectAttributes.addFlashAttribute("alert_failure", "Price is incorrect!");
+            
+            return "redirect:" + uriBuilder.path("/room/create").build();
+       }
+            
+//        NumberFormat nf = NumberFormat.getInstance(locale);
+//        BigDecimal price_bd = new BigDecimal(nf.parse(price).toString());
+//        if (price_bd.compareTo(BigDecimal.ZERO) > 0){
+//            roomFacade.changePrice(id,price_bd);
+//        }
+//        log.debug("change price");
+//        return "redirect:" + uriBuilder.path("/room/list").build();
+
+
+

@@ -62,21 +62,24 @@ public class HotelController {
         model.addAttribute("createHotel", new CreateHotelDto());
         return "hotel/create";
     }
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(@Valid @ModelAttribute("hotel") CreateHotelDto hotel, BindingResult bindingResult,
                          RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
 
-        if (bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("alert_failure", "Some data were not filled!");
-            return "redirect:" + uriBuilder.path("/hotel/create").build();
+        if (bindingResult.hasFieldErrors()){
+            for(FieldError error : bindingResult.getFieldErrors()){
+                 if (error.getField().equals("name")) 
+                      redirectAttributes.addFlashAttribute("alert_failure", "Name is empty!");
+            }
+                      return "redirect:" + uriBuilder.path("/hotel/create").build();
         }
         hotelFacade.createHotel(hotel);
 
         redirectAttributes.addFlashAttribute("alert_success", "Hotel was successfully created.");
 
         return "redirect:" + uriBuilder.path("/hotel/list").build();
-
     }
+    
     @RequestMapping(value = "/{id}/show", method = RequestMethod.GET)
     public String show(@PathVariable long id, Model model) {
         Collection<BookingDto> bookings = new ArrayList<BookingDto>();
@@ -128,7 +131,7 @@ public class HotelController {
             for(FieldError error: bindingResult.getFieldErrors()){
 
                 if (error.getField().equals("name"))
-                    redirectAttributes.addFlashAttribute("alert_failure", "Invalid forename!");
+                    redirectAttributes.addFlashAttribute("alert_failure", "Name is empty!");
             }
             return "redirect:" + uriBuilder.path("/hotel/edit/"+id).build();
         }
@@ -137,7 +140,7 @@ public class HotelController {
         updatedHotel.setName(hotel.getName());
 
         hotelFacade.updateHotel(updatedHotel);
-        redirectAttributes.addFlashAttribute("alert_success", "User was successfully updated.");
+        redirectAttributes.addFlashAttribute("alert_success", "Hotel was successfully updated.");
 
         return "redirect:" + uriBuilder.path("/hotel/list").build();
 
