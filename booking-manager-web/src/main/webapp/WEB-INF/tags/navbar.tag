@@ -12,7 +12,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </buton>
-            <a class="navbar-brand" href="${pageContext.request.contextPath}/home">Hotels</a>
+            <a href="/pa165">Home</a>
         </div>
         <!-- Navigation -->
         <div class="collapse navbar-collapse navbar-ex1-collapse" id="bs-example-navbar-collapse-1">
@@ -21,7 +21,7 @@
                 <li><a href="${pageContext.request.contextPath}/room/list" role="button">Rooms</a></li>
                 <li><a href="${pageContext.request.contextPath}/customer/list" role="button">Customers</a></li>
                 <li><a href="${pageContext.request.contextPath}/booking/list" role="button">Booking</a></li>
-                <li><a href="${pageContext.request.contextPath}/about" role="button">About</a></li>
+                <li><a href="/pa165/about.jsp" role="button">About</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sign In<span class="caret"></span></a>
                     <ul class="dropdown-menu">
