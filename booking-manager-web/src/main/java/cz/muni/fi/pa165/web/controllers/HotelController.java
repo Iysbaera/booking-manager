@@ -69,7 +69,7 @@ public class HotelController {
         if (bindingResult.hasFieldErrors()){
             for(FieldError error : bindingResult.getFieldErrors()){
                  if (error.getField().equals("name")) 
-                      redirectAttributes.addFlashAttribute("alert_failure", "Name is empty!");
+                      redirectAttributes.addFlashAttribute("alert_failure", "Has to have at least 3 characters!");
             }
                       return "redirect:" + uriBuilder.path("/hotel/create").build();
         }
