@@ -25,6 +25,12 @@
                     <li class="list-group-item">
                         <span class="badge">${fn:length(hotel.rooms)}</span>
                         <a href="${pageContext.request.contextPath}/hotel/${hotel.id}/show">${hotel.name}</a>
+
+                        <td>
+                            <form method="get" action="${pageContext.request.contextPath}/hotel/edit/${hotel.id}">
+                                <input type="submit" value="Edit">
+                            </form>
+                        </td>
                            <span class="button">
                             <td>
                                 <c:forEach var="item" items="${toDelete}">

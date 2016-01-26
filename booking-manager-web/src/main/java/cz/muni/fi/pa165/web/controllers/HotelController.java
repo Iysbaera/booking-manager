@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -110,5 +111,35 @@ public class HotelController {
         hotelFacade.deleteHotel(id);
 
         return "redirect:" + uriBuilder.path("/hotel/list").build();
+    }
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String edit_form(@PathVariable long id, Model model) {
+
+        model.addAttribute("hotel", hotelFacade.getHotelById(id));
+        log.debug("update_form(model={})", model);
+        return "hotel/edit";
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+    public String edit(@PathVariable long id, @Valid @ModelAttribute("hotel") CreateHotelDto hotel, BindingResult bindingResult, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
+
+        if (bindingResult.hasFieldErrors()){
+
+            for(FieldError error: bindingResult.getFieldErrors()){
+
+                if (error.getField().equals("name"))
+                    redirectAttributes.addFlashAttribute("alert_failure", "Invalid forename!");
+            }
+            return "redirect:" + uriBuilder.path("/hotel/edit/"+id).build();
+        }
+
+        HotelDto updatedHotel = hotelFacade.getHotelById(id);
+        updatedHotel.setName(hotel.getName());
+
+        hotelFacade.updateHotel(updatedHotel);
+        redirectAttributes.addFlashAttribute("alert_success", "User was successfully updated.");
+
+        return "redirect:" + uriBuilder.path("/hotel/list").build();
+
     }
 }

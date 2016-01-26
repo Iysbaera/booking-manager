@@ -36,6 +36,14 @@ public class HotelFacadeImpl implements HotelFacade {
     }
 
     @Override
+    public Long updateHotel(HotelDto hotelDto) {
+        Hotel hotel = hotelService.getHotelById(hotelDto.getId());
+        hotel.setName(hotelDto.getName());
+        hotelService.updateHotel(hotel);
+        return hotel.getId();
+    }
+
+    @Override
     public HotelDto getHotelById(Long id) {
         return mapper.map(hotelService.getHotelById(id), HotelDto.class);
     }

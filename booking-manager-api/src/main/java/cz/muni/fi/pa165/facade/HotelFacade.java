@@ -39,4 +39,6 @@ public interface HotelFacade {
      * @return Collection of hotel DTOs.
      */
     Collection<HotelDto> getAllHotels();
+
+    Long updateHotel(HotelDto hotelDto);
 }
