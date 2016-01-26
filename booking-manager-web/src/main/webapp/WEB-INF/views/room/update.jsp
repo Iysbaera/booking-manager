@@ -23,7 +23,7 @@
 
 <form:form method="post" action="${pageContext.request.contextPath}/room/update/${room.id}" modelAttribute="room">
 
-  <h1> Customers </h1>
+  <h1> Room </h1>
   <table class="table">
     <tr>
       <th>Hotel name</th>

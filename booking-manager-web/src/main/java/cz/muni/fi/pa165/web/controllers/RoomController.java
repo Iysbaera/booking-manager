@@ -132,6 +132,14 @@ public class RoomController {
             redirectAttributes.addFlashAttribute("alert_failure", "Some data were not filled!");
             return "redirect:" + uriBuilder.path("/room/create").build();
         }
+        Collection<RoomDto> roomsInHotel = hotelFacade.getHotelById(room.getHotelId()).getRooms();
+        for(RoomDto item : roomsInHotel){
+            if(item.getNumber() == room.getNumber()){
+                redirectAttributes.addFlashAttribute("alert_failure",
+                        "Room with this number already exist in hotel.");
+                return "redirect:" + uriBuilder.path("/room/create").build();
+            }
+        }
         roomFacade.createRoom(room);
 
         redirectAttributes.addFlashAttribute("alert_success", "Room was successfully created.");

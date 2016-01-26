@@ -38,7 +38,7 @@ public class Room {
     @Enumerated(EnumType.ORDINAL)
     private RoomType type;
 
-    @Column(nullable = true, unique = true)
+    @Column(nullable = true)
     private int number;
 
     @Column(nullable = true)
