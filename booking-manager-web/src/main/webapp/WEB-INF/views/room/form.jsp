@@ -10,12 +10,12 @@
 
 <tr>
 <form:label path="number">Number</form:label>
-<form:input path="number" id="number"/>
+<form:input path="number" type="number" min="1" value="1" id="number"/>
 <form:errors path="number" cssClass="error"/>
 </tr>
 <tr>
 <form:label path="price">Price</form:label>
-<form:input path="price" id="price"/>
+<form:input path="price" type="number" min="1" value="1" id="price"/>
 <form:errors path="price" cssClass="error"/>
 </tr>
 <tr>

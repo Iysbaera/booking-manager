@@ -39,7 +39,7 @@
       <td><c:out value="${room.number}"/></td>
       <td><c:out value="${room.price}"/></td>
     <td>
-     <form:input path="price" id="price"/>
+     <form:input path="price" type="number" min="1" value="${room.price}" id="price"/>
      <form:errors path="price" cssClass="error"/>
     </td>
         <td>
