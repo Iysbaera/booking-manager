@@ -20,37 +20,34 @@ public class BookingValidator implements Validator{
     public void validate(Object target, Errors errors) {
         
         CreateBookingDto booking = (CreateBookingDto) target;
+               
+        if((booking.getCheckIn()!= null)&&(booking.getCheckOut()!=null)){
+            
+            if ((booking.getCheckIn().after(booking.getCheckOut())) 
+                || (booking.getCheckIn().equals(booking.getCheckOut()))
+                    || (booking.getCheckIn().before(new Date()))
+                        || (booking.getCheckOut().before(new Date())))
+                                
+            errors.reject("duration");
+        } 
         
-        if ((booking.getCheckIn() == null) || (booking.getCheckOut() == null)) {
-            errors.reject("Date is null.");
-        }
+        if (booking.getCustomerId() == null)  errors.rejectValue("customer", null);
+                
+        if (booking.getRoomId() == null)  errors.rejectValue("room", null);
         
-        if (booking.getRoomId() == null) {
-            errors.reject("Room id is null.");
-        }
+        if (booking.getCheckOut() == null) errors.rejectValue("checkOut", null);
         
-        if (booking.getCustomerId() == null){
-            errors.reject("Customer id is null.");
-        }
-        if (booking.getCheckIn().after(booking.getCheckOut())){
-            errors.reject("Invalid check in date.");
-        }
-        if (booking.getCheckIn().equals(booking.getCheckOut())) {
-            errors.reject("Invalid check in date.");            
-        }
-        
-        if (booking.getCheckIn().before(new Date())) {
-            errors.reject("Invalid check in date");
-        }
-        
-        if (booking.getCheckOut().before(new Date())) {
-            errors.reject("Invalid checkout date.");
-        }
-       Long zero = 0L;
-        Long roomId = booking.getRoomId();
-        if (roomId < zero) {
-            errors.reject("Invalid room number");
-        }
+        if (booking.getCheckIn() == null) errors.rejectValue("checkIn", null);
+      
     }
+        
+    }
+       
+        
+//       Long zero = 0L;
+//        Long roomId = booking.getRoomId();
+//        if (roomId < zero) {
+//            errors.reject("Invalid room number");
+//        }
     
-}
+

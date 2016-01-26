@@ -130,7 +130,7 @@ public class CustomerController {
 	  if (bindingResult.hasFieldErrors()){
 	      
               for(FieldError error: bindingResult.getFieldErrors()){
-//                  redirectAttributes.addFlashAttribute("alert_failure", error.getDefaultMessage());
+
                   if (error.getField().equals("forename")) 
                       redirectAttributes.addFlashAttribute("alert_failure", "Invalid forename!");
                   if (error.getField().equals("surname")) 
@@ -179,8 +179,19 @@ public class CustomerController {
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
     public String edit(@PathVariable long id, @Valid @ModelAttribute("customer") CreateCustomerDto customer, BindingResult bindingResult, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
         
-	  if (bindingResult.hasErrors()){
-	       redirectAttributes.addFlashAttribute("alert_failure", "Forename or surname was not filled!");
+	   if (bindingResult.hasFieldErrors()){
+	      
+              for(FieldError error: bindingResult.getFieldErrors()){
+
+                  if (error.getField().equals("forename")) 
+                      redirectAttributes.addFlashAttribute("alert_failure", "Invalid forename!");
+                  if (error.getField().equals("surname")) 
+                      redirectAttributes.addFlashAttribute("alert_failure", "Invalid surname!");
+                  if (error.getField().equals("email")) 
+                      redirectAttributes.addFlashAttribute("alert_failure", "Invalid e-mail!");
+                  if (error.getField().equals("password")) 
+                      redirectAttributes.addFlashAttribute("alert_failure", "Invalid password!");	      
+              }
 	       return "redirect:" + uriBuilder.path("/customer/edit/"+id).build();
 	   }
 	    	  

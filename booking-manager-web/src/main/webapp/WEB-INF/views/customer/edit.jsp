@@ -15,7 +15,7 @@
 <jsp:attribute name="body">
     
 <form:form method="post" action="${pageContext.request.contextPath}/customer/edit/${customer.id}" modelAttribute="customer">
-    <fieldset><legend>New Customer</legend>
+    <fieldset><legend>Edit Customer</legend>
         <%@include file="form.jsp"%>
         <input type="submit" value="Save">
     </fieldset>

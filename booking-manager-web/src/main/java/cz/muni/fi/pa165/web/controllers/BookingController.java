@@ -1,8 +1,6 @@
 package cz.muni.fi.pa165.web.controllers;
 
-import cz.muni.fi.pa165.dto.BookingDto;
 import cz.muni.fi.pa165.dto.CreateBookingDto;
-import cz.muni.fi.pa165.dto.CreateRoomDto;
 import cz.muni.fi.pa165.entity.Booking;
 import cz.muni.fi.pa165.facade.BookingFacade;
 import cz.muni.fi.pa165.facade.CustomerFacade;
@@ -11,7 +9,6 @@ import java.util.Locale;
 import javax.validation.Valid;
 
 import cz.muni.fi.pa165.web.validators.BookingValidator;
-import cz.muni.fi.pa165.web.validators.RoomValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -99,12 +95,33 @@ public class BookingController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(@Valid @ModelAttribute("booking") CreateBookingDto booking, BindingResult bindingResult,
                          RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
-        if (bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("alert_failure", "Some data were not filled!");
+        
+        if (bindingResult.hasFieldErrors()){
+            
+            for(FieldError error: bindingResult.getFieldErrors()){
+//                if (error.getField().equals("past"))
+//                    redirectAttributes.addFlashAttribute("alert_failure", "Booking cannot be in the past!");
+//                
+                if (error.getField().equals("customer"))
+                    redirectAttributes.addFlashAttribute("alert_failure", "Customer is empty!");
+                
+                if (error.getField().equals("room"))
+                    redirectAttributes.addFlashAttribute("alert_failure", "Room is empty!");
+                
+                if (error.getField().equals("checkOut"))
+                    redirectAttributes.addFlashAttribute("alert_failure", "Check-out is empty!");
+                                
+                if (error.getField().equals("checkIn"))
+                    redirectAttributes.addFlashAttribute("alert_failure", "Check-in is empty!");
+            }
             return "redirect:" + uriBuilder.path("/booking/create").build();
         }
+        else if (bindingResult.hasErrors()){
+                    redirectAttributes.addFlashAttribute("alert_failure", "Invalid duration of booking!");
+                    return "redirect:" + uriBuilder.path("/booking/create").build();
+            }
+        
         bookingFacade.createBooking(booking);
-
 
         redirectAttributes.addFlashAttribute("alert_success", "Booking was successfully created.");
 
