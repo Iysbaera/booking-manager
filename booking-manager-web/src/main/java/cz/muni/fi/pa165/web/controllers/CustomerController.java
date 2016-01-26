@@ -127,9 +127,20 @@ public class CustomerController {
                 System.out.println(objectError.getCode());
             }
         }
-	  if (bindingResult.hasErrors()){
+	  if (bindingResult.hasFieldErrors()){
 	      
-		redirectAttributes.addFlashAttribute("alert_failure", "Forename or surname was not filled!");
+              for(FieldError error: bindingResult.getFieldErrors()){
+//                  redirectAttributes.addFlashAttribute("alert_failure", error.getDefaultMessage());
+                  if (error.getField().equals("forename")) 
+                      redirectAttributes.addFlashAttribute("alert_failure", "Invalid forename!");
+                  if (error.getField().equals("surname")) 
+                      redirectAttributes.addFlashAttribute("alert_failure", "Invalid surname!");
+                  if (error.getField().equals("email")) 
+                      redirectAttributes.addFlashAttribute("alert_failure", "Invalid e-mail!");
+                  if (error.getField().equals("password")) 
+                      redirectAttributes.addFlashAttribute("alert_failure", "Invalid password!");	      
+              }
+              
 	       return "redirect:" + uriBuilder.path("/customer/create").build();
 	   }
 	  
