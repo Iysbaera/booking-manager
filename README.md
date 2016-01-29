@@ -16,7 +16,10 @@ For more information about project see official [Wiki pages](https://github.com/
 Whole project is divided to several maven projects representing specific layers:
 * __booking-manager-service__ - Represents service layer and contains implementations of facades,
 * __booking-manager-api__ - Represents API layer, which contains Data Transfer Objects and defines interfaces for facades,
-* __booking-manager-persistence__ - Represents persistent layer, which provides DB operations via Data Access Objects.
+* __booking-manager-persistence__ - Represents persistent layer, which provides DB operations via Data Access Objects,
+* __booking-manager-RESTful__ - Represents basic REST interface,
+* __booking-manager-web_app__ - User interface in the web application,
+* __booking-manager-sample_data__ - Sample to show functionalities of our project.
 
 ## Testing
 For unit testing there are no special set ups. Project uses TestNG framework with Mockito support for objects mocking.
